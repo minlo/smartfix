@@ -108,7 +108,7 @@ def test_model_pipeline(data, test_year, split_date, target_column, response_col
     #
     convert_to_numeric_pipeline = Pipeline([('convert_to_numeric', DataFrameToMatrix([response_column, 'date']))])
     #
-    # X_train = convert_to_numeric_pipeline.fit_transform(data_train)
+    X_train = convert_to_numeric_pipeline.fit_transform(data_train)
     # y_train = data_train.as_matrix([response_column])
     # y_train = np.ravel(y_train)
 
@@ -127,11 +127,17 @@ def test_model_pipeline(data, test_year, split_date, target_column, response_col
     # calculate fluctuation
     data_test_save = data_test[['date', target_column]]
     data_test_save['look_forward_days'] = look_forward_days
-    data_test_save['predict_next_day'] = y_predict
+    data_test_save['predict'] = y_predict
+    data_test_save["model_name"] = model_name
+    data_test_save["model_timestamp"] = timestamp_current
     data_test_save.reset_index(drop=True, inplace=True)
 
-    predict_path = "../results/predict/predict_step_" + str(look_forward_days) + "_" + model_name + "_" + str(timestamp_current) + ".csv"
-    data_test_save.to_csv(predict_path, encoding="utf-8", index=None, header=True)
+    predict_path = "../results/predict/predict_step_" + str(look_forward_days) + ".csv"
+    if os.path.exists(predict_path):
+        with open(predict_path, "a") as f:
+            data_test_save.to_csv(f, encoding="utf-8", index=None, header=False)
+    else:
+        data_test_save.to_csv(predict_path, encoding="utf-8", index=None, header=True)
 
 
 if __name__ == "__main__":
