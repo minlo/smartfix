@@ -129,7 +129,7 @@ def train_test_model_pipeline(data, test_year, split_date, target_column, respon
 
 
 if __name__ == "__main__":
-    data = pd.read_csv('./../data/data_live/data_live_imputated_cubic.csv', encoding='utf-8')
+    data = pd.read_csv('./../data/data_live/data_live_1218_imputated_cubic.csv', encoding='utf-8')
 
     # delete column x_59 and warning
     del data['x59'], data['warning']
@@ -220,7 +220,7 @@ if __name__ == "__main__":
     data_predict = train_test_model_pipeline(
         data=data.copy(),
         test_year=2017,
-        split_date=datetime.date(2017, 12, 15),
+        split_date=datetime.date(2017, 12, 18),
         target_column="y",
         response_column="y_forward_1",
         imputer=imputer_dataframe,
