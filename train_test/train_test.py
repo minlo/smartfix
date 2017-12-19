@@ -23,13 +23,11 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler, Imputer
 from sklearn.decomposition import PCA
 from sklearn.pipeline import Pipeline, FeatureUnion
 from sklearn.feature_selection import SelectFromModel
-from sklearn.externals import joblib
 
 # from scipy import stats
 import statsmodels.api as sm
 
-
-from xgboost import XGBRegressor, XGBClassifier
+# from xgboost import XGBRegressor, XGBClassifier
 
 
 def regression_t_statistic(data, y_column, ctrl_columns, x_column):
@@ -81,9 +79,9 @@ def test_accuracy(y_predict, y_test):
     return error_10, error_15, error_20, error_30
 
 
-def train_model_pipeline(data, test_year, split_date, target_column, response_column, imputer, feature_engineer, scaler,
-                         selector, model, pipeline_mode="single", param_grid=None, n_iter=5, verbose=1,
-                         selected_features_list=None, look_forward_days=1, model_name="random_forest"):
+def train_test_model_pipeline(data, test_year, split_date, target_column, response_column, imputer, feature_engineer, scaler,
+                              selector, model, pipeline_mode="single", param_grid=None, n_iter=5, verbose=1,
+                              selected_features_list=None):
     """
     Train and test a single model pipeline.
     """
@@ -118,34 +116,20 @@ def train_model_pipeline(data, test_year, split_date, target_column, response_co
     # fit
     model_pipeline.fit(X_train, y_train)
 
-    # save the model details into file
-    model_history_dir = "./../results/model_history/"
-    if not os.path.exists(model_history_dir):
-        os.makedirs(model_history_dir)
+    # predict
+    y_predict = model_pipeline.predict(X_test)
 
-    model_list_path = os.path.join(model_history_dir, "model_list.csv")
-    if not os.path.exists(model_list_path):
-        with open(model_list_path, "a") as file:
-            file.write("ahead_step,model_name,split_date,timestamp")
-            file.write("\n")
+    # calculate fluctuation
+    data_test_save = data_test[['date', target_column]]
+    data_test_save['today'] = y_test
+    data_test_save['predict_next_day'] = y_predict
+    data_test_save.reset_index(drop=True, inplace=True)
 
-    timestamp_current = int(time.time() * 1000)
-    with open(model_list_path, "a") as file:
-        file.write(",".join([str(i) for i in [
-            look_forward_days,
-            model_name,
-            split_date,
-            timestamp_current
-        ]]))
-        file.write("\n")
-
-    # save the model into pickle file
-    joblib.dump(model_pipeline, os.path.join("../results/models/", "model_" + str(look_forward_days) + "_" + model_name + "_" + str(timestamp_current) + ".pkl"))
-    print("Model saved to pickle file {}.".format(timestamp_current))
+    return data_test_save
 
 
 if __name__ == "__main__":
-    data = pd.read_csv('./../data/data_live/data_live_1218_imputated_cubic.csv', encoding='utf-8')
+    data = pd.read_csv('./../data/data_live/data_live_imputated_cubic.csv', encoding='utf-8')
 
     # delete column x_59 and warning
     del data['x59'], data['warning']
@@ -232,11 +216,11 @@ if __name__ == "__main__":
     selector_lasso = SelectFromModel(Lasso(alpha=0.1), prefit=False)
 
     # train and predict
-    # t+1, random_forest
-    train_model_pipeline(
+    print("data shape: {}".format(data.shape))
+    data_predict = train_test_model_pipeline(
         data=data.copy(),
         test_year=2017,
-        split_date=datetime.date(2017, 12, 18),
+        split_date=datetime.date(2017, 12, 15),
         target_column="y",
         response_column="y_forward_1",
         imputer=imputer_dataframe,
@@ -253,69 +237,15 @@ if __name__ == "__main__":
         model=RandomForestRegressor(n_estimators=500, n_jobs=-1, random_state=1234),
         pipeline_mode="single",
         param_grid=None,
-        selected_features_list=None,
-        look_forward_days=1,
-        model_name="random_forest"
+        selected_features_list=None
     )
+    print(data_predict)
 
-    # t+1, lasso
-    train_model_pipeline(
-        data=data.copy(),
-        test_year=2017,
-        split_date=datetime.date(2017, 12, 18),
-        target_column="y",
-        response_column="y_forward_1",
-        imputer=imputer_dataframe,
-        feature_engineer=GenerateNDiffFeatures(
-            target_column="y",
-            look_forward_days=1,
-            look_backward_days=30,
-            diff_order=0,
-            addition_time_features=True,
-            date_column="date"
-        ),
-        scaler=scaler_minmax,
-        selector=SelectKBest(k="all"),
-        model=Lasso(alpha=0.01, random_state=1234),
-        pipeline_mode="single",
-        param_grid=None,
-        selected_features_list=None,
-        look_forward_days=1,
-        model_name="lasso"
-    )
+    # save results
+    data_predict.to_csv("./../results/data_predict_" + datetime.date.today().strftime("%Y%m%d") + ".csv",
+                        encoding="utf-8",
+                        index=None,
+                        header=True)
 
-    # t+1, xgb
-    train_model_pipeline(
-        data=data.copy(),
-        test_year=2017,
-        split_date=datetime.date(2017, 12, 18),
-        target_column="y",
-        response_column="y_forward_1",
-        imputer=imputer_dataframe,
-        feature_engineer=GenerateNDiffFeatures(
-            target_column="y",
-            look_forward_days=1,
-            look_backward_days=20,
-            diff_order=0,
-            addition_time_features=True,
-            date_column="date"
-        ),
-        scaler=scaler_minmax,
-        selector=SelectFromModel(Lasso(alpha=0.0001), prefit=False),
-        model=XGBRegressor(
-            subsample=0.9,
-            min_child_weight=2,
-            max_depth=2,
-            learning_rate=0.1,
-            gamma=0.3,
-            colsample_bytree=0.6
-        ),
-        pipeline_mode="single",
-        param_grid=None,
-        selected_features_list=None,
-        look_forward_days=1,
-        model_name="xgboost"
-    )
-
-    print("training complete!")
+    print("done")
 

@@ -81,9 +81,10 @@ def test_accuracy(y_predict, y_test):
     return error_10, error_15, error_20, error_30
 
 
-def train_model_pipeline(data, test_year, split_date, target_column, response_column, imputer, feature_engineer, scaler,
+def test_model_pipeline(data, test_year, split_date, target_column, response_column, imputer, feature_engineer, scaler,
                          selector, model, pipeline_mode="single", param_grid=None, n_iter=5, verbose=1,
-                         selected_features_list=None, look_forward_days=1, model_name="random_forest"):
+                         selected_features_list=None, look_forward_days=1, model_name="random_forest",
+                        timestamp_current=1):
     """
     Train and test a single model pipeline.
     """
@@ -102,46 +103,35 @@ def train_model_pipeline(data, test_year, split_date, target_column, response_co
         data_train = data_train[selected_features_list_y]
         data_test = data_test[selected_features_list_y]
 
-    model_pipeline = GeneratePipeline(scaler, selector, model, pipeline_mode, param_grid, n_iter, verbose,
-                                      scoring_criterion="neg_mean_squared_error").get_pipeline()
-
+    # model_pipeline = GeneratePipeline(scaler, selector, model, pipeline_mode, param_grid, n_iter, verbose,
+    #                                   scoring_criterion="neg_mean_squared_error").get_pipeline()
+    #
     convert_to_numeric_pipeline = Pipeline([('convert_to_numeric', DataFrameToMatrix([response_column, 'date']))])
-
-    X_train = convert_to_numeric_pipeline.fit_transform(data_train)
-    y_train = data_train.as_matrix([response_column])
-    y_train = np.ravel(y_train)
+    #
+    # X_train = convert_to_numeric_pipeline.fit_transform(data_train)
+    # y_train = data_train.as_matrix([response_column])
+    # y_train = np.ravel(y_train)
 
     X_test = convert_to_numeric_pipeline.transform(data_test)
-    y_test = data_test.as_matrix([target_column])
-    y_test = np.ravel(y_test)
 
-    # fit
-    model_pipeline.fit(X_train, y_train)
+    # load model_pipeline
+    print("Loading model from file with timestamp {}...".format(timestamp_current))
+    model_pipeline = joblib.load(os.path.join(
+        "../results/models/",
+        "model_" + str(look_forward_days) + "_" + model_name + "_" + str(timestamp_current) + ".pkl"
+    ))
 
-    # save the model details into file
-    model_history_dir = "./../results/model_history/"
-    if not os.path.exists(model_history_dir):
-        os.makedirs(model_history_dir)
+    # predict
+    y_predict = model_pipeline.predict(X_test)
 
-    model_list_path = os.path.join(model_history_dir, "model_list.csv")
-    if not os.path.exists(model_list_path):
-        with open(model_list_path, "a") as file:
-            file.write("ahead_step,model_name,split_date,timestamp")
-            file.write("\n")
+    # calculate fluctuation
+    data_test_save = data_test[['date', target_column]]
+    data_test_save['look_forward_days'] = look_forward_days
+    data_test_save['predict_next_day'] = y_predict
+    data_test_save.reset_index(drop=True, inplace=True)
 
-    timestamp_current = int(time.time() * 1000)
-    with open(model_list_path, "a") as file:
-        file.write(",".join([str(i) for i in [
-            look_forward_days,
-            model_name,
-            split_date,
-            timestamp_current
-        ]]))
-        file.write("\n")
-
-    # save the model into pickle file
-    joblib.dump(model_pipeline, os.path.join("../results/models/", "model_" + str(look_forward_days) + "_" + model_name + "_" + str(timestamp_current) + ".pkl"))
-    print("Model saved to pickle file {}.".format(timestamp_current))
+    predict_path = "../results/predict/predict_step_" + str(look_forward_days) + "_" + model_name + "_" + str(timestamp_current) + ".csv"
+    data_test_save.to_csv(predict_path, encoding="utf-8", index=None, header=True)
 
 
 if __name__ == "__main__":
@@ -233,7 +223,7 @@ if __name__ == "__main__":
 
     # train and predict
     # t+1, random_forest
-    train_model_pipeline(
+    test_model_pipeline(
         data=data.copy(),
         test_year=2017,
         split_date=datetime.date(2017, 12, 18),
@@ -255,11 +245,12 @@ if __name__ == "__main__":
         param_grid=None,
         selected_features_list=None,
         look_forward_days=1,
-        model_name="random_forest"
+        model_name="random_forest",
+        timestamp_current=1
     )
 
     # t+1, lasso
-    train_model_pipeline(
+    test_model_pipeline(
         data=data.copy(),
         test_year=2017,
         split_date=datetime.date(2017, 12, 18),
@@ -281,11 +272,12 @@ if __name__ == "__main__":
         param_grid=None,
         selected_features_list=None,
         look_forward_days=1,
-        model_name="lasso"
+        model_name="lasso",
+        timestamp_current=1
     )
 
     # t+1, xgb
-    train_model_pipeline(
+    test_model_pipeline(
         data=data.copy(),
         test_year=2017,
         split_date=datetime.date(2017, 12, 18),
@@ -314,8 +306,9 @@ if __name__ == "__main__":
         param_grid=None,
         selected_features_list=None,
         look_forward_days=1,
-        model_name="xgboost"
+        model_name="xgboost",
+        timestamp_current=1
     )
 
-    print("training complete!")
+    print("predict complete!")
 
