@@ -130,6 +130,8 @@ def test_model_pipeline(data, test_year, split_date, target_column, response_col
     data_test_save['predict'] = y_predict
     data_test_save["model_name"] = model_name
     data_test_save["model_timestamp"] = timestamp_current
+    data_test_save["predict_date"] = datetime.date.today().strftime("%Y%m%d")
+    data_test_save["predict_timestamp"] = int(time.time() * 1000)
     data_test_save.reset_index(drop=True, inplace=True)
 
     predict_path = "../results/predict/predict_step_" + str(look_forward_days) + ".csv"
