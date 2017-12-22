@@ -142,6 +142,7 @@ def train_model_pipeline(data, test_year, split_date, target_column, response_co
     # save the model into pickle file
     joblib.dump(model_pipeline, os.path.join("../results/models/", "model_" + str(look_forward_days) + "_" + model_name + "_" + str(timestamp_current) + ".pkl"))
     print("Model saved to pickle file {}.".format(timestamp_current))
+    print(model_pipeline.predict(X_test))
 
 
 if __name__ == "__main__":
