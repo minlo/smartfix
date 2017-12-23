@@ -12,13 +12,14 @@ from pipeline_lib import TrainTestForTimeSeries, GeneratePipeline, BuildPipeline
 from sklearn.externals import joblib
 
 
-def train(imputer, scaler, engineer, selector, model, X, y, model_id=""):
+def train(imputer, engineer, selector, scaler, reducer, model, X, y, model_id=""):
     """Train historical data and save the model into pickle file."""
     pipeline = BuildPipeline(
         imputer=imputer,
-        scaler=scaler,
         engineer=engineer,
         selector=selector,
+        scaler=scaler,
+        reducer=reducer,
         model=model
     )
     pipeline.fit(X, y)
@@ -26,7 +27,7 @@ def train(imputer, scaler, engineer, selector, model, X, y, model_id=""):
     joblib.dump(pipeline, model_save_path)
 
 
-def test(pipeline, X, model_id=""):
+def test(X, model_id=""):
     model_load_path = os.path.join("../results/models/", "model_" + model_id + ".pkl")
     if not os.path.exists(model_load_path):
         raise ValueError("model_id {} does not exist.".format(model_id))
