@@ -7,13 +7,14 @@ from scipy import interpolate
 class ImputationMethod (BaseEstimator, TransformerMixin):
     """
     make merged data(which have day,month,year frequency data) imputated by different method
-
+    
+    remove argument self when the method declared as staticmethod on 2017-12-23 21:36.
     """
     def __init__(self, method):
         self.method = method
 
     @staticmethod
-    def remove_weekend(self, data):
+    def remove_weekend(data):
         """
         :parameter data :DataFrame
         :return:
@@ -25,7 +26,7 @@ class ImputationMethod (BaseEstimator, TransformerMixin):
         return data
 
     @staticmethod
-    def direct_impute(self, data):
+    def direct_impute(data):
         """
         :return:
         """
@@ -34,7 +35,7 @@ class ImputationMethod (BaseEstimator, TransformerMixin):
         return data_directly
 
     @staticmethod
-    def method_imputed(self, data):
+    def method_imputed(data):
         """
         :return: DataFrame after imputated
         """
@@ -88,6 +89,10 @@ class ImputationMethod (BaseEstimator, TransformerMixin):
         data_after_remove_weekend = self.remove_weekend(X)
 
         if self.method == 'directly':
-            return self.direct_impute(data_after_remove_weekend)
+            # return self.direct_impute(data_after_remove_weekend), y
+            X = self.direct_impute(data_after_remove_weekend)
         else:
-            return self.diffmethod_imputed(data_after_remove_weekend)
+            # return self.diffmethod_imputed(data_after_remove_weekend), y
+            X = self.diffmethod_imputed(data_after_remove_weekend)
+        return self
+

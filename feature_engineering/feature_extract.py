@@ -27,7 +27,7 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
         :param diff: bool, whether diff need to calculate
         """
 
-        self.method_list = method_list
+        # self.method_list = method_list
         self.ma = ma
         self.log = log
         self.ind = ind
