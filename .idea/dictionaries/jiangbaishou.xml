@@ -1,15 +1,10 @@
 <component name="ProjectDictionaryState">
   <dictionary name="jiangbaishou">
     <words>
-      <w>dataframe</w>
-      <w>imputated</w>
-      <w>imputer</w>
-      <w>minmax</w>
-      <w>scaler</w>
-      <w>scipy</w>
-      <w>thres</w>
-      <w>thresholding</w>
-      <w>univariate</w>
+      <w>bytree</w>
+      <w>colsample</w>
+      <w>slinear</w>
+      <w>xgboost</w>
     </words>
   </dictionary>
 </component>
