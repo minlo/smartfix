@@ -5,7 +5,7 @@ import time
 import datetime
 import sys
 import operator
-
+import argparse
 import matplotlib.pyplot as plt
 sys.path.append('./../')
 
@@ -129,7 +129,11 @@ def train_test_model_pipeline(data, test_year, split_date, target_column, respon
 
 
 if __name__ == "__main__":
-    data = pd.read_csv('./../data/data_live/data_live_1218_imputated_cubic.csv', encoding='utf-8')
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--impute_way", help="choose the way to impute", required=False, default="directly", type=str)
+    args = parser.parse_args()    
+
+    data = pd.read_csv('./../data/data_live/data_live_1221_imputated_' + args.impute_way + '.csv', encoding='utf-8')
 
     # delete column x_59 and warning
     del data['x59'], data['warning']
@@ -220,7 +224,7 @@ if __name__ == "__main__":
     data_predict = train_test_model_pipeline(
         data=data.copy(),
         test_year=2017,
-        split_date=datetime.date(2017, 12, 18),
+        split_date=datetime.date(2017, 12, 20),
         target_column="y",
         response_column="y_forward_1",
         imputer=imputer_dataframe,
@@ -234,7 +238,7 @@ if __name__ == "__main__":
         ),
         scaler=scaler_minmax,
         selector=SelectKBest(k="all"),
-        model=RandomForestRegressor(n_estimators=500, n_jobs=-1, random_state=1234),
+        model=RandomForestRegressor(n_estimators=1000, n_jobs=-1, random_state=1234),
         pipeline_mode="single",
         param_grid=None,
         selected_features_list=None

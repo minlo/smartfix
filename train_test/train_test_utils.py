@@ -65,7 +65,8 @@ def train(imputer, engineer, selector, scaler, reducer, model, X, y, split_date,
         selector=selector,
         scaler=scaler,
         reducer=reducer,
-        model=model
+        model=model,
+        split_date=split_date
     )
     pipeline_1 = pipeline.build_before_selector()
     pipeline_2 = pipeline.build_after_selector()
@@ -136,8 +137,8 @@ def search_regression_ml(save_k_best, look_ahead_day, split_date):
         "engineer__lag": [10],  # [10, 20, 30, 40, 50, 60]
     }
     selector_dict = {
-        "soft_selector": SoftThresholdSelector()
-        "hard_selector": HardThresholdSelector()
+        # "soft_selector": SoftThresholdSelector(),
+        "hard_selector": HardThresholdSelector(),
         "all_selector": SelectKBest(k="all")
     }
     hard_selector_param_grid = {
