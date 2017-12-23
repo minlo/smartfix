@@ -14,6 +14,10 @@ class ImputationMethod (BaseEstimator, TransformerMixin):
         self.method = method
 
     @staticmethod
+    def remove_missing_y(data):
+        pass
+
+    @staticmethod
     def remove_weekend(data):
         """
         :parameter data :DataFrame
@@ -21,7 +25,7 @@ class ImputationMethod (BaseEstimator, TransformerMixin):
         """
         data.index = pd.to_datetime(data.index)
         for i in data.index:
-            if (i.dayofweek == 5 or i.dayofweek == 6):
+            if i.dayofweek == 5 or i.dayofweek == 6:
                 data.drop(i, inplace=True)
         return data
 
@@ -41,12 +45,12 @@ class ImputationMethod (BaseEstimator, TransformerMixin):
         """
         data_value = data.values
         list_columns_fill = []
-        for i in range(0, data_value.shape[1]):
+        for i in range(0, data_value.shape[1]-1):
             cnt_nan = 0.0
             for j in range(0, data_value.shape[0]):
-                if (np.isnan(data_value[j][i])):
+                if np.isnan(data_value[j][i]):
                     cnt_nan += 1
-            if (cnt_nan / data_value.shape[0] >= 0.1):
+            if cnt_nan / data_value.shape[0] >= 0.1:
                 list_columns_fill.append(i)
 
         # method = "nearest","zero","slinear","quadratic","cubic"
@@ -56,7 +60,7 @@ class ImputationMethod (BaseEstimator, TransformerMixin):
             data_filled_value = []
             data_filled_position = []
             for j in range(0, data.shape[0]):
-                if (not (np.isnan(data_copy[j][i]))):
+                if not (np.isnan(data_copy[j][i])):
                     data_filled_value.append(data_copy[j][i])
                     data_filled_position.append(j)
 
@@ -64,9 +68,9 @@ class ImputationMethod (BaseEstimator, TransformerMixin):
             y = data_filled_value
             # f=interpolate.CubicSpline(x,y)
             xnew = np.linspace(x[0], x[-1], x[-1] - x[0] + 1)
-            if (self.method == 'cubic'):
+            if self.method == 'cubic':
                 f = interpolate.CubicSpline(x, y)
-            elif (self.method == 'quadratic'):
+            elif self.method == 'quadratic':
                 f = interpolate.interp1d(x, y, kind=self.method)
             else:
                 f = interpolate.interp1d(x, y, kind=self.method)
@@ -94,5 +98,5 @@ class ImputationMethod (BaseEstimator, TransformerMixin):
         else:
             # return self.diffmethod_imputed(data_after_remove_weekend), y
             X = self.diffmethod_imputed(data_after_remove_weekend)
-        return self
+        return X
 

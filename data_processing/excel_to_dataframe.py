@@ -23,8 +23,9 @@ class GenerateDataFrame:
         data.index = pd.to_datetime(data.index)
         old_colum_list = data.columns
         new_column_list = []
-        for i in range(data.shape[1]):
+        for i in range(data.shape[1]-1):
             new_column_list.append('x' + str(i + 1))
+        new_column_list.append('y')
         data.columns = new_column_list
 
         return data

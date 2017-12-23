@@ -55,7 +55,6 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
                     ma_add += data[k][i]
                 ma_list.append(ma_add / ma_days)
             new_data_list.append(ma_list)
-
         new_data = np.array(new_data_list).transpose()
         return new_data
 
@@ -109,7 +108,6 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
             for j in range(1, data.shape[0]):
                 rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
             new_data_list.append(rate_list)
-
         new_data = np.array(new_data_list).transpose()
         return new_data
 
@@ -144,7 +142,7 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
             for j in range(0, i):
                 lag.append(None)
             for j in range(i, len(y)):
-                lag.append(y[j][0])
+                lag.append(y[j])
             lag_y.append(lag)
         new_data = np.array(lag_y).transpose()
         return new_data
@@ -160,10 +158,10 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
         year = date.year
         month = date.month
         day = date.day
-        if year%100==0 or year%4==0:
-            month_list = [31,29,31,30,31,30,31,31,30,31,30,31]
+        if year % 100 == 0 or year % 4 == 0:
+            month_list = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
         else:
-            month_list = [31,29,31,30,31,30,31,31,30,31,30,31]
+            month_list = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
         if day+look_forward_days > month_list[month]:
             end_of_month = 1
@@ -206,7 +204,7 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
         data_index = data.index
         data_columns = data.columns
 
-        #add important time point feature
+        # add important time point feature
         weekdays = []
         end_of_month = []
         end_of_season = []
@@ -227,67 +225,67 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
         df_time_point = pd.DataFrame(data_array_time_point, index = data_index, columns = time_point_columns)
         data = pd.concat([data, df_time_point], axis=1)
 
-        #add y lag into X
-        data_y = y.copy()
-        data_y_value = data_y.copy()
+        # add y lag into X
+        data_y = data_value[:, -1].copy()
         y_lag_columns = []
         for i in range(0, self.lag):
-            y_lag_columns.append('y_lag_'+str(i))
-        data_lag = self.generate_lag(data_y_value.copy(), self.lag)
+            y_lag_columns.append('y_lag_'+str(i+1))
+        data_lag = self.generate_lag(data_y.copy(), self.lag)
         df_lag = pd.DataFrame(data_lag, index=data_index, columns=y_lag_columns)
         data = pd.concat([data, df_lag], axis=1)
 
-        #predict y_lookforward
-        predict_y = []
+        # predict y_lookforward
+        forward_y = []
         for i in range(0, len(data_y)-self.look_forward_days):
-            predict_y.append(data_y[i][0])
+            forward_y.append(data_y[i+self.look_forward_days])
         for i in range(len(data_y)-self.look_forward_days, len(data_y)):
-            predict_y.append(None)
-        df_y = pd.DataFrame(np.array(predict_y).transpose(), index=data_index, columns=['predict_y'])
+            forward_y.append(None)
+        # df_y = pd.DataFrame(np.array(forward_y).transpose(), index=data_index, columns=['forward_y'])
 
         if len(self.ma) != 0:
             for ma_days in self.ma:
-                data_ma_5 = self.generate_ma(data_value.copy(), ma_days)
+                data_ma_5 = self.generate_ma(data_value.copy()[:, :-1], ma_days)
                 data_ma_columns = []
-                for j in data_columns:
+                for j in data_columns[:-1]:
                     data_ma_columns.append(j+'_ma_'+str(ma_days))
                 df_ma = pd.DataFrame(data_ma_5, index=data_index, columns=data_ma_columns)
                 data = pd.concat([data, df_ma], axis=1)
 
         if self.log:
-            data_log = self.genrate_log(data_value.copy())
+            data_log = self.genrate_log(data_value.copy()[:, :-1])
             data_log_columns = []
-            for j in data_columns:
+            for j in data_columns[:-1]:
                 data_log_columns.append(j+'_log')
             df_log = pd.DataFrame(data_log, index=data_index, columns=data_log_columns)
             data = pd.concat([data, df_log], axis=1)
 
         if len(self.ind) != 0:
             for ind in self.ind:
-                data_ind = self.generate_index(data_value.copy(), ind)
+                data_ind = self.generate_index(data_value.copy()[:, :-1], ind)
                 data_ind_columns = []
-                for j in data_columns:
+                for j in data_columns[:-1]:
                     data_ind_columns.append(j+'_ind_'+str(ind))
                 df_ind = pd.DataFrame(data_ind, index=data_index, columns=data_ind_columns)
                 data = pd.concat([data, df_ind], axis=1)
 
         if self.changerate:
-            data_changerate = self.generate_change_rate(data_value.copy())
+            data_changerate = self.generate_change_rate(data_value.copy()[:, :-1])
             data_changerate_columns = []
-            for j in data_columns:
+            for j in data_columns[:-1]:
                 data_changerate_columns.append(j+'_changerate')
             df_changerate = pd.DataFrame(data_changerate, index=data_index, columns=data_changerate_columns)
             data = pd.concat([data, df_changerate], axis=1)
 
         if self.diff:
-            data_diff = self.generate_diff(data_value.copy())
+            data_diff = self.generate_diff(data_value.copy()[:, :-1])
             data_diff_columns = []
-            for j in data_columns:
+            for j in data_columns[:-1]:
                 data_diff_columns.append(j+'_diff')
             df_diff = pd.DataFrame(data_diff, index=data_index, columns=data_diff_columns)
             data = pd.concat([data, df_diff], axis=1)
 
-        return data, df_y
+        data['forward_y'] = np.array(forward_y)
+        return data
 
 
 
