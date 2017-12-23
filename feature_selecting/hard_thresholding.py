@@ -21,7 +21,7 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
     2. features with t-statistic value bigger than specified confidence level 1 - alpha, where alpha would be a
         parameter specified by the user.
     """
-    def __init__(self, target_column, k, alpha, date_column="date", select_top_k=True, print_top_k=False):
+    def __init__(self, target_column="y", k=10, alpha=0.05, date_column="date", select_top_k=True, print_top_k=False):
         self.target_column = target_column
         self.k = k
         self.alpha = alpha
