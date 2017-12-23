@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
-from sklearn.base import BaseEstimator, TransformerMixin
 
-class Generate_DataFrame(BaseEstimator, TransformerMixin):
+
+class GenerateDataFrame:
     """
     The class process on the origin excel dataset, it has two functions
     1. transform excel dataset to dataframe
@@ -31,7 +31,6 @@ class Generate_DataFrame(BaseEstimator, TransformerMixin):
 
     def r007_to_dataframe(self):
         """
-
         :return: DataFrame
         """
         r007 = pd.read_excel(self.r007_url, index_col='指标名称')
@@ -53,7 +52,5 @@ class Generate_DataFrame(BaseEstimator, TransformerMixin):
 
         return warning
 
-    def fit(self, X, y=None):
-        return self
 
-    def transform(self, X, y=None):
+
