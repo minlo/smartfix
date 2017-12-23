@@ -9,7 +9,7 @@ sys.path.append('./../')
 from pipeline_lib import BuildPipeline
 from feature_engineering import FeatureExtract
 from feature_selecting import HardThresholdSelector, SoftThresholdSelector
-from data_processing import ImputationMethod
+from data_processing import ImputationMethod, GenerateDataFrame
 
 from sklearn.externals import joblib
 from sklearn.pipeline import Pipeline
@@ -133,7 +133,7 @@ def search_regression_ml(save_k_best, look_ahead_day, split_date):
     }
     # Actually, we would not do grid search on this part right now
     engineer_param_grid = {
-        "engineer__lag": [10, 20, 30, 40, 50, 60]
+        "engineer__lag": [10],  # [10, 20, 30, 40, 50, 60]
     }
     selector_dict = {
         "soft_selector": SoftThresholdSelector()
@@ -141,7 +141,7 @@ def search_regression_ml(save_k_best, look_ahead_day, split_date):
         "all_selector": SelectKBest(k="all")
     }
     hard_selector_param_grid = {
-        "selector__k": [10, 20, 30, 40, 50]
+        "selector__k": [10],  # [10, 20, 30, 40, 50]
     }
     # temporarily not used
     reducer_param_grid = {
@@ -156,23 +156,25 @@ def search_regression_ml(save_k_best, look_ahead_day, split_date):
         "random_forest": {
             "model__n_estimators": [100, 500, 1000]
         },
-        "xgboost": {
-            "model__max_depth": range(2, 12, 2),
-            "model__min_child_weight": range(2, 10, 2),
-            "model__subsample": [i / 10.0 for i in range(6, 10)],
-            "model__colsample_bytree": [0, 0.1, 0.2, 0.3, 0.4, 0.5],
-            "model__learning_rate": [0.01, 0.1]
-        },
-        "lasso": {
-            "model__alpha": [1 / (10**x) for x in range(2, 10)]
-        }
+        # "xgboost": {
+        #     "model__max_depth": range(2, 12, 2),
+        #     "model__min_child_weight": range(2, 10, 2),
+        #     "model__subsample": [i / 10.0 for i in range(6, 10)],
+        #     "model__colsample_bytree": [0, 0.1, 0.2, 0.3, 0.4, 0.5],
+        #     "model__learning_rate": [0.01, 0.1]
+        # },
+        # "lasso": {
+        #     "model__alpha": [1 / (10**x) for x in range(2, 10)]
+        # }
     }
     model_pipeline_mode_dict = {
         "random_forest": "grid",
         "xgboost": "random",
         "lasso": "random"
     }
-    X_train, y_train, X_test, y_test = 1, 2, 3, 4
+
+    X_train = pd.read_excel("./../data/data_live/data_20171221.xls", encoding="utf-8")
+    y_train = pd.read_excel("./../data/data_live/r007_20171221.xls", encoding="utf-8")
 
     results = pd.DataFrame(columns=["model_id", "split_date", "model_name", "impute_method",
                                     "model_selector", "eval_metric", "model_params",
@@ -182,7 +184,7 @@ def search_regression_ml(save_k_best, look_ahead_day, split_date):
     time_init = time.time()
     save_model_dict = {}
     logger.info("Tuning models, {}: ".format(datetime.date.today().strftime("%Y%m%d")))
-    for impute_method in ["directly", "slinear", "cubic", "quadratic"]:
+    for impute_method in ["directly", "slinear", "cubic", "zero"]:
         for model_selector in selector_dict.keys():
             for model_name in model_dict.keys():
                 time_start = time.time()
@@ -253,4 +255,7 @@ def search_regression_ml(save_k_best, look_ahead_day, split_date):
                                 "regression_results_" + str(look_ahead_day) + ".csv")
     results.to_csv(results_path, encoding="utf-8", header=True, index=None)
 
+
+if __name__ == "__main__":
+    search_regression_ml(5, 1, datetime.date(2017, 12, 21))
 
