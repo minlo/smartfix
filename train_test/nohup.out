@@ -1,0 +1,283 @@
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
+  from pandas.core import datetools
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/cross_validation.py:44: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
+  "This module will be removed in 0.20.", DeprecationWarning)
+INFO:__main__:Index(['y'], dtype='object')
+INFO:__main__:Tuning models, 20171223: 
+./../feature_engineering/feature_extract.py:111: RuntimeWarning: invalid value encountered in double_scalars
+  rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+./../feature_engineering/feature_extract.py:111: RuntimeWarning: divide by zero encountered in double_scalars
+  rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+INFO:__main__:x_columns: 639, unique: 639
+INFO:__main__:X_train: (1493, 639), y: (1493,)
+INFO:__main__:(array([], dtype=int64), array([], dtype=int64))
+INFO:__main__:0.0
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:    9.9s finished
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:114: RuntimeWarning: divide by zero encountered in true_divide
+  f = msb / msw
+INFO:__main__:It takes 20.31 seconds to train this model.
+INFO:__main__:Model 1, model_id: fddbb35a-50e7-4537-ba91-65dee51722e5,model_name: random_forest, impute_method: directly, model_selector: all_selector, using 20.33 seconds
+Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/internals.py", line 4294, in create_block_manager_from_blocks
+    placement=slice(0, len(axes[0])))]
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/internals.py", line 2719, in make_block
+    return klass(values, ndim=ndim, fastpath=fastpath, placement=placement)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/internals.py", line 115, in __init__
+    len(self.mgr_locs)))
+ValueError: Wrong number of items passed 105, placement implies 86928
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "train_test_utils.py", line 291, in <module>
+    search_regression_ml(5, 1, datetime.date(2017, 12, 24))
+  File "train_test_utils.py", line 237, in search_regression_ml
+    pipeline_param_grid=pipeline_param_grid
+  File "train_test_utils.py", line 75, in train
+    X = pipeline_1.fit_transform(X)
+  File "/opt/anaconda3/lib/python3.6/site-packages/sklearn/pipeline.py", line 301, in fit_transform
+    Xt, fit_params = self._fit(X, y, **fit_params)
+  File "/opt/anaconda3/lib/python3.6/site-packages/sklearn/pipeline.py", line 234, in _fit
+    Xt = transform.fit_transform(Xt, y, **fit_params_steps[name])
+  File "/opt/anaconda3/lib/python3.6/site-packages/sklearn/base.py", line 494, in fit_transform
+    return self.fit(X, **fit_params).transform(X)
+  File "./../data_processing/imputation.py", line 100, in transform
+    X = self.method_imputed(data_after_remove_weekend)
+  File "./../data_processing/imputation.py", line 83, in method_imputed
+    data_after_imputation = pd.DataFrame(np.array(data_copy), index=data.index, columns=data.columns)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/frame.py", line 306, in __init__
+    copy=copy)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/frame.py", line 483, in _init_ndarray
+    return create_block_manager_from_blocks([values], [columns, index])
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/internals.py", line 4303, in create_block_manager_from_blocks
+    construction_error(tot_items, blocks[0].shape[1:], axes, e)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/internals.py", line 4280, in construction_error
+    passed, implied))
+ValueError: Shape of passed values is (105, 1559), indices imply (86928, 1559)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
+  from pandas.core import datetools
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/cross_validation.py:44: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
+  "This module will be removed in 0.20.", DeprecationWarning)
+INFO:__main__:Index(['y'], dtype='object')
+INFO:__main__:Tuning models, 20171224: 
+./../feature_engineering/feature_extract.py:111: RuntimeWarning: invalid value encountered in double_scalars
+  rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+./../feature_engineering/feature_extract.py:111: RuntimeWarning: divide by zero encountered in double_scalars
+  rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+INFO:__main__:x_columns: 639, unique: 639
+INFO:__main__:X_train: (1493, 639), y: (1493,)
+INFO:__main__:(array([], dtype=int64), array([], dtype=int64))
+INFO:__main__:0.0
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:    9.8s finished
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:114: RuntimeWarning: divide by zero encountered in true_divide
+  f = msb / msw
+INFO:__main__:It takes 20.23 seconds to train this model.
+INFO:__main__:Model 1, model_id: 45715f3b-4488-4dbf-8691-6a40d4acabb4,model_name: random_forest, impute_method: directly, model_selector: all_selector, using 20.24 seconds
+./../feature_engineering/feature_extract.py:111: RuntimeWarning: divide by zero encountered in double_scalars
+  rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+./../feature_engineering/feature_extract.py:111: RuntimeWarning: invalid value encountered in double_scalars
+  rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+INFO:__main__:x_columns: 639, unique: 639
+INFO:__main__:X_train: (1505, 639), y: (1505,)
+INFO:__main__:(array([], dtype=int64), array([], dtype=int64))
+INFO:__main__:0.333333333333
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.056512, total=  13.3s
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:114: RuntimeWarning: divide by zero encountered in true_divide
+  f = msb / msw
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.083399, total=  10.2s
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.186615, total=   5.5s
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:113: UserWarning: Features [ 82 201 305 409 435 436 513 539 540 617] are constant.
+  UserWarning)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:114: RuntimeWarning: divide by zero encountered in true_divide
+  f = msb / msw
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:114: RuntimeWarning: invalid value encountered in true_divide
+  f = msb / msw
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:   13.6s finished
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:114: RuntimeWarning: divide by zero encountered in true_divide
+  f = msb / msw
+INFO:__main__:It takes 27.71 seconds to train this model.
+INFO:__main__:Model 2, model_id: 2fbecc4d-95da-4363-ac3d-1be3b9002797,model_name: random_forest, impute_method: slinear, model_selector: all_selector, using 27.73 seconds
+./../feature_engineering/feature_extract.py:111: RuntimeWarning: divide by zero encountered in double_scalars
+  rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+INFO:__main__:x_columns: 639, unique: 639
+INFO:__main__:X_train: (1528, 639), y: (1528,)
+INFO:__main__:(array([], dtype=int64), array([], dtype=int64))
+INFO:__main__:3.06390256154
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:   14.6s finished
+INFO:__main__:It takes 29.96 seconds to train this model.
+INFO:__main__:Model 3, model_id: f55ebe67-233e-4e86-8134-007eba6f6f21,model_name: random_forest, impute_method: cubic, model_selector: all_selector, using 29.98 seconds
+./../feature_engineering/feature_extract.py:111: RuntimeWarning: invalid value encountered in double_scalars
+  rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+./../feature_engineering/feature_extract.py:111: RuntimeWarning: divide by zero encountered in double_scalars
+  rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+INFO:__main__:x_columns: 639, unique: 639
+INFO:__main__:X_train: (1493, 639), y: (1493,)
+INFO:__main__:(array([], dtype=int64), array([], dtype=int64))
+INFO:__main__:0.0
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:    9.8s finished
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:114: RuntimeWarning: divide by zero encountered in true_divide
+  f = msb / msw
+INFO:__main__:It takes 20.86 seconds to train this model.
+INFO:__main__:Model 4, model_id: e4345f43-b6df-4fd5-80a6-3130ff0b3035,model_name: random_forest, impute_method: zero, model_selector: all_selector, using 20.87 seconds
+INFO:__main__:We have run 5 models, using 98.82 seconds
+Traceback (most recent call last):
+  File "train_test_utils.py", line 291, in <module>
+    search_regression_ml(5, 1, datetime.date(2017, 12, 24))
+  File "train_test_utils.py", line 279, in search_regression_ml
+    for index_i in range(results.index):
+TypeError: 'RangeIndex' object cannot be interpreted as an integer
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
+  from pandas.core import datetools
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/cross_validation.py:44: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
+  "This module will be removed in 0.20.", DeprecationWarning)
+INFO:__main__:Index(['y'], dtype='object')
+INFO:__main__:Tuning models, 20171224: 
+./../feature_engineering/feature_extract.py:111: RuntimeWarning: invalid value encountered in double_scalars
+  rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+./../feature_engineering/feature_extract.py:111: RuntimeWarning: divide by zero encountered in double_scalars
+  rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+INFO:__main__:x_columns: 639, unique: 639
+INFO:__main__:X_train: (1493, 639), y: (1493,)
+INFO:__main__:(array([], dtype=int64), array([], dtype=int64))
+INFO:__main__:0.0
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:    9.9s finished
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:114: RuntimeWarning: divide by zero encountered in true_divide
+  f = msb / msw
+INFO:__main__:It takes 20.37 seconds to train this model.
+INFO:__main__:Model 1, model_id: aa02c7b2-925d-499c-99b2-30866f7c8f04,model_name: random_forest, impute_method: directly, model_selector: all_selector, using 20.39 seconds
+./../feature_engineering/feature_extract.py:111: RuntimeWarning: divide by zero encountered in double_scalars
+  rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+./../feature_engineering/feature_extract.py:111: RuntimeWarning: invalid value encountered in double_scalars
+  rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+INFO:__main__:x_columns: 639, unique: 639
+INFO:__main__:X_train: (1505, 639), y: (1505,)
+INFO:__main__:(array([], dtype=int64), array([], dtype=int64))
+INFO:__main__:0.333333333333
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:   13.4s finished
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:114: RuntimeWarning: divide by zero encountered in true_divide
+  f = msb / msw
+INFO:__main__:It takes 27.22 seconds to train this model.
+INFO:__main__:Model 2, model_id: 87d990b7-c263-4e62-b6a3-85236687bcf5,model_name: random_forest, impute_method: slinear, model_selector: all_selector, using 27.24 seconds
+./../feature_engineering/feature_extract.py:111: RuntimeWarning: divide by zero encountered in double_scalars
+  rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+INFO:__main__:x_columns: 639, unique: 639
+INFO:__main__:X_train: (1528, 639), y: (1528,)
+INFO:__main__:(array([], dtype=int64), array([], dtype=int64))
+INFO:__main__:3.06390256154
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:   14.6s finished
+INFO:__main__:It takes 29.56 seconds to train this model.
+INFO:__main__:Model 3, model_id: 03eff47c-7941-4fd8-ae01-16068ab18826,model_name: random_forest, impute_method: cubic, model_selector: all_selector, using 29.58 seconds
+./../feature_engineering/feature_extract.py:111: RuntimeWarning: invalid value encountered in double_scalars
+  rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+./../feature_engineering/feature_extract.py:111: RuntimeWarning: divide by zero encountered in double_scalars
+  rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+INFO:__main__:x_columns: 639, unique: 639
+INFO:__main__:X_train: (1493, 639), y: (1493,)
+INFO:__main__:(array([], dtype=int64), array([], dtype=int64))
+INFO:__main__:0.0
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:    9.9s finished
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:114: RuntimeWarning: divide by zero encountered in true_divide
+  f = msb / msw
+INFO:__main__:It takes 21.27 seconds to train this model.
+INFO:__main__:Model 4, model_id: c598ccd2-44a5-4180-b82b-596131375cf8,model_name: random_forest, impute_method: zero, model_selector: all_selector, using 21.28 seconds
+INFO:__main__:We have run 5 models, using 98.49 seconds
+INFO:__main__:Saving aa02c7b2-925d-499c-99b2-30866f7c8f04 to disk...
+Traceback (most recent call last):
+  File "train_test_utils.py", line 291, in <module>
+    search_regression_ml(5, 1, datetime.date(2017, 12, 24))
+  File "train_test_utils.py", line 282, in search_regression_ml
+    save_pipeline(save_model_dict[model_id_i], model_id_i)
+  File "train_test_utils.py", line 125, in save_pipeline
+    model_save_path = os.path.join("../results/models/", "model_" + model_id + ".pkl")
+TypeError: must be str, not UUID
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
+  from pandas.core import datetools
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/cross_validation.py:44: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
+  "This module will be removed in 0.20.", DeprecationWarning)
+INFO:__main__:Index(['y'], dtype='object')
+INFO:__main__:Tuning models, 20171224: 
+./../feature_engineering/feature_extract.py:111: RuntimeWarning: invalid value encountered in double_scalars
+  rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+./../feature_engineering/feature_extract.py:111: RuntimeWarning: divide by zero encountered in double_scalars
+  rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+INFO:__main__:x_columns: 639, unique: 639
+INFO:__main__:X_train: (1493, 639), y: (1493,)
+INFO:__main__:(array([], dtype=int64), array([], dtype=int64))
+INFO:__main__:0.0
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:    9.8s finished
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:114: RuntimeWarning: divide by zero encountered in true_divide
+  f = msb / msw
+INFO:__main__:It takes 20.15 seconds to train this model.
+INFO:__main__:Model 1, model_id: 034f048c-e0d7-44aa-bbf3-a9869dc549f1,model_name: random_forest, impute_method: directly, model_selector: all_selector, using 20.16 seconds
+./../feature_engineering/feature_extract.py:111: RuntimeWarning: divide by zero encountered in double_scalars
+  rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+./../feature_engineering/feature_extract.py:111: RuntimeWarning: invalid value encountered in double_scalars
+  rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+INFO:__main__:x_columns: 639, unique: 639
+INFO:__main__:X_train: (1505, 639), y: (1505,)
+INFO:__main__:(array([], dtype=int64), array([], dtype=int64))
+INFO:__main__:0.333333333333
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:   13.5s finished
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:114: RuntimeWarning: divide by zero encountered in true_divide
+  f = msb / msw
+INFO:__main__:It takes 27.30 seconds to train this model.
+INFO:__main__:Model 2, model_id: 9131d269-e43d-4d92-8b98-c92fe58fc313,model_name: random_forest, impute_method: slinear, model_selector: all_selector, using 27.32 seconds
+./../feature_engineering/feature_extract.py:111: RuntimeWarning: divide by zero encountered in double_scalars
+  rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+INFO:__main__:x_columns: 639, unique: 639
+INFO:__main__:X_train: (1528, 639), y: (1528,)
+INFO:__main__:(array([], dtype=int64), array([], dtype=int64))
+INFO:__main__:3.06390256154
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:   14.7s finished
+INFO:__main__:It takes 29.59 seconds to train this model.
+INFO:__main__:Model 3, model_id: fa4659b5-a7de-4d0b-bcaf-d83ac409d0cd,model_name: random_forest, impute_method: cubic, model_selector: all_selector, using 29.60 seconds
+./../feature_engineering/feature_extract.py:111: RuntimeWarning: invalid value encountered in double_scalars
+  rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+./../feature_engineering/feature_extract.py:111: RuntimeWarning: divide by zero encountered in double_scalars
+  rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+INFO:__main__:x_columns: 639, unique: 639
+INFO:__main__:X_train: (1493, 639), y: (1493,)
+INFO:__main__:(array([], dtype=int64), array([], dtype=int64))
+INFO:__main__:0.0
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.058482, total=   9.6s
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:114: RuntimeWarning: divide by zero encountered in true_divide
+  f = msb / msw
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.070834, total=   8.1s
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:113: UserWarning: Features [ 77 196 300 404 435 436 506 508 539 540 610 612] are constant.
+  UserWarning)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:114: RuntimeWarning: divide by zero encountered in true_divide
+  f = msb / msw
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:114: RuntimeWarning: invalid value encountered in true_divide
+  f = msb / msw
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:    9.9s finished
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:114: RuntimeWarning: divide by zero encountered in true_divide
+  f = msb / msw
+INFO:__main__:It takes 21.22 seconds to train this model.
+INFO:__main__:Model 4, model_id: b1b3c47f-2a9a-405f-9b53-87538699c32f,model_name: random_forest, impute_method: zero, model_selector: all_selector, using 21.23 seconds
+INFO:__main__:We have run 5 models, using 98.31 seconds
+INFO:__main__:Saving 034f048c-e0d7-44aa-bbf3-a9869dc549f1 to disk...
+INFO:__main__:Model dumped into ../results/models/model_034f048c-e0d7-44aa-bbf3-a9869dc549f1.pkl.
+INFO:__main__:Saving 9131d269-e43d-4d92-8b98-c92fe58fc313 to disk...
+INFO:__main__:Model dumped into ../results/models/model_9131d269-e43d-4d92-8b98-c92fe58fc313.pkl.
+INFO:__main__:Saving fa4659b5-a7de-4d0b-bcaf-d83ac409d0cd to disk...
+INFO:__main__:Model dumped into ../results/models/model_fa4659b5-a7de-4d0b-bcaf-d83ac409d0cd.pkl.
+INFO:__main__:Saving b1b3c47f-2a9a-405f-9b53-87538699c32f to disk...
+INFO:__main__:Model dumped into ../results/models/model_b1b3c47f-2a9a-405f-9b53-87538699c32f.pkl.

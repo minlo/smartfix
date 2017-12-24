@@ -38,10 +38,10 @@ class ImputationMethod (BaseEstimator, TransformerMixin):
         data_directly = data_directly.fillna(method='bfill')
         return data_directly
 
-    @staticmethod
-    def method_imputed(data):
+    # @staticmethod
+    def method_imputed(self, data):
         """
-        :return: DataFrame after imputated
+        :return: DataFrame after imputed
         """
         data_value = data.values
         list_columns_fill = []
@@ -55,13 +55,12 @@ class ImputationMethod (BaseEstimator, TransformerMixin):
 
         # method = "nearest","zero","slinear","quadratic","cubic"
 
-        data_copy = np.copy(data_value)
         for i in list_columns_fill:
             data_filled_value = []
             data_filled_position = []
             for j in range(0, data.shape[0]):
-                if not (np.isnan(data_copy[j][i])):
-                    data_filled_value.append(data_copy[j][i])
+                if not (np.isnan(data_value[j][i])):
+                    data_filled_value.append(data_value[j][i])
                     data_filled_position.append(j)
 
             x = data_filled_position
@@ -78,9 +77,9 @@ class ImputationMethod (BaseEstimator, TransformerMixin):
             # print(xnew)
             # print(ynew)
             for k in range(x[0], x[-1]):
-                data[k, i] = ynew[k - x[0]]
+                data_value[k, i] = ynew[k - x[0]]
 
-        data_after_imputation = pd.DataFrame(np.array(data_copy), index=data.index, columns=data.columns)
+        data_after_imputation = pd.DataFrame(np.array(data_value), index=data.index, columns=data.columns)
         data_imputated_distributed = data_after_imputation.fillna(method='pad')
         data_imputated_distributed = data_imputated_distributed.fillna(method='bfill')
         return data_imputated_distributed
@@ -97,6 +96,7 @@ class ImputationMethod (BaseEstimator, TransformerMixin):
             X = self.direct_impute(data_after_remove_weekend)
         else:
             # return self.diffmethod_imputed(data_after_remove_weekend), y
-            X = self.diffmethod_imputed(data_after_remove_weekend)
+            X = self.method_imputed(data_after_remove_weekend)
+        # print(X.values)
         return X
 
