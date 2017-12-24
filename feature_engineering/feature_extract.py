@@ -75,7 +75,7 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
                 if num != 0:
                     log_list.append(math.log(num))
                 else:
-                    log_list.append(None)
+                    log_list.append(np.finfo(np.float64).min)
             new_data_list.append(log_list)
         new_data = np.array(new_data_list).transpose()
         return new_data
@@ -108,7 +108,10 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
             rate_list = []
             rate_list.append(None)
             for j in range(1, data.shape[0]):
-                rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+                if data[j-1][i] != 0:
+                    rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
+                else:
+                    rate_list.append(np.finfo(np.float64).max)
             new_data_list.append(rate_list)
         new_data = np.array(new_data_list).transpose()
         return new_data
@@ -181,8 +184,6 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
             end_of_year = 0
 
         return end_of_month, end_of_season, end_of_year
-
-
 
     def fit(self, X, y=None):
         """

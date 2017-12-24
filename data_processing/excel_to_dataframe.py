@@ -8,20 +8,19 @@ class GenerateDataFrame:
     1. transform excel dataset to dataframe
     2. make the columns name to dictionaries
     """
-    def __init__(self, raw_feature_url, r007_url, warning_url):
-        self.raw_feature_url = raw_feature_url
+    def __init__(self, raw_data_url, r007_url, warning_url):
+        self.raw_data_url = raw_data_url
         self.r007_url = r007_url
         self.warning_url = warning_url
 
-    def feature_to_dataframe(self):
+    def data_to_dataframe(self):
         """
-
+        read excel which have features and the r007 on the last columns
         :return: DataFrame
         """
-        data = pd.read_excel(self.raw_feature_url, index_col='指标名称')
+        data = pd.read_excel(self.raw_data_url, index_col='指标名称')
         data.index = data.index.rename('date')
         data.index = pd.to_datetime(data.index)
-        old_colum_list = data.columns
         new_column_list = []
         for i in range(data.shape[1]-1):
             new_column_list.append('x' + str(i + 1))
