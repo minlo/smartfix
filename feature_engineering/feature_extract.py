@@ -43,7 +43,8 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
         :param ma_days: int
         :return: np.array
         """
-
+        # print(type(data))
+        # print(data)
         new_data_list = []
         for i in range(0, data.shape[1]):
             ma_list = []
@@ -52,6 +53,7 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
             for j in range(ma_days, data.shape[0]):
                 ma_add = 0
                 for k in range(j-ma_days, j):
+                    # print(ma_add, data[k][i])
                     ma_add += data[k][i]
                 ma_list.append(ma_add / ma_days)
             new_data_list.append(ma_list)
@@ -142,7 +144,7 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
             for j in range(0, i):
                 lag.append(None)
             for j in range(i, len(y)):
-                lag.append(y[j])
+                lag.append(y[j-i])
             lag_y.append(lag)
         new_data = np.array(lag_y).transpose()
         return new_data
@@ -163,17 +165,17 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
         else:
             month_list = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
-        if day+look_forward_days > month_list[month]:
+        if day+look_forward_days > month_list[month-1]:
             end_of_month = 1
         else:
             end_of_month = 0
 
-        if(month == 3 or month == 6 or month == 9 or month == 12) and (day+look_forward_days > month_list[month]):
+        if(month == 3 or month == 6 or month == 9 or month == 12) and (day+look_forward_days > month_list[month-1]):
             end_of_season = 1
         else:
             end_of_season = 0
 
-        if month == 12 and (day+look_forward_days > month_list[month]):
+        if month == 12 and (day+look_forward_days > month_list[month-1]):
             end_of_year = 1
         else:
             end_of_year = 0
@@ -182,7 +184,7 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
 
 
 
-    def fit(self, X, y):
+    def fit(self, X, y=None):
         """
 
         :param X: DataFrame
@@ -191,18 +193,20 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
         """
         return self
 
-    def transform(self, X, y):
+    def transform(self, X, y=None):
         """
 
         :param X: DataFrame
         :param y: DataFrame
         :return: DataFrame
         """
-
+        
         data = X.copy()
+        # data.index = pd.to_datetime(data.index)
         data_value = data.values
         data_index = data.index
         data_columns = data.columns
+        # print(data_value)
 
         # add important time point feature
         weekdays = []
@@ -252,7 +256,7 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
                 data = pd.concat([data, df_ma], axis=1)
 
         if self.log:
-            data_log = self.genrate_log(data_value.copy()[:, :-1])
+            data_log = self.generate_log(data_value.copy()[:, :-1])
             data_log_columns = []
             for j in data_columns[:-1]:
                 data_log_columns.append(j+'_log')
@@ -285,6 +289,10 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
             data = pd.concat([data, df_diff], axis=1)
 
         data['forward_y'] = np.array(forward_y)
+        # del data['银行间质押式回购加权利率:7天'] # print(data['forward_y'])
+        # print(data['银行间质押式回购加权利率:7天'])
+        # data.rename({"银行间质押式回购加权利率:7天": "y"}, inplace=True)
+        # print(data['y'])
         return data
 
 

@@ -4,7 +4,7 @@ import statsmodels.api as sm
 import logging
 import operator
 from scipy.stats import norm
-
+import numpy as np
 
 # setting logging configuration
 logging.basicConfig(level=logging.INFO)
@@ -40,13 +40,18 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
         column_x_list = ctrl_columns.copy()
         column_x_list.append(feature_column)
 
-        X = data[column_x_list]
-        y = data[target_column]
+        X = data.as_matrix([column_x_list])
+        y = data.as_matrix([target_column])
+        y = np.ravel(y)
+        logger.info("target_column: {}, column_x_list: {}".format(target_column, column_x_list))
+        logger.info("X: {}, y: {}".format(X.shape, y.shape))        
+        logger.info("X: {}, y: {}".format(X[0], y))
 
         # run regression
         X2 = sm.add_constant(X)
         est = sm.OLS(y, X2)
         est2 = est.fit()
+        logger.info("est2 summary: {}".format(est2.summary()))
         return est2.summary().tables[1].data[-1][3]
 
     def generate_ctrl_columns(self, data):
@@ -55,7 +60,7 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
         for column_i in list(data.columns):
             if column_i in [self.target_column, self.date_column] or "forward" in column_i:
                 continue
-            if self.target_column + "_back_0_order_diff" in column_i:
+            if self.target_column + "_lag_" in column_i:
                 hard_thres_ctrl_columns.append(column_i)
             else:
                 hard_thres_test_columns.append(column_i)
@@ -70,6 +75,7 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
         ctrl_columns, test_columns = self.generate_ctrl_columns(data)
 
         for column_i in test_columns:
+            logger.info("regression on {}".format(column_i))
             t_i = self.regression_t_statistic(data, self.target_column, ctrl_columns, column_i)
             hard_thres_test_t_stats[column_i] = abs(float(t_i))
 
