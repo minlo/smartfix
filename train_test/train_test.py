@@ -134,6 +134,19 @@ if __name__ == "__main__":
     args = parser.parse_args()    
 
     data = pd.read_csv('./../data/data_live/data_live_1222_imputated_' + args.impute_way + '.csv', encoding='utf-8')
+    
+    # add cross_year column 
+    date = pd.to_datetime(data['date'])
+    cross_year = []
+    for date_i in date:
+        month = date_i.month
+        day = date_i.day
+        if month==12 and day+7 > 31:
+            #cross_year.append(1)
+        else:
+            #cross_year.append(0)
+    data['cross_year'] = cross_year
+    
 
     # delete column x_59 and warning
     del data['x59'], data['warning']
