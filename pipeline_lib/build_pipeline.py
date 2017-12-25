@@ -42,13 +42,14 @@ class BuildPipeline(object):
     def build_before_selector(self):
         pipeline = Pipeline([
             ("imputer", self.imputer),
-            ("engineer", self.engineer)
+            ("engineer", self.engineer),
+            # ("selector", self.selector),
         ])
         return pipeline
 
     def build_after_selector(self):
         pipeline = Pipeline([
-            ("selector", self.selector),
+            # ("selector", self.selector),
             ("scaler", self.scaler),
             # ("reducer", self.reducer),  # temporarily not used
             ("model", self.model)

@@ -20,7 +20,8 @@ class GenerateDataFrame:
         """
         data = pd.read_excel(self.raw_data_url, index_col='指标名称')
         data.index = data.index.rename('date')
-        data.index = pd.to_datetime(data.index)
+        data.index = pd.to_datetime(data.index, errors="coerce")
+        data = data[~data.index.isnull()]
         new_column_list = []
         for i in range(data.shape[1]-1):
             new_column_list.append('x' + str(i + 1))

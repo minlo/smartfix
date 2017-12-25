@@ -281,3 +281,502 @@ INFO:__main__:Saving fa4659b5-a7de-4d0b-bcaf-d83ac409d0cd to disk...
 INFO:__main__:Model dumped into ../results/models/model_fa4659b5-a7de-4d0b-bcaf-d83ac409d0cd.pkl.
 INFO:__main__:Saving b1b3c47f-2a9a-405f-9b53-87538699c32f to disk...
 INFO:__main__:Model dumped into ../results/models/model_b1b3c47f-2a9a-405f-9b53-87538699c32f.pkl.
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
+  from pandas.core import datetools
+INFO:__main__:Index(['银行间质押式回购加权利率:7天'], dtype='object')
+INFO:__main__:Index(['y'], dtype='object')
+INFO:__main__:Tuning models, 20171224: 
+INFO:__main__:X_train: (1525, 639), y: (1525,)
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:   10.0s finished
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/utils/__init__.py:310: RuntimeWarning: overflow encountered in square
+  X = X ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:98: RuntimeWarning: overflow encountered in add
+  square_of_sums_alldata = sum(sums_args) ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:99: RuntimeWarning: overflow encountered in square
+  square_of_sums_args = [s ** 2 for s in sums_args]
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:100: RuntimeWarning: invalid value encountered in subtract
+  sstot = ss_alldata - square_of_sums_alldata / float(n_samples)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:104: RuntimeWarning: invalid value encountered in subtract
+  ssbn -= square_of_sums_alldata / float(n_samples)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:114: RuntimeWarning: divide by zero encountered in true_divide
+  f = msb / msw
+INFO:__main__:It takes 20.58 seconds to train this model.
+INFO:__main__:X_test: (24, 639)
+train_test_utils.py:170: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model 1, model_id: 055418e1-c6b8-4a3e-8d6e-9505facdebf4,model_name: random_forest, impute_method: directly, model_selector: all_selector, using 22.98 seconds
+INFO:__main__:X_train: (1525, 639), y: (1525,)
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:   13.7s finished
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/utils/__init__.py:310: RuntimeWarning: overflow encountered in square
+  X = X ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:98: RuntimeWarning: overflow encountered in add
+  square_of_sums_alldata = sum(sums_args) ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:98: RuntimeWarning: overflow encountered in square
+  square_of_sums_alldata = sum(sums_args) ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:99: RuntimeWarning: overflow encountered in square
+  square_of_sums_args = [s ** 2 for s in sums_args]
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:100: RuntimeWarning: invalid value encountered in subtract
+  sstot = ss_alldata - square_of_sums_alldata / float(n_samples)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:104: RuntimeWarning: invalid value encountered in subtract
+  ssbn -= square_of_sums_alldata / float(n_samples)
+INFO:__main__:It takes 27.88 seconds to train this model.
+INFO:__main__:X_test: (24, 639)
+train_test_utils.py:170: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model 2, model_id: 62e99367-92a5-42e1-9a72-f2d7916be0d6,model_name: random_forest, impute_method: slinear, model_selector: all_selector, using 30.95 seconds
+INFO:__main__:X_train: (1525, 639), y: (1525,)
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:   14.8s finished
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/utils/__init__.py:310: RuntimeWarning: overflow encountered in square
+  X = X ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:98: RuntimeWarning: overflow encountered in add
+  square_of_sums_alldata = sum(sums_args) ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:99: RuntimeWarning: overflow encountered in square
+  square_of_sums_args = [s ** 2 for s in sums_args]
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:100: RuntimeWarning: invalid value encountered in subtract
+  sstot = ss_alldata - square_of_sums_alldata / float(n_samples)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:104: RuntimeWarning: invalid value encountered in subtract
+  ssbn -= square_of_sums_alldata / float(n_samples)
+INFO:__main__:It takes 29.78 seconds to train this model.
+INFO:__main__:X_test: (24, 639)
+train_test_utils.py:170: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model 3, model_id: bb0ae734-6ab1-44dd-93ae-7ebd30aa9894,model_name: random_forest, impute_method: cubic, model_selector: all_selector, using 32.85 seconds
+INFO:__main__:X_train: (1525, 639), y: (1525,)
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:   10.2s finished
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/utils/__init__.py:310: RuntimeWarning: overflow encountered in square
+  X = X ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:98: RuntimeWarning: overflow encountered in add
+  square_of_sums_alldata = sum(sums_args) ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:99: RuntimeWarning: overflow encountered in square
+  square_of_sums_args = [s ** 2 for s in sums_args]
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:100: RuntimeWarning: invalid value encountered in subtract
+  sstot = ss_alldata - square_of_sums_alldata / float(n_samples)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:104: RuntimeWarning: invalid value encountered in subtract
+  ssbn -= square_of_sums_alldata / float(n_samples)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:114: RuntimeWarning: divide by zero encountered in true_divide
+  f = msb / msw
+INFO:__main__:It takes 21.44 seconds to train this model.
+INFO:__main__:X_test: (24, 639)
+train_test_utils.py:170: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model 4, model_id: 735d6892-0b44-4c9c-a909-533e44626f34,model_name: random_forest, impute_method: zero, model_selector: all_selector, using 24.51 seconds
+INFO:__main__:We have run 5 models, using 111.29 seconds
+INFO:__main__:Saving 055418e1-c6b8-4a3e-8d6e-9505facdebf4 to disk...
+INFO:__main__:Model dumped into ../results/models/model_055418e1-c6b8-4a3e-8d6e-9505facdebf4.pkl.
+INFO:__main__:Saving 735d6892-0b44-4c9c-a909-533e44626f34 to disk...
+INFO:__main__:Model dumped into ../results/models/model_735d6892-0b44-4c9c-a909-533e44626f34.pkl.
+INFO:__main__:Saving 62e99367-92a5-42e1-9a72-f2d7916be0d6 to disk...
+INFO:__main__:Model dumped into ../results/models/model_62e99367-92a5-42e1-9a72-f2d7916be0d6.pkl.
+INFO:__main__:Saving bb0ae734-6ab1-44dd-93ae-7ebd30aa9894 to disk...
+INFO:__main__:Model dumped into ../results/models/model_bb0ae734-6ab1-44dd-93ae-7ebd30aa9894.pkl.
+INFO:__main__:X_train: (1555, 639), y_train: (1555,)
+INFO:__main__:model 055418e1-c6b8-4a3e-8d6e-9505facdebf4 does not exists
+INFO:__main__:Input contains NaN, infinity or a value too large for dtype('float64').
+INFO:__main__:X_train: (1555, 639), y_train: (1555,)
+INFO:__main__:model 735d6892-0b44-4c9c-a909-533e44626f34 does not exists
+INFO:__main__:Input contains NaN, infinity or a value too large for dtype('float64').
+INFO:__main__:X_train: (1555, 639), y_train: (1555,)
+INFO:__main__:model 62e99367-92a5-42e1-9a72-f2d7916be0d6 does not exists
+INFO:__main__:Input contains NaN, infinity or a value too large for dtype('float64').
+INFO:__main__:X_train: (1555, 639), y_train: (1555,)
+INFO:__main__:model bb0ae734-6ab1-44dd-93ae-7ebd30aa9894 does not exists
+INFO:__main__:Input contains NaN, infinity or a value too large for dtype('float64').
+INFO:__main__:Prediction finished!!!
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
+  from pandas.core import datetools
+INFO:__main__:Index(['银行间质押式回购加权利率:7天'], dtype='object')
+INFO:__main__:Index(['y'], dtype='object')
+train_test_utils.py:156: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  data_train.dropna(inplace=True)
+INFO:__main__:X_train: (1545, 639), y_train: (1545,)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/utils/__init__.py:310: RuntimeWarning: overflow encountered in square
+  X = X ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:98: RuntimeWarning: overflow encountered in add
+  square_of_sums_alldata = sum(sums_args) ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:99: RuntimeWarning: overflow encountered in square
+  square_of_sums_args = [s ** 2 for s in sums_args]
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:100: RuntimeWarning: invalid value encountered in subtract
+  sstot = ss_alldata - square_of_sums_alldata / float(n_samples)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:104: RuntimeWarning: invalid value encountered in subtract
+  ssbn -= square_of_sums_alldata / float(n_samples)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:114: RuntimeWarning: divide by zero encountered in true_divide
+  f = msb / msw
+INFO:__main__:X_test: (4, 639)
+train_test_utils.py:171: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model: 055418e1-c6b8-4a3e-8d6e-9505facdebf4, model_name: random_forest, metric: 58.33333333333334
+train_test_utils.py:156: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  data_train.dropna(inplace=True)
+INFO:__main__:X_train: (1545, 639), y_train: (1545,)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/utils/__init__.py:310: RuntimeWarning: overflow encountered in square
+  X = X ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:98: RuntimeWarning: overflow encountered in add
+  square_of_sums_alldata = sum(sums_args) ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:99: RuntimeWarning: overflow encountered in square
+  square_of_sums_args = [s ** 2 for s in sums_args]
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:100: RuntimeWarning: invalid value encountered in subtract
+  sstot = ss_alldata - square_of_sums_alldata / float(n_samples)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:104: RuntimeWarning: invalid value encountered in subtract
+  ssbn -= square_of_sums_alldata / float(n_samples)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:114: RuntimeWarning: divide by zero encountered in true_divide
+  f = msb / msw
+INFO:__main__:X_test: (4, 639)
+train_test_utils.py:171: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model: 735d6892-0b44-4c9c-a909-533e44626f34, model_name: random_forest, metric: 58.33333333333334
+train_test_utils.py:156: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  data_train.dropna(inplace=True)
+INFO:__main__:X_train: (1545, 639), y_train: (1545,)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/utils/__init__.py:310: RuntimeWarning: overflow encountered in square
+  X = X ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:98: RuntimeWarning: overflow encountered in add
+  square_of_sums_alldata = sum(sums_args) ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:98: RuntimeWarning: overflow encountered in square
+  square_of_sums_alldata = sum(sums_args) ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:99: RuntimeWarning: overflow encountered in square
+  square_of_sums_args = [s ** 2 for s in sums_args]
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:100: RuntimeWarning: invalid value encountered in subtract
+  sstot = ss_alldata - square_of_sums_alldata / float(n_samples)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:104: RuntimeWarning: invalid value encountered in subtract
+  ssbn -= square_of_sums_alldata / float(n_samples)
+INFO:__main__:X_test: (4, 639)
+train_test_utils.py:171: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model: 62e99367-92a5-42e1-9a72-f2d7916be0d6, model_name: random_forest, metric: 50.0
+train_test_utils.py:156: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  data_train.dropna(inplace=True)
+INFO:__main__:X_train: (1545, 639), y_train: (1545,)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/utils/__init__.py:310: RuntimeWarning: overflow encountered in square
+  X = X ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:98: RuntimeWarning: overflow encountered in add
+  square_of_sums_alldata = sum(sums_args) ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:99: RuntimeWarning: overflow encountered in square
+  square_of_sums_args = [s ** 2 for s in sums_args]
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:100: RuntimeWarning: invalid value encountered in subtract
+  sstot = ss_alldata - square_of_sums_alldata / float(n_samples)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:104: RuntimeWarning: invalid value encountered in subtract
+  ssbn -= square_of_sums_alldata / float(n_samples)
+INFO:__main__:X_test: (4, 639)
+train_test_utils.py:171: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model: bb0ae734-6ab1-44dd-93ae-7ebd30aa9894, model_name: random_forest, metric: 50.0
+INFO:__main__:Prediction finished!!!
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
+  from pandas.core import datetools
+Traceback (most recent call last):
+  File "pandas/_libs/tslib.pyx", line 2469, in pandas._libs.tslib.array_to_datetime (pandas/_libs/tslib.c:44294)
+  File "pandas/_libs/src/datetime.pxd", line 132, in datetime._string_to_dts (pandas/_libs/tslib.c:97337)
+UnicodeEncodeError: 'ascii' codec can't encode characters in position 0-3: ordinal not in range(128)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "pandas/_libs/tslib.pyx", line 2491, in pandas._libs.tslib.array_to_datetime (pandas/_libs/tslib.c:44703)
+  File "pandas/_libs/tslib.pyx", line 1955, in pandas._libs.tslib.parse_datetime_string (pandas/_libs/tslib.c:35351)
+  File "/opt/anaconda3/lib/python3.6/site-packages/dateutil/parser.py", line 1168, in parse
+    return DEFAULTPARSER.parse(timestr, **kwargs)
+  File "/opt/anaconda3/lib/python3.6/site-packages/dateutil/parser.py", line 559, in parse
+    raise ValueError("Unknown string format")
+ValueError: Unknown string format
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "train_test_utils.py", line 342, in <module>
+    refit=True
+  File "train_test_utils.py", line 144, in test
+    X = pipeline_before_selector.transform(X)
+  File "/opt/anaconda3/lib/python3.6/site-packages/sklearn/pipeline.py", line 445, in _transform
+    Xt = transform.transform(Xt)
+  File "./../data_processing/imputation.py", line 92, in transform
+    data_after_remove_weekend = self.remove_weekend(X)
+  File "./../data_processing/imputation.py", line 26, in remove_weekend
+    data.index = pd.to_datetime(data.index)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/tools/datetimes.py", line 514, in to_datetime
+    result = _convert_listlike(arg, box, format, name=arg.name)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/tools/datetimes.py", line 435, in _convert_listlike
+    require_iso8601=require_iso8601
+  File "pandas/_libs/tslib.pyx", line 2355, in pandas._libs.tslib.array_to_datetime (pandas/_libs/tslib.c:46617)
+  File "pandas/_libs/tslib.pyx", line 2583, in pandas._libs.tslib.array_to_datetime (pandas/_libs/tslib.c:46321)
+  File "pandas/_libs/tslib.pyx", line 2497, in pandas._libs.tslib.array_to_datetime (pandas/_libs/tslib.c:44803)
+TypeError: invalid string coercion to datetime
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
+  from pandas.core import datetools
+Traceback (most recent call last):
+  File "train_test_utils.py", line 321, in <module>
+    data = data.loc[:-2]
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexing.py", line 1328, in __getitem__
+    return self._getitem_axis(key, axis=0)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexing.py", line 1506, in _getitem_axis
+    return self._get_slice_axis(key, axis=axis)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexing.py", line 1356, in _get_slice_axis
+    slice_obj.step, kind=self.name)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 3301, in slice_indexer
+    kind=kind)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 3495, in slice_locs
+    end_slice = self.get_slice_bound(end, 'right', kind)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 3428, in get_slice_bound
+    label = self._maybe_cast_slice_bound(label, side, kind)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 3379, in _maybe_cast_slice_bound
+    self._invalid_indexer('slice', label)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 1469, in _invalid_indexer
+    kind=type(key)))
+TypeError: cannot do slice indexing on <class 'pandas.core.indexes.base.Index'> with these indexers [-2] of <class 'int'>
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
+  from pandas.core import datetools
+Traceback (most recent call last):
+  File "train_test_utils.py", line 321, in <module>
+    data = data.loc[:data.shape[0]-2]
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexing.py", line 1328, in __getitem__
+    return self._getitem_axis(key, axis=0)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexing.py", line 1506, in _getitem_axis
+    return self._get_slice_axis(key, axis=axis)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexing.py", line 1356, in _get_slice_axis
+    slice_obj.step, kind=self.name)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 3301, in slice_indexer
+    kind=kind)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 3495, in slice_locs
+    end_slice = self.get_slice_bound(end, 'right', kind)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 3428, in get_slice_bound
+    label = self._maybe_cast_slice_bound(label, side, kind)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 3379, in _maybe_cast_slice_bound
+    self._invalid_indexer('slice', label)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 1469, in _invalid_indexer
+    kind=type(key)))
+TypeError: cannot do slice indexing on <class 'pandas.core.indexes.base.Index'> with these indexers [2183] of <class 'int'>
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
+  from pandas.core import datetools
+Traceback (most recent call last):
+  File "train_test_utils.py", line 321, in <module>
+    data = data.loc[:data.shape[0]-2, :]
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexing.py", line 1325, in __getitem__
+    return self._getitem_tuple(key)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexing.py", line 856, in _getitem_tuple
+    retval = getattr(retval, self.name)._getitem_axis(key, axis=i)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexing.py", line 1506, in _getitem_axis
+    return self._get_slice_axis(key, axis=axis)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexing.py", line 1356, in _get_slice_axis
+    slice_obj.step, kind=self.name)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 3301, in slice_indexer
+    kind=kind)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 3495, in slice_locs
+    end_slice = self.get_slice_bound(end, 'right', kind)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 3428, in get_slice_bound
+    label = self._maybe_cast_slice_bound(label, side, kind)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 3379, in _maybe_cast_slice_bound
+    self._invalid_indexer('slice', label)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 1469, in _invalid_indexer
+    kind=type(key)))
+TypeError: cannot do slice indexing on <class 'pandas.core.indexes.base.Index'> with these indexers [2183] of <class 'int'>
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
+  from pandas.core import datetools
+Traceback (most recent call last):
+  File "train_test_utils.py", line 321, in <module>
+    data = data.loc[:data.shape[0]-2, :]
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexing.py", line 1325, in __getitem__
+    return self._getitem_tuple(key)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexing.py", line 856, in _getitem_tuple
+    retval = getattr(retval, self.name)._getitem_axis(key, axis=i)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexing.py", line 1506, in _getitem_axis
+    return self._get_slice_axis(key, axis=axis)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexing.py", line 1356, in _get_slice_axis
+    slice_obj.step, kind=self.name)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexes/datetimes.py", line 1515, in slice_indexer
+    return Index.slice_indexer(self, start, end, step, kind=kind)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 3301, in slice_indexer
+    kind=kind)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 3495, in slice_locs
+    end_slice = self.get_slice_bound(end, 'right', kind)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 3428, in get_slice_bound
+    label = self._maybe_cast_slice_bound(label, side, kind)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexes/datetimes.py", line 1462, in _maybe_cast_slice_bound
+    self._invalid_indexer('slice', label)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 1469, in _invalid_indexer
+    kind=type(key)))
+TypeError: cannot do slice indexing on <class 'pandas.core.indexes.datetimes.DatetimeIndex'> with these indexers [2181] of <class 'int'>
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
+  from pandas.core import datetools
+train_test_utils.py:156: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  data_train.dropna(inplace=True)
+INFO:__main__:X_train: (1545, 639), y_train: (1545,)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/utils/__init__.py:310: RuntimeWarning: overflow encountered in square
+  X = X ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:98: RuntimeWarning: overflow encountered in add
+  square_of_sums_alldata = sum(sums_args) ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:99: RuntimeWarning: overflow encountered in square
+  square_of_sums_args = [s ** 2 for s in sums_args]
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:100: RuntimeWarning: invalid value encountered in subtract
+  sstot = ss_alldata - square_of_sums_alldata / float(n_samples)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:104: RuntimeWarning: invalid value encountered in subtract
+  ssbn -= square_of_sums_alldata / float(n_samples)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:114: RuntimeWarning: divide by zero encountered in true_divide
+  f = msb / msw
+INFO:__main__:X_test: (5, 639)
+Traceback (most recent call last):
+  File "train_test_utils.py", line 343, in <module>
+    refit=True
+  File "train_test_utils.py", line 170, in test
+    X_copy = data_test[["y", "forward_y"]]
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/frame.py", line 2056, in __getitem__
+    return self._getitem_array(key)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/frame.py", line 2100, in _getitem_array
+    indexer = self.loc._convert_to_indexer(key, axis=1)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/core/indexing.py", line 1231, in _convert_to_indexer
+    raise KeyError('%s not in index' % objarr[mask])
+KeyError: "['y'] not in index"
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
+  from pandas.core import datetools
+train_test_utils.py:156: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  data_train.dropna(inplace=True)
+INFO:__main__:X_train: (1545, 639), y_train: (1545,)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/utils/__init__.py:310: RuntimeWarning: overflow encountered in square
+  X = X ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:98: RuntimeWarning: overflow encountered in add
+  square_of_sums_alldata = sum(sums_args) ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:99: RuntimeWarning: overflow encountered in square
+  square_of_sums_args = [s ** 2 for s in sums_args]
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:100: RuntimeWarning: invalid value encountered in subtract
+  sstot = ss_alldata - square_of_sums_alldata / float(n_samples)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:104: RuntimeWarning: invalid value encountered in subtract
+  ssbn -= square_of_sums_alldata / float(n_samples)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:114: RuntimeWarning: divide by zero encountered in true_divide
+  f = msb / msw
+INFO:__main__:X_test: (5, 639)
+train_test_utils.py:171: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model: 055418e1-c6b8-4a3e-8d6e-9505facdebf4, model_name: random_forest, metric: 58.33333333333334
+train_test_utils.py:156: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  data_train.dropna(inplace=True)
+INFO:__main__:X_train: (1545, 639), y_train: (1545,)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/utils/__init__.py:310: RuntimeWarning: overflow encountered in square
+  X = X ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:98: RuntimeWarning: overflow encountered in add
+  square_of_sums_alldata = sum(sums_args) ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:99: RuntimeWarning: overflow encountered in square
+  square_of_sums_args = [s ** 2 for s in sums_args]
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:100: RuntimeWarning: invalid value encountered in subtract
+  sstot = ss_alldata - square_of_sums_alldata / float(n_samples)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:104: RuntimeWarning: invalid value encountered in subtract
+  ssbn -= square_of_sums_alldata / float(n_samples)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:114: RuntimeWarning: divide by zero encountered in true_divide
+  f = msb / msw
+INFO:__main__:X_test: (5, 639)
+train_test_utils.py:171: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model: 735d6892-0b44-4c9c-a909-533e44626f34, model_name: random_forest, metric: 58.33333333333334
+train_test_utils.py:156: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  data_train.dropna(inplace=True)
+INFO:__main__:X_train: (1545, 639), y_train: (1545,)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/utils/__init__.py:310: RuntimeWarning: overflow encountered in square
+  X = X ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:98: RuntimeWarning: overflow encountered in add
+  square_of_sums_alldata = sum(sums_args) ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:98: RuntimeWarning: overflow encountered in square
+  square_of_sums_alldata = sum(sums_args) ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:99: RuntimeWarning: overflow encountered in square
+  square_of_sums_args = [s ** 2 for s in sums_args]
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:100: RuntimeWarning: invalid value encountered in subtract
+  sstot = ss_alldata - square_of_sums_alldata / float(n_samples)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:104: RuntimeWarning: invalid value encountered in subtract
+  ssbn -= square_of_sums_alldata / float(n_samples)
+INFO:__main__:X_test: (5, 639)
+train_test_utils.py:171: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model: 62e99367-92a5-42e1-9a72-f2d7916be0d6, model_name: random_forest, metric: 50.0
+train_test_utils.py:156: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  data_train.dropna(inplace=True)
+INFO:__main__:X_train: (1545, 639), y_train: (1545,)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/utils/__init__.py:310: RuntimeWarning: overflow encountered in square
+  X = X ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:98: RuntimeWarning: overflow encountered in add
+  square_of_sums_alldata = sum(sums_args) ** 2
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:99: RuntimeWarning: overflow encountered in square
+  square_of_sums_args = [s ** 2 for s in sums_args]
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:100: RuntimeWarning: invalid value encountered in subtract
+  sstot = ss_alldata - square_of_sums_alldata / float(n_samples)
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/feature_selection/univariate_selection.py:104: RuntimeWarning: invalid value encountered in subtract
+  ssbn -= square_of_sums_alldata / float(n_samples)
+INFO:__main__:X_test: (5, 639)
+train_test_utils.py:171: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model: bb0ae734-6ab1-44dd-93ae-7ebd30aa9894, model_name: random_forest, metric: 50.0
+INFO:__main__:Prediction finished!!!

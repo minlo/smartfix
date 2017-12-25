@@ -10,6 +10,7 @@ from pipeline_lib import BuildPipeline
 from feature_engineering import FeatureExtract
 from feature_selecting import HardThresholdSelector, SoftThresholdSelector
 from data_processing import ImputationMethod, GenerateDataFrame
+from evaluation import Evaluate
 
 from sklearn.externals import joblib
 from sklearn.pipeline import Pipeline
@@ -74,6 +75,7 @@ def train(imputer, engineer, selector, scaler, reducer, model, X, split_date,
     time_init = time.time()
     X = pipeline_1.fit_transform(X)
     # logger.info("X head after the feature engineering: {}".format(X.head()))
+    # logger.info(X.shape)
 
     # delete all values after split_date
     X.replace([np.inf, -np.inf], np.nan, inplace=True)
@@ -151,6 +153,7 @@ def test(X, split_date, model_id="", pipeline_combined=None, refit=False):
 
     if refit:
         data_train = X[X.index < split_date]
+        data_train.dropna(inplace=True)
         X_train = data_train.as_matrix(x_columns)
         y_train = data_train.as_matrix(['forward_y'])
         y_train = np.ravel(y_train)
@@ -170,15 +173,8 @@ def test(X, split_date, model_id="", pipeline_combined=None, refit=False):
     return X_copy
 
 
-def evaluate(y_test_true, y_test_predict):
-    count_right = 0
-    for index_i in range(len(y_test_true)):
-        if np.isnan(y_test_predict[index_i]) or np.isnan(y_test_true[index_i]):
-            continue
-        if abs(y_test_predict[index_i] - y_test_true[index_i]) < 0.10:
-            count_right += 1
-    return count_right / len(y_test_true)
-
+def evaluate(y_test_true, y_test_predict, error=0.10):
+    return Evaluate(y_test_predict, y_test_true, error).accuracy()
 
 def search_regression_ml(data, save_k_best, look_ahead_day, split_date):
     imputer_param_grid = {
@@ -189,8 +185,8 @@ def search_regression_ml(data, save_k_best, look_ahead_day, split_date):
         "engineer__lag": [10],  # [10, 20, 30, 40, 50, 60]
     }
     selector_dict = {
-        "soft_selector": SelectFromModel(Lasso(alpha=0.1), prefit=False),
-        # "hard_selector": HardThresholdSelector(),
+        # "soft_selector": SelectFromModel(Lasso(alpha=0.1), prefit=False),
+        "hard_selector": HardThresholdSelector(),
         "all_selector": SelectKBest(k="all")
     }
     hard_selector_param_grid = {
@@ -236,7 +232,7 @@ def search_regression_ml(data, save_k_best, look_ahead_day, split_date):
     time_init = time.time()
     save_model_dict = {}
     logger.info("Tuning models, {}: ".format(datetime.date.today().strftime("%Y%m%d")))
-    for impute_method in ["directly", "slinear", "cubic", "zero"]:
+    for impute_method in ["directly", "slinear"]:  # , "cubic", "zero"]:
         for model_selector in selector_dict.keys():
             for model_name in model_dict.keys():
                 time_start = time.time()
@@ -314,16 +310,26 @@ def search_regression_ml(data, save_k_best, look_ahead_day, split_date):
 
 
 if __name__ == "__main__":
-    X_train = pd.read_excel("./../data/data_live/data_20171221.xls", encoding="utf-8", index_col="指标名称")
-    y_train = pd.read_excel("./../data/data_live/r007_20171221.xls", encoding="utf-8", index_col="指标名称")
+    # X_train = pd.read_excel("./../data/data_live/data_20171221.xls", encoding="utf-8", index_col="指标名称")
+    # y_train = pd.read_excel("./../data/data_live/r007_20171221.xls", encoding="utf-8", index_col="指标名称")
     # logger.info(y_train.columns)
-    y_train.rename(columns={y_train.columns[0]: "y"}, inplace=True)
-    logger.info(y_train.columns)
-    data = pd.concat([X_train, y_train], axis=1)
+    # y_train.rename(columns={y_train.columns[0]: "y"}, inplace=True)
+    # logger.info(y_train.columns)
+    # data = pd.concat([X_train, y_train], axis=1)
+    
+    data = pd.read_excel("./../data/data_live/raw_data_20171222.xls", encoding="utf-8", index_col="指标名称")
+    data.rename(columns={data.columns[-1]: "y"}, inplace=True)
+    # data = data.loc[:data.shape[0]-2, :]
+    # import data
+    # data = GenerateDataFrame(
+    #     raw_data_url="./../data/data_live/raw_data_20171222.xls",
+    #     r007_url=None,
+    #     warning_url=None
+    # ).data_to_dataframe()
 
     look_ahead_day = 1
     results_path = os.path.join("./../results/model_history/", "regression_results_" + str(look_ahead_day) + ".csv")
-    # search_regression_ml(data.copy(), 5, look_ahead_day, datetime.date(2017, 12, 15))
+    search_regression_ml(data.copy(), 5, look_ahead_day, datetime.date(2017, 12, 18))
     model_results = pd.read_csv(results_path, encoding="utf-8")
     predict_results_dir = "./../results/predict/"
     predict_results_path = os.path.join(predict_results_dir, "regression_predict_step_" + str(look_ahead_day) + ".csv")
@@ -331,12 +337,11 @@ if __name__ == "__main__":
 
     for index_i in range(len(model_results.index)):
         try:
-            amen = True if index_i == 6 else False
             y_predict = test(
                 data.copy(),
-                datetime.date(2017, 12, 15),
+                datetime.date(2017, 12, 18),
                 model_id=model_results['model_id'][index_i],
-                refit=amen
+                refit=True
             )
             logger.info("Model: {}, model_name: {}, metric: {}".format(
                 model_results['model_id'][index_i],

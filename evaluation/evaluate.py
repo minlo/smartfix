@@ -19,7 +19,8 @@ class Evaluate:
         """
         cnt = 0
         for i, j in zip(self.predict_y, self.true_y):
-            if abs(i-j)/j <= error:
+            # if abs(i-j)/j <= error:
+            if abs(i - j) < self.error:
                 cnt += 1
         acc = cnt/len(self.predict_y)*100
 
