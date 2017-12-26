@@ -23,6 +23,8 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler, Imputer
 from sklearn.decomposition import PCA
 # from xgboost import XGBRegressor, XGBClassifier
 import logging
+import argparse
+import json
 
 
 # setting logging configuration
@@ -176,7 +178,8 @@ def test(X, split_date, model_id="", pipeline_combined=None, refit=False):
 def evaluate(y_test_true, y_test_predict, error=0.10):
     return Evaluate(y_test_predict, y_test_true, error).accuracy()
 
-def search_regression_ml(data, save_k_best, look_ahead_day, split_date):
+
+def search_regression_ml(data, save_k_best, look_ahead_day, split_date, validation_period_length):
     imputer_param_grid = {
         "imputer__method": ["directly", "quadratic", "slinear", "cubic"]
     }
@@ -187,14 +190,14 @@ def search_regression_ml(data, save_k_best, look_ahead_day, split_date):
     selector_dict = {
         # "soft_selector": SelectFromModel(Lasso(alpha=0.1), prefit=False),
         "hard_selector": HardThresholdSelector(),
-        "all_selector": SelectKBest(k="all")
+        # "all_selector": SelectKBest(k="all")
     }
     hard_selector_param_grid = {
         "selector__k": [10],  # [10, 20, 30, 40, 50]
     }
     # temporarily not used
     reducer_param_grid = {
-        "reducer__n_components": [10, 20, 30, 40]
+        "reducer__n_components": [10]
     }
     model_dict = {
         "random_forest": RandomForestRegressor(n_estimators=1000, n_jobs=-1, random_state=1234),
@@ -203,7 +206,7 @@ def search_regression_ml(data, save_k_best, look_ahead_day, split_date):
     }
     model_param_grid_dict = {
         "random_forest": {
-            "model__n_estimators": [500]  # [100, 500, 1000]
+            "model__n_estimators": [100]  # [100, 500, 1000]
         },
         # "xgboost": {
         #     "model__max_depth": range(2, 12, 2),
@@ -225,65 +228,74 @@ def search_regression_ml(data, save_k_best, look_ahead_day, split_date):
     # logger.info("data value: {}".format(data.values))
 
     results = pd.DataFrame(columns=["model_id", "split_date", "model_name", "impute_method",
-                                    "model_selector", "eval_metric", "model_params",
-                                    "updating_date", "timestamp"])
+                                    "engineer_lag", "model_selector", "eval_metric",
+                                    "update_date", "timestamp"])
+    model_params_json_path = "./../results/model_history/model_params.json"
+    if os.path.exists(model_params_json_path):
+        model_params_dict = json.loads(model_params_json_path)
+    else:
+        model_params_dict = {}
 
     model_count = 0
     time_init = time.time()
     save_model_dict = {}
     logger.info("Tuning models, {}: ".format(datetime.date.today().strftime("%Y%m%d")))
-    for impute_method in ["directly", "slinear"]:  # , "cubic", "zero"]:
-        for model_selector in selector_dict.keys():
-            for model_name in model_dict.keys():
-                time_start = time.time()
-                pipeline_param_grid = model_param_grid_dict[model_name].copy()
-                # pipeline_param_grid.update(engineer_param_grid)
-                if model_selector == "hard_selector":
-                    pipeline_param_grid.update(hard_selector_param_grid)
-                pipeline = train(
-                    imputer=ImputationMethod(method=impute_method),
-                    engineer=FeatureExtract(lag=10, look_forward_days=look_ahead_day),
-                    selector=selector_dict[model_selector],
-                    scaler=MinMaxScaler(),
-                    reducer=PCA(n_components=10),  # temporarily not in use
-                    model=model_dict[model_name],
-                    X=data.copy(),
-                    split_date=split_date - datetime.timedelta(days=30),
-                    pipeline_mode=model_pipeline_mode_dict[model_name],
-                    pipeline_param_grid=pipeline_param_grid
-                )
-                model_id = str(uuid.uuid4())
-                y_test_predict = test(
-                    data.copy(),
-                    split_date - datetime.timedelta(days=30),
-                    model_id=model_id,
-                    pipeline_combined=pipeline
-                )
-
-                eval_metric = evaluate(np.array(y_test_predict['forward_y']), np.array(y_test_predict['predict_y']))
-                results.loc[len(results.index)] = [model_id, split_date,
-                                                   model_name, impute_method, model_selector,
-                                                   eval_metric, pipeline.get_params(),
-                                                   datetime.date.today().strftime("%Y%m%d"),
-                                                   int(1000 * time.time())]
-                save_model_dict[model_id] = pipeline
-
-                model_count += 1
-                logger.info(
-                    "Model {}, "
-                    "model_id: {},"
-                    "model_name: {}, "
-                    "impute_method: {}, "
-                    "model_selector: {}, "
-                    "using {:.2f} seconds".format(
-                        model_count,
-                        model_id,
-                        model_name,
-                        impute_method,
-                        model_selector,
-                        time.time() - time_start
+    for impute_method in ["directly", "slinear", "cubic", "zero"]:
+        for engineer_lag in [10]:   # [10, 20, 30, 40, 50, 60]:
+            for hard_k in [20]:   # [10, 20, 30, 40, 50, 100]:  # for model_selector in selector_dict.keys():
+                for model_name in model_dict.keys():
+                    logger.info("\n\n\n\n\nimpute_method: {}\n".format(impute_method))
+                    time_start = time.time()
+                    pipeline_param_grid = model_param_grid_dict[model_name].copy()
+                    pipeline_param_grid.update(reducer_param_grid)
+                    # if model_selector == "hard_selector":
+                    #     pipeline_param_grid.update(hard_selector_param_grid)
+                    pipeline = train(
+                        imputer=ImputationMethod(method=impute_method),
+                        engineer=FeatureExtract(lag=engineer_lag, look_forward_days=look_ahead_day),
+                        selector=HardThresholdSelector(k=hard_k),  # selector_dict[model_selector],
+                        scaler=MinMaxScaler(),
+                        reducer=PCA(n_components=20),  # temporarily not in use
+                        model=model_dict[model_name],
+                        X=data.copy(),
+                        split_date=split_date - datetime.timedelta(days=validation_period_length),
+                        pipeline_mode=model_pipeline_mode_dict[model_name],
+                        pipeline_param_grid=pipeline_param_grid
                     )
-                )
+                    model_id = str(uuid.uuid4())
+                    y_test_predict = test(
+                        data.copy(),
+                        split_date - datetime.timedelta(days=30),
+                        model_id=model_id,
+                        pipeline_combined=pipeline
+                    )
+                    model_selector = "hard_threshold_" + str(hard_k)
+                    eval_metric = evaluate(np.array(y_test_predict['forward_y']), np.array(y_test_predict['predict_y']))
+                    results.loc[len(results.index)] = [model_id, split_date,
+                                                       model_name, impute_method,
+                                                       engineer_lag, model_selector, eval_metric,
+                                                       datetime.date.today().strftime("%Y%m%d"),
+                                                       int(1000 * time.time())]
+                    save_model_dict[model_id] = pipeline
+
+                    model_count += 1
+                    logger.info(
+                        "Model {}, "
+                        "model_id: {},"
+                        "model_name: {}, "
+                        "impute_method: {}, "
+                        "model_selector: {}, "
+                        "eval_metric: {}"
+                        "using {:.2f} seconds".format(
+                            model_count,
+                            model_id,
+                            model_name,
+                            impute_method,
+                            model_selector,
+                            eval_metric,
+                            time.time() - time_start
+                        )
+                    )
     logger.info("We have run {} models, using {:.2f} seconds".format(
         model_count + 1,
         time.time() - time_init
@@ -300,6 +312,9 @@ def search_regression_ml(data, save_k_best, look_ahead_day, split_date):
         logger.info("Saving {} to disk...".format(model_id_i))
         save_pipeline(save_model_dict[model_id_i], model_id_i)
 
+        # save model params to json file
+        model_params_dict[model_id_i] = save_model_dict[model_id_i].get_params()
+
     # save results into a csv
     results_path = os.path.join("./../results/model_history/",
                                 "regression_results_" + str(look_ahead_day) + ".csv")
@@ -308,16 +323,37 @@ def search_regression_ml(data, save_k_best, look_ahead_day, split_date):
     else:
         results.to_csv(results_path, encoding="utf-8", header=False, index=None, mode="a")
 
+    # save model params
+    with open(model_params_json_path, 'w') as fp:
+        json.dump(model_params_dict, fp)
+
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--split_date", help="date to split training and testing, must be in YYYYmmdd format",
+                        required=False, default=datetime.date.today().strftime("%Y%m%d"), type=str)
+    parser.add_argument("--look_forward_days", help="how many days to look forward",
+                        required=False, default=1, type=int)
+    parser.add_argument("--data_path", help="select which data to import for training or testing",
+                        required=False, default="./../data/data_live/raw_data_20171222.xls", type=str)
+    parser.add_argument("--is_training", help="if true, we run the grid search and "
+                                              "select the best models in the validation period",
+                        required=False, default=False, type=lambda x: (str(x).lower() == "true"))
+    parser.add_argument("--validation_period_length", help="run validation on how many natural days before split date",
+                        required=False, default=30, type=int)
+    parser.add_argument("--save_k_best", help="if training, select k best models to save after training",
+                        required=False, default=1, type=int)
+    args = parser.parse_args()
     # X_train = pd.read_excel("./../data/data_live/data_20171221.xls", encoding="utf-8", index_col="指标名称")
     # y_train = pd.read_excel("./../data/data_live/r007_20171221.xls", encoding="utf-8", index_col="指标名称")
     # logger.info(y_train.columns)
     # y_train.rename(columns={y_train.columns[0]: "y"}, inplace=True)
     # logger.info(y_train.columns)
     # data = pd.concat([X_train, y_train], axis=1)
-    
-    data = pd.read_excel("./../data/data_live/raw_data_20171222.xls", encoding="utf-8", index_col="指标名称")
+
+    # import data
+    # data = pd.read_excel("./../data/data_live/raw_data_20171222.xls", encoding="utf-8", index_col="指标名称")
+    data = pd.read_excel(args.data_path, encoding="utf-8", index_col="指标名称")
     data.rename(columns={data.columns[-1]: "y"}, inplace=True)
     # data = data.loc[:data.shape[0]-2, :]
     # import data
@@ -327,21 +363,33 @@ if __name__ == "__main__":
     #     warning_url=None
     # ).data_to_dataframe()
 
-    look_ahead_day = 1
-    results_path = os.path.join("./../results/model_history/", "regression_results_" + str(look_ahead_day) + ".csv")
-    search_regression_ml(data.copy(), 5, look_ahead_day, datetime.date(2017, 12, 18))
+    # if is_training is True, we run grid search on multiple combinations of the pipeline to select the best one
+    if args.is_training:
+        logger.info("Setting is_training to be true, we run grid search on look_forward_days to be {}".format(
+            args.look_forward_days
+        ))
+        search_regression_ml(
+            data=data.copy(),
+            save_k_best=args.save_k_best,
+            look_ahead_day=args.look_forward_days,
+            split_date=datetime.datetime.strptime(args.split_date, "%Y%m%d").date(),
+            validation_period_length=args.validation_period_length
+        )
+
+    # set the model results path
+    results_path = os.path.join("./../results/model_history/", "regression_results_" + str(args.look_forward_days) + ".csv")
     model_results = pd.read_csv(results_path, encoding="utf-8")
     predict_results_dir = "./../results/predict/"
-    predict_results_path = os.path.join(predict_results_dir, "regression_predict_step_" + str(look_ahead_day) + ".csv")
+    predict_results_path = os.path.join(predict_results_dir, "regression_predict_step_" + str(args.look_forward_days) + ".csv")
     predict_results = pd.DataFrame(columns=["y", "forward_y", "predict_y", "model_name", "model_id", "prediction_date", "timestamp"])
 
     for index_i in range(len(model_results.index)):
         try:
             y_predict = test(
-                data.copy(),
-                datetime.date(2017, 12, 18),
+                X=data.copy(),
+                split_date=datetime.datetime.strptime(args.split_date, '%Y%m%d').date(),
                 model_id=model_results['model_id'][index_i],
-                refit=True
+                refit=False
             )
             logger.info("Model: {}, model_name: {}, metric: {}".format(
                 model_results['model_id'][index_i],
@@ -359,9 +407,10 @@ if __name__ == "__main__":
 
     if not os.path.exists(predict_results_dir):
         os.makedirs(predict_results_dir)
-        predict_results.to_csv(predict_results_path, index=True, mode="a", header=True)
+    if not os.path.exists(predict_results_path):
+        predict_results.to_csv(predict_results_path, encoding="utf-8", index=True, mode="a", header=True)
     else:
-        predict_results.to_csv(predict_results_path, index=True, mode="a", header=False)
+        predict_results.to_csv(predict_results_path, encoding="utf-8", index=True, mode="a", header=False)
 
     logger.info("Prediction finished!!!")
 

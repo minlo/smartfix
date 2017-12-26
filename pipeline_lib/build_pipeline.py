@@ -43,7 +43,7 @@ class BuildPipeline(object):
         pipeline = Pipeline([
             ("imputer", self.imputer),
             ("engineer", self.engineer),
-            # ("selector", self.selector),
+            ("selector", self.selector),
         ])
         return pipeline
 
@@ -51,7 +51,7 @@ class BuildPipeline(object):
         pipeline = Pipeline([
             # ("selector", self.selector),
             ("scaler", self.scaler),
-            # ("reducer", self.reducer),  # temporarily not used
+            ("reducer", self.reducer),  # temporarily not used
             ("model", self.model)
         ])
         return pipeline
