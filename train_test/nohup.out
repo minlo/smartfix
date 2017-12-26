@@ -780,3 +780,622 @@ See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stabl
   X_copy['predict_y'] = y_predict
 INFO:__main__:Model: bb0ae734-6ab1-44dd-93ae-7ebd30aa9894, model_name: random_forest, metric: 50.0
 INFO:__main__:Prediction finished!!!
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
+  from pandas.core import datetools
+Traceback (most recent call last):
+  File "train_test_utils.py", line 381, in <module>
+    model_results = pd.read_csv(results_path, encoding="utf-8")
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/io/parsers.py", line 655, in parser_f
+    return _read(filepath_or_buffer, kwds)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/io/parsers.py", line 405, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/io/parsers.py", line 762, in __init__
+    self._make_engine(self.engine)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/io/parsers.py", line 966, in _make_engine
+    self._engine = CParserWrapper(self.f, **self.options)
+  File "/opt/anaconda3/lib/python3.6/site-packages/pandas/io/parsers.py", line 1582, in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+  File "pandas/_libs/parsers.pyx", line 394, in pandas._libs.parsers.TextReader.__cinit__ (pandas/_libs/parsers.c:4209)
+  File "pandas/_libs/parsers.pyx", line 710, in pandas._libs.parsers.TextReader._setup_parser_source (pandas/_libs/parsers.c:8873)
+FileNotFoundError: File b'./../results/model_history/regression_results_1.csv' does not exist
+done
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
+  from pandas.core import datetools
+INFO:__main__:Setting is_training to be true, we run grid search on look_forward_days to be 1
+INFO:__main__:Tuning models, 20171225: 
+INFO:__main__:
+
+
+
+
+impute_method: directly
+
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_train: (1530, 21), y: (1530,)
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.085791, total=   0.9s
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.183423, total=   0.8s
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:    1.1s finished
+INFO:__main__:It takes 196.29 seconds to train this model.
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_test: (25, 21)
+train_test_utils.py:173: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model 1, model_id: 34e1b05e-8fc2-4954-ac38-404898c3f593,model_name: random_forest, impute_method: directly, model_selector: hard_threshold_20, eval_metric: 20.0using 399.20 seconds
+INFO:__main__:
+
+
+
+
+impute_method: slinear
+
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1573: RuntimeWarning: overflow encountered in multiply
+  tol = S.max(axis=-1, keepdims=True) * max(M.shape[-2:]) * finfo(S.dtype).eps
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1458: RuntimeWarning: overflow encountered in square
+  eigvals = self._wexog_singular_values ** 2
+/opt/anaconda3/lib/python3.6/site-packages/numpy/core/_methods.py:116: RuntimeWarning: overflow encountered in multiply
+  x = um.multiply(x, x, out=x)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: divide by zero encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+INFO:__main__:X_train: (1530, 21), y: (1530,)
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.132970, total=   1.1s
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.053780, total=   0.7s
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.065949, total=   1.1s
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:    1.3s finished
+INFO:__main__:It takes 212.63 seconds to train this model.
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1573: RuntimeWarning: overflow encountered in multiply
+  tol = S.max(axis=-1, keepdims=True) * max(M.shape[-2:]) * finfo(S.dtype).eps
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1458: RuntimeWarning: overflow encountered in square
+  eigvals = self._wexog_singular_values ** 2
+/opt/anaconda3/lib/python3.6/site-packages/numpy/core/_methods.py:116: RuntimeWarning: overflow encountered in multiply
+  x = um.multiply(x, x, out=x)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: divide by zero encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+INFO:__main__:X_test: (25, 21)
+train_test_utils.py:173: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model 2, model_id: d53d460b-a211-466b-9375-f0a8cd7ae5b4,model_name: random_forest, impute_method: slinear, model_selector: hard_threshold_20, eval_metric: 28.000000000000004using 438.10 seconds
+INFO:__main__:
+
+
+
+
+impute_method: cubic
+
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_train: (1530, 21), y: (1530,)
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.074409, total=   0.7s
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.262039, total=   0.6s
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:    0.9s finished
+INFO:__main__:It takes 213.39 seconds to train this model.
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_test: (25, 21)
+train_test_utils.py:173: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model 3, model_id: 34ee0515-ae32-4e48-b6d8-788d613500f2,model_name: random_forest, impute_method: cubic, model_selector: hard_threshold_20, eval_metric: 24.0using 403.60 seconds
+INFO:__main__:
+
+
+
+
+impute_method: zero
+
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_train: (1530, 21), y: (1530,)
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.199320, total=   0.7s
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.183423, total=   0.8s
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.085791, total=   0.8s
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:    0.9s finished
+INFO:__main__:It takes 190.30 seconds to train this model.
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_test: (25, 21)
+train_test_utils.py:173: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model 4, model_id: 24ee7e21-da57-4516-8a96-676207aa3b07,model_name: random_forest, impute_method: zero, model_selector: hard_threshold_20, eval_metric: 20.0using 382.46 seconds
+INFO:__main__:We have run 5 models, using 1623.37 seconds
+INFO:__main__:Saving d53d460b-a211-466b-9375-f0a8cd7ae5b4 to disk...
+INFO:__main__:Model dumped into ../results/models/model_d53d460b-a211-466b-9375-f0a8cd7ae5b4.pkl.
+INFO:__main__:Saving 34ee0515-ae32-4e48-b6d8-788d613500f2 to disk...
+INFO:__main__:Model dumped into ../results/models/model_34ee0515-ae32-4e48-b6d8-788d613500f2.pkl.
+INFO:__main__:Saving 34e1b05e-8fc2-4954-ac38-404898c3f593 to disk...
+INFO:__main__:Model dumped into ../results/models/model_34e1b05e-8fc2-4954-ac38-404898c3f593.pkl.
+Traceback (most recent call last):
+  File "train_test_utils.py", line 376, in <module>
+    validation_period_length=args.validation_period_length
+  File "train_test_utils.py", line 328, in search_regression_ml
+    json.dump(model_params_dict, fp)
+  File "/opt/anaconda3/lib/python3.6/json/__init__.py", line 179, in dump
+    for chunk in iterable:
+  File "/opt/anaconda3/lib/python3.6/json/encoder.py", line 430, in _iterencode
+    yield from _iterencode_dict(o, _current_indent_level)
+  File "/opt/anaconda3/lib/python3.6/json/encoder.py", line 404, in _iterencode_dict
+    yield from chunks
+  File "/opt/anaconda3/lib/python3.6/json/encoder.py", line 404, in _iterencode_dict
+    yield from chunks
+  File "/opt/anaconda3/lib/python3.6/json/encoder.py", line 325, in _iterencode_list
+    yield from chunks
+  File "/opt/anaconda3/lib/python3.6/json/encoder.py", line 325, in _iterencode_list
+    yield from chunks
+  File "/opt/anaconda3/lib/python3.6/json/encoder.py", line 437, in _iterencode
+    o = _default(o)
+  File "/opt/anaconda3/lib/python3.6/json/encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'Pipeline' is not JSON serializable
+done
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
+  from pandas.core import datetools
+INFO:__main__:Setting is_training to be true, we run grid search on look_forward_days to be 1
+INFO:__main__:Tuning models, 20171226: 
+INFO:__main__:
+
+
+
+
+impute_method: directly
+
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_train: (1530, 21), y: (1530,)
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.183423, total=   1.2s
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:    1.4s finished
+INFO:__main__:It takes 232.50 seconds to train this model.
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_test: (25, 21)
+train_test_utils.py:173: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model 1, model_id: 4ab8cd0c-8bcf-432d-b4b4-e5342f00d311,model_name: random_forest, impute_method: directly, model_selector: hard_threshold_20, eval_metric: 20.0using 464.95 seconds
+INFO:__main__:
+
+
+
+
+impute_method: slinear
+
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1573: RuntimeWarning: overflow encountered in multiply
+  tol = S.max(axis=-1, keepdims=True) * max(M.shape[-2:]) * finfo(S.dtype).eps
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1458: RuntimeWarning: overflow encountered in square
+  eigvals = self._wexog_singular_values ** 2
+/opt/anaconda3/lib/python3.6/site-packages/numpy/core/_methods.py:116: RuntimeWarning: overflow encountered in multiply
+  x = um.multiply(x, x, out=x)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: divide by zero encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+INFO:__main__:X_train: (1530, 21), y: (1530,)
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.053780, total=   0.9s
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.132970, total=   0.8s
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:    2.9s finished
+INFO:__main__:It takes 229.31 seconds to train this model.
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1573: RuntimeWarning: overflow encountered in multiply
+  tol = S.max(axis=-1, keepdims=True) * max(M.shape[-2:]) * finfo(S.dtype).eps
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1458: RuntimeWarning: overflow encountered in square
+  eigvals = self._wexog_singular_values ** 2
+/opt/anaconda3/lib/python3.6/site-packages/numpy/core/_methods.py:116: RuntimeWarning: overflow encountered in multiply
+  x = um.multiply(x, x, out=x)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: divide by zero encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+INFO:__main__:X_test: (25, 21)
+train_test_utils.py:173: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model 2, model_id: b200c54f-f5ae-4f80-a975-5e6bb57318ff,model_name: random_forest, impute_method: slinear, model_selector: hard_threshold_20, eval_metric: 28.000000000000004using 454.66 seconds
+INFO:__main__:
+
+
+
+
+impute_method: cubic
+
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_train: (1530, 21), y: (1530,)
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.262039, total=   0.8s
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.074409, total=   0.8s
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:    0.9s finished
+INFO:__main__:It takes 234.62 seconds to train this model.
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_test: (25, 21)
+train_test_utils.py:173: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model 3, model_id: 7a1a350d-eff4-4445-ae45-2418ba98cb92,model_name: random_forest, impute_method: cubic, model_selector: hard_threshold_20, eval_metric: 24.0using 478.92 seconds
+INFO:__main__:
+
+
+
+
+impute_method: zero
+
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_train: (1530, 21), y: (1530,)
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.199320, total=   1.1s
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.183423, total=   1.1s
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.085791, total=   1.1s
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:    1.2s finished
+INFO:__main__:It takes 231.94 seconds to train this model.
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_test: (25, 21)
+train_test_utils.py:173: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model 4, model_id: 917c4c04-4655-4085-9cc6-078863d9d3e1,model_name: random_forest, impute_method: zero, model_selector: hard_threshold_20, eval_metric: 20.0using 452.36 seconds
+INFO:__main__:We have run 5 models, using 1850.89 seconds
+INFO:__main__:Saving b200c54f-f5ae-4f80-a975-5e6bb57318ff to disk...
+INFO:__main__:Model dumped into ../results/models/model_b200c54f-f5ae-4f80-a975-5e6bb57318ff.pkl.
+INFO:__main__:Saving 7a1a350d-eff4-4445-ae45-2418ba98cb92 to disk...
+INFO:__main__:Model dumped into ../results/models/model_7a1a350d-eff4-4445-ae45-2418ba98cb92.pkl.
+INFO:__main__:Saving 4ab8cd0c-8bcf-432d-b4b4-e5342f00d311 to disk...
+INFO:__main__:Model dumped into ../results/models/model_4ab8cd0c-8bcf-432d-b4b4-e5342f00d311.pkl.
+Traceback (most recent call last):
+  File "train_test_utils.py", line 379, in <module>
+    data=data.copy(),
+  File "train_test_utils.py", line 331, in search_regression_ml
+    with open(model_params_json_path, 'w') as fp:
+  File "/opt/anaconda3/lib/python3.6/json/__init__.py", line 179, in dump
+    for chunk in iterable:
+  File "/opt/anaconda3/lib/python3.6/json/encoder.py", line 430, in _iterencode
+    yield from _iterencode_dict(o, _current_indent_level)
+  File "/opt/anaconda3/lib/python3.6/json/encoder.py", line 404, in _iterencode_dict
+    yield from chunks
+  File "/opt/anaconda3/lib/python3.6/json/encoder.py", line 404, in _iterencode_dict
+    yield from chunks
+  File "/opt/anaconda3/lib/python3.6/json/encoder.py", line 404, in _iterencode_dict
+    yield from chunks
+  File "/opt/anaconda3/lib/python3.6/json/encoder.py", line 325, in _iterencode_list
+    yield from chunks
+  File "/opt/anaconda3/lib/python3.6/json/encoder.py", line 325, in _iterencode_list
+    yield from chunks
+  File "/opt/anaconda3/lib/python3.6/json/encoder.py", line 437, in _iterencode
+    o = _default(o)
+  File "/opt/anaconda3/lib/python3.6/json/encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'ImputationMethod' is not JSON serializable
+done
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
+  from pandas.core import datetools
+INFO:__main__:Setting is_training to be true, we run grid search on look_forward_days to be 1
+Traceback (most recent call last):
+  File "train_test_utils.py", line 383, in <module>
+    validation_period_length=args.validation_period_length
+  File "train_test_utils.py", line 235, in search_regression_ml
+    model_params_dict = json.loads(model_params_json_path)
+  File "/opt/anaconda3/lib/python3.6/json/__init__.py", line 354, in loads
+    return _default_decoder.decode(s)
+  File "/opt/anaconda3/lib/python3.6/json/decoder.py", line 339, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/opt/anaconda3/lib/python3.6/json/decoder.py", line 357, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+done
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
+  from pandas.core import datetools
+INFO:__main__:Setting is_training to be true, we run grid search on look_forward_days to be 1
+INFO:__main__:Tuning models, 20171226: 
+INFO:__main__:
+
+
+
+
+impute_method: directly
+
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_train: (1530, 21), y: (1530,)
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.199320, total=   1.0s
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.183423, total=   1.1s
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.085791, total=   1.1s
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:    1.2s finished
+INFO:__main__:It takes 237.23 seconds to train this model.
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_test: (25, 21)
+train_test_utils.py:173: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model 1, model_id: 4faea703-d959-4a86-b967-40f18b465b9d,model_name: random_forest, impute_method: directly, model_selector: hard_threshold_20, eval_metric: 20.0using 465.62 seconds
+INFO:__main__:
+
+
+
+
+impute_method: slinear
+
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1573: RuntimeWarning: overflow encountered in multiply
+  tol = S.max(axis=-1, keepdims=True) * max(M.shape[-2:]) * finfo(S.dtype).eps
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1458: RuntimeWarning: overflow encountered in square
+  eigvals = self._wexog_singular_values ** 2
+/opt/anaconda3/lib/python3.6/site-packages/numpy/core/_methods.py:116: RuntimeWarning: overflow encountered in multiply
+  x = um.multiply(x, x, out=x)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: divide by zero encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+INFO:__main__:X_train: (1530, 21), y: (1530,)
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.065949, total=   1.0s
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:    1.2s finished
+INFO:__main__:It takes 240.75 seconds to train this model.
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1573: RuntimeWarning: overflow encountered in multiply
+  tol = S.max(axis=-1, keepdims=True) * max(M.shape[-2:]) * finfo(S.dtype).eps
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1458: RuntimeWarning: overflow encountered in square
+  eigvals = self._wexog_singular_values ** 2
+/opt/anaconda3/lib/python3.6/site-packages/numpy/core/_methods.py:116: RuntimeWarning: overflow encountered in multiply
+  x = um.multiply(x, x, out=x)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: divide by zero encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+INFO:__main__:X_test: (25, 21)
+train_test_utils.py:173: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model 2, model_id: 27d34e6c-8f8c-4fdb-8bc8-c0a677c61869,model_name: random_forest, impute_method: slinear, model_selector: hard_threshold_20, eval_metric: 28.000000000000004using 466.20 seconds
+INFO:__main__:
+
+
+
+
+impute_method: cubic
+
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns

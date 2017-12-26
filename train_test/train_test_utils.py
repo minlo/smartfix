@@ -27,6 +27,18 @@ import argparse
 import json
 
 
+"""
+Functionalities to be added, checked on 2017-12-26:
+1. refit when predicting
+    Now there exists some bugs concerning this functionality, changes have to be made to make this functionality useable.
+
+2. pipeline params dumps to json file
+    It seems that some objects or steps in the pipeline is not json serizable. Problems have to be fixed to normalize the functionality. 
+
+
+"""
+
+
 # setting logging configuration
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -201,28 +213,28 @@ def search_regression_ml(data, save_k_best, look_ahead_day, split_date, validati
     }
     model_dict = {
         "random_forest": RandomForestRegressor(n_estimators=1000, n_jobs=-1, random_state=1234),
-        # "xgboost": XGBRegressor(),
-        # "lasso": Lasso(alpha=0.01, random_state=1234),
+        "xgboost": XGBRegressor(),
+        "lasso": Lasso(alpha=0.01, random_state=1234),
     }
     model_param_grid_dict = {
         "random_forest": {
-            "model__n_estimators": [100]  # [100, 500, 1000]
+            "model__n_estimators": [100, 500, 1000]
         },
-        # "xgboost": {
-        #     "model__max_depth": range(2, 12, 2),
-        #     "model__min_child_weight": range(2, 10, 2),
-        #     "model__subsample": [i / 10.0 for i in range(6, 10)],
-        #     "model__colsample_bytree": [0, 0.1, 0.2, 0.3, 0.4, 0.5],
-        #     "model__learning_rate": [0.01, 0.1]
-        # },
-        # "lasso": {
-        #     "model__alpha": [1 / (10**x) for x in range(2, 10)]
-        # }
+        "xgboost": {
+            "model__max_depth": range(2, 12, 2),
+            "model__min_child_weight": range(2, 10, 2),
+            "model__subsample": [i / 10.0 for i in range(6, 10)],
+            "model__colsample_bytree": [0, 0.1, 0.2, 0.3, 0.4, 0.5],
+            "model__learning_rate": [0.01, 0.1]
+        },
+        "lasso": {
+            "model__alpha": [1 / (10**x) for x in range(2, 10)]
+        }
     }
     model_pipeline_mode_dict = {
         "random_forest": "grid",
-        # "xgboost": "random",
-        # "lasso": "random"
+        "xgboost": "random",
+        "lasso": "random"
     }
     # logger.info("data: {}".format(data.head(5)))
     # logger.info("data value: {}".format(data.values))
@@ -231,18 +243,18 @@ def search_regression_ml(data, save_k_best, look_ahead_day, split_date, validati
                                     "engineer_lag", "model_selector", "eval_metric",
                                     "update_date", "timestamp"])
     model_params_json_path = "./../results/model_history/model_params.json"
-    if os.path.exists(model_params_json_path):
-        model_params_dict = json.loads(model_params_json_path)
-    else:
-        model_params_dict = {}
+    # if os.path.exists(model_params_json_path):
+    #     model_params_dict = json.loads(model_params_json_path)
+    # else:
+    #     model_params_dict = {}
 
     model_count = 0
     time_init = time.time()
     save_model_dict = {}
     logger.info("Tuning models, {}: ".format(datetime.date.today().strftime("%Y%m%d")))
     for impute_method in ["directly", "slinear", "cubic", "zero"]:
-        for engineer_lag in [10]:   # [10, 20, 30, 40, 50, 60]:
-            for hard_k in [20]:   # [10, 20, 30, 40, 50, 100]:  # for model_selector in selector_dict.keys():
+        for engineer_lag in [10, 20, 30, 40, 50, 60]:
+            for hard_k in [10, 20, 30, 40, 50, 100]:  # for model_selector in selector_dict.keys():
                 for model_name in model_dict.keys():
                     logger.info("\n\n\n\n\nimpute_method: {}\n".format(impute_method))
                     time_start = time.time()
@@ -255,7 +267,7 @@ def search_regression_ml(data, save_k_best, look_ahead_day, split_date, validati
                         engineer=FeatureExtract(lag=engineer_lag, look_forward_days=look_ahead_day),
                         selector=HardThresholdSelector(k=hard_k),  # selector_dict[model_selector],
                         scaler=MinMaxScaler(),
-                        reducer=PCA(n_components=20),  # temporarily not in use
+                        reducer=PCA(n_components=10),  # temporarily not in use
                         model=model_dict[model_name],
                         X=data.copy(),
                         split_date=split_date - datetime.timedelta(days=validation_period_length),
@@ -307,13 +319,17 @@ def search_regression_ml(data, save_k_best, look_ahead_day, split_date, validati
 
     results = results.loc[:save_k_best]
 
+    # save the best models during this training process
     for index_i in range(len(results.index)):
         model_id_i = results['model_id'][index_i]
         logger.info("Saving {} to disk...".format(model_id_i))
         save_pipeline(save_model_dict[model_id_i], model_id_i)
 
         # save model params to json file
-        model_params_dict[model_id_i] = save_model_dict[model_id_i].get_params()
+        # model_params_dict[model_id_i] = {
+            # "pipeline_before_selector": save_model_dict[model_id_i].named_steps["pipeline_before_selector"].get_params(),
+        #     "pipeline_after_selector": save_model_dict[model_id_i].named_steps["pipeline_after_selector"].get_params()
+        # }
 
     # save results into a csv
     results_path = os.path.join("./../results/model_history/",
@@ -335,7 +351,7 @@ if __name__ == "__main__":
     parser.add_argument("--look_forward_days", help="how many days to look forward",
                         required=False, default=1, type=int)
     parser.add_argument("--data_path", help="select which data to import for training or testing",
-                        required=False, default="./../data/data_live/raw_data_20171222.xls", type=str)
+                        required=False, default="raw_data_20171222.xls", type=str)
     parser.add_argument("--is_training", help="if true, we run the grid search and "
                                               "select the best models in the validation period",
                         required=False, default=False, type=lambda x: (str(x).lower() == "true"))
@@ -344,6 +360,10 @@ if __name__ == "__main__":
     parser.add_argument("--save_k_best", help="if training, select k best models to save after training",
                         required=False, default=1, type=int)
     args = parser.parse_args()
+    
+    # see if there exists confliction between split date and look_forward_days
+    # add code here later, on 2017-12-26 17:27, by Zhao Yi, hopefully to be fixed by Xu Haonan
+
     # X_train = pd.read_excel("./../data/data_live/data_20171221.xls", encoding="utf-8", index_col="指标名称")
     # y_train = pd.read_excel("./../data/data_live/r007_20171221.xls", encoding="utf-8", index_col="指标名称")
     # logger.info(y_train.columns)
@@ -353,7 +373,10 @@ if __name__ == "__main__":
 
     # import data
     # data = pd.read_excel("./../data/data_live/raw_data_20171222.xls", encoding="utf-8", index_col="指标名称")
-    data = pd.read_excel(args.data_path, encoding="utf-8", index_col="指标名称")
+    # data = pd.read_excel(args.data_path, encoding="utf-8", index_col="指标名称")
+    data = GenerateDataFrame(
+        raw_data_url=os.path.join("./../data/data_live/", args.data_path)
+    ).data_to_dataframe()
     data.rename(columns={data.columns[-1]: "y"}, inplace=True)
     # data = data.loc[:data.shape[0]-2, :]
     # import data
@@ -379,6 +402,26 @@ if __name__ == "__main__":
     # set the model results path
     results_path = os.path.join("./../results/model_history/", "regression_results_" + str(args.look_forward_days) + ".csv")
     model_results = pd.read_csv(results_path, encoding="utf-8")
+    # select the relevant models by split_date and eval_metric, so that we are using the best model trained with the most recent updated data
+    model_results['split_date'] = pd.to_datetime(model_results['split_date'])
+    model_results['split_date'] = model_results['split_date'].dt.date
+    most_recent_split_date = model_results['split_date'].max()
+    model_results = model_results[model_results['split_date'] == most_recent_split_date]
+    best_eval_metric = model_results['eval_metric'].max()
+    model_results = model_results[model_results['eval_metric'] == best_eval_metric]
+    model_results.reset_index(drop=True, inplace=True)
+    if model_results.shape[0] == 0:
+        raise ValueError("No model left after filtering the best model recently!")
+
+    logger.info(
+        "By filtering the best eval_metric, "
+        "we select the only model {}, with eval_metric: {}".format(
+            model_results['model_id'][0],
+            model_results['eval_metric'][0]        
+        )
+    )
+
+
     predict_results_dir = "./../results/predict/"
     predict_results_path = os.path.join(predict_results_dir, "regression_predict_step_" + str(args.look_forward_days) + ".csv")
     predict_results = pd.DataFrame(columns=["y", "forward_y", "predict_y", "model_name", "model_id", "prediction_date", "timestamp"])

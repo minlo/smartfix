@@ -1,0 +1,4 @@
+model_id,split_date,model_name,impute_method,engineer_lag,model_selector,eval_metric,update_date,timestamp
+b200c54f-f5ae-4f80-a975-5e6bb57318ff,2017-12-18,random_forest,slinear,10,hard_threshold_20,28.000000000000004,20171226,1514278782726
+7a1a350d-eff4-4445-ae45-2418ba98cb92,2017-12-18,random_forest,cubic,10,hard_threshold_20,24.0,20171226,1514279261689
+4ab8cd0c-8bcf-432d-b4b4-e5342f00d311,2017-12-18,random_forest,directly,10,hard_threshold_20,20.0,20171226,1514278328103
