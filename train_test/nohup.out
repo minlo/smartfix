@@ -1399,3 +1399,1211 @@ INFO:__main__:
 impute_method: cubic
 
 INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_train: (1530, 21), y: (1530,)
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.262039, total=   0.8s
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.200399, total=   0.8s
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.074409, total=   0.8s
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:    0.9s finished
+INFO:__main__:It takes 229.85 seconds to train this model.
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_test: (25, 21)
+train_test_utils.py:173: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model 3, model_id: 00671e15-8a8e-4016-a633-5f99405a9946,model_name: random_forest, impute_method: cubic, model_selector: hard_threshold_20, eval_metric: 24.0using 455.17 seconds
+INFO:__main__:
+
+
+
+
+impute_method: zero
+
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_train: (1530, 21), y: (1530,)
+Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.199320, total=   0.7s
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.183423, total=   0.6s
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV]  model__n_estimators=100, reducer__n_components=10, score=-0.085791, total=   0.7s
+[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:    0.9s finished
+INFO:__main__:It takes 225.78 seconds to train this model.
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_test: (25, 21)
+train_test_utils.py:173: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model 4, model_id: fd4067a5-1bc0-4f04-85ef-1328a3ea0177,model_name: random_forest, impute_method: zero, model_selector: hard_threshold_20, eval_metric: 20.0using 445.69 seconds
+INFO:__main__:We have run 5 models, using 1832.68 seconds
+INFO:__main__:Saving 27d34e6c-8f8c-4fdb-8bc8-c0a677c61869 to disk...
+INFO:__main__:Model dumped into ../results/models/model_27d34e6c-8f8c-4fdb-8bc8-c0a677c61869.pkl.
+INFO:__main__:Saving 00671e15-8a8e-4016-a633-5f99405a9946 to disk...
+INFO:__main__:Model dumped into ../results/models/model_00671e15-8a8e-4016-a633-5f99405a9946.pkl.
+INFO:__main__:Saving 4faea703-d959-4a86-b967-40f18b465b9d to disk...
+INFO:__main__:Model dumped into ../results/models/model_4faea703-d959-4a86-b967-40f18b465b9d.pkl.
+Traceback (most recent call last):
+  File "train_test_utils.py", line 383, in <module>
+    raw_data_url=os.path.join("./../data/data_live/", args.data_path)
+  File "train_test_utils.py", line 332, in search_regression_ml
+    
+NameError: name 'model_params_dict' is not defined
+done
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
+  from pandas.core import datetools
+INFO:__main__:Setting is_training to be true, we run grid search on look_forward_days to be 1
+INFO:__main__:Tuning models, 20171226: 
+INFO:__main__:
+
+
+
+
+impute_method: directly
+
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_train: (1530, 11), y: (1530,)
+Fitting 3 folds for each of 3 candidates, totalling 9 fits
+[CV] model__n_estimators=1000, reducer__n_components=10 ..............
+[CV] model__n_estimators=1000, reducer__n_components=10 ..............
+[CV] model__n_estimators=500, reducer__n_components=10 ...............
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV] model__n_estimators=500, reducer__n_components=10 ...............
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV] model__n_estimators=1000, reducer__n_components=10 ..............
+[CV] model__n_estimators=100, reducer__n_components=10 ...............
+[CV] model__n_estimators=500, reducer__n_components=10 ...............
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.6/site-packages/sklearn/externals/joblib/_parallel_backends.py", line 344, in __call__
+    return self.func(*args, **kwargs)
+  File "/opt/anaconda3/lib/python3.6/site-packages/sklearn/externals/joblib/parallel.py", line 131, in __call__
+    return [func(*args, **kwargs) for func, args, kwargs in self.items]
+  File "/opt/anaconda3/lib/python3.6/site-packages/sklearn/externals/joblib/parallel.py", line 131, in <listcomp>
+    return [func(*args, **kwargs) for func, args, kwargs in self.items]
+  File "/opt/anaconda3/lib/python3.6/site-packages/sklearn/model_selection/_validation.py", line 227, in _fit_and_score
+    estimator.set_params(**parameters)
+  File "/opt/anaconda3/lib/python3.6/site-packages/sklearn/pipeline.py", line 180, in set_params
+    self._set_params('steps', **kwargs)
+  File "/opt/anaconda3/lib/python3.6/site-packages/sklearn/pipeline.py", line 69, in _set_params
+    super(_BasePipeline, self).set_params(**params)
+  File "/opt/anaconda3/lib/python3.6/site-packages/sklearn/base.py", line 282, in set_params
+    (name, self))
+ValueError: Invalid parameter reducer for estimator Pipeline(steps=[('scaler', MinMaxScaler(copy=True, feature_range=(0, 1))), ('model', RandomForestRegressor(bootstrap=True, criterion='mse', max_depth=None,
+           max_features='auto', max_leaf_nodes=None,
+           min_impurity_split=1e-07, min_samples_leaf=1,
+           min_samples_split=2, min_weight_fraction_leaf=0.0,
+           n_estimators=100, n_jobs=-1, oob_score=False, random_state=1234,
+           verbose=0, warm_start=False))]). Check the list of available parameters with `estimator.get_params().keys()`.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.6/multiprocessing/pool.py", line 119, in worker
+    result = (True, func(*args, **kwds))
+  File "/opt/anaconda3/lib/python3.6/site-packages/sklearn/externals/joblib/_parallel_backends.py", line 353, in __call__
+    raise TransportableException(text, e_type)
+sklearn.externals.joblib.my_exceptions.TransportableException: TransportableException
+___________________________________________________________________________
+ValueError                                         Tue Dec 26 04:59:26 2017
+PID: 41174                          Python 3.6.1: /opt/anaconda3/bin/python
+...........................................................................
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/externals/joblib/parallel.py in __call__(self=<sklearn.externals.joblib.parallel.BatchedCalls object>)
+    126     def __init__(self, iterator_slice):
+    127         self.items = list(iterator_slice)
+    128         self._size = len(self.items)
+    129 
+    130     def __call__(self):
+--> 131         return [func(*args, **kwargs) for func, args, kwargs in self.items]
+        self.items = [(<function _fit_and_score>, (Pipeline(steps=[('scaler', MinMaxScaler(copy=Tru...=1234,
+           verbose=0, warm_start=False))]), array([[  4.519     ,  20.421361  ,   4.20256   ...7.75956736,
+          4.4407    ,   3.2785    ]]), array([ 4.0835,  3.9949,  4.1816, ...,  3.4924,  3.2785,  3.3609]), make_scorer(mean_squared_error, greater_is_better=False), array([  0,   1,   2,   3,   4,   5,   6,   7,  ..., 376,
+       377, 378, 379, 380, 381, 382, 383]), array([384, 385, 386, 387, 388, 389, 390, 391, 3..., 758, 759, 760,
+       761, 762, 763, 764, 765]), 3, {'model__n_estimators': 100, 'reducer__n_components': 10}), {'error_score': 'raise', 'fit_params': {}, 'return_n_test_samples': True, 'return_parameters': True, 'return_times': True, 'return_train_score': True})]
+    132 
+    133     def __len__(self):
+    134         return self._size
+    135 
+
+...........................................................................
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/externals/joblib/parallel.py in <listcomp>(.0=<list_iterator object>)
+    126     def __init__(self, iterator_slice):
+    127         self.items = list(iterator_slice)
+    128         self._size = len(self.items)
+    129 
+    130     def __call__(self):
+--> 131         return [func(*args, **kwargs) for func, args, kwargs in self.items]
+        func = <function _fit_and_score>
+        args = (Pipeline(steps=[('scaler', MinMaxScaler(copy=Tru...=1234,
+           verbose=0, warm_start=False))]), array([[  4.519     ,  20.421361  ,   4.20256   ...7.75956736,
+          4.4407    ,   3.2785    ]]), array([ 4.0835,  3.9949,  4.1816, ...,  3.4924,  3.2785,  3.3609]), make_scorer(mean_squared_error, greater_is_better=False), array([  0,   1,   2,   3,   4,   5,   6,   7,  ..., 376,
+       377, 378, 379, 380, 381, 382, 383]), array([384, 385, 386, 387, 388, 389, 390, 391, 3..., 758, 759, 760,
+       761, 762, 763, 764, 765]), 3, {'model__n_estimators': 100, 'reducer__n_components': 10})
+        kwargs = {'error_score': 'raise', 'fit_params': {}, 'return_n_test_samples': True, 'return_parameters': True, 'return_times': True, 'return_train_score': True}
+    132 
+    133     def __len__(self):
+    134         return self._size
+    135 
+
+...........................................................................
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/model_selection/_validation.py in _fit_and_score(estimator=Pipeline(steps=[('scaler', MinMaxScaler(copy=Tru...=1234,
+           verbose=0, warm_start=False))]), X=array([[  4.519     ,  20.421361  ,   4.20256   ...7.75956736,
+          4.4407    ,   3.2785    ]]), y=array([ 4.0835,  3.9949,  4.1816, ...,  3.4924,  3.2785,  3.3609]), scorer=make_scorer(mean_squared_error, greater_is_better=False), train=array([  0,   1,   2,   3,   4,   5,   6,   7,  ..., 376,
+       377, 378, 379, 380, 381, 382, 383]), test=array([384, 385, 386, 387, 388, 389, 390, 391, 3..., 758, 759, 760,
+       761, 762, 763, 764, 765]), verbose=3, parameters={'model__n_estimators': 100, 'reducer__n_components': 10}, fit_params={}, return_train_score=True, return_parameters=True, return_n_test_samples=True, return_times=True, error_score='raise')
+    222     fit_params = fit_params if fit_params is not None else {}
+    223     fit_params = dict([(k, _index_param_value(X, v, train))
+    224                       for k, v in fit_params.items()])
+    225 
+    226     if parameters is not None:
+--> 227         estimator.set_params(**parameters)
+        estimator.set_params = <bound method Pipeline.set_params of Pipeline(st...1234,
+           verbose=0, warm_start=False))])>
+        parameters = {'model__n_estimators': 100, 'reducer__n_components': 10}
+    228 
+    229     start_time = time.time()
+    230 
+    231     X_train, y_train = _safe_split(estimator, X, y, train)
+
+...........................................................................
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/pipeline.py in set_params(self=Pipeline(steps=[('scaler', MinMaxScaler(copy=Tru...=1234,
+           verbose=0, warm_start=False))]), **kwargs={'model__n_estimators': 100, 'reducer__n_components': 10})
+    175 
+    176         Returns
+    177         -------
+    178         self
+    179         """
+--> 180         self._set_params('steps', **kwargs)
+        self._set_params = <bound method _BasePipeline._set_params of Pipel...1234,
+           verbose=0, warm_start=False))])>
+        kwargs = {'model__n_estimators': 100, 'reducer__n_components': 10}
+    181         return self
+    182 
+    183     def _validate_steps(self):
+    184         names, estimators = zip(*self.steps)
+
+...........................................................................
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/pipeline.py in _set_params(self=Pipeline(steps=[('scaler', MinMaxScaler(copy=Tru...=1234,
+           verbose=0, warm_start=False))]), steps_attr='steps', **params={'model__n_estimators': 100, 'reducer__n_components': 10})
+     64         step_names, _ = zip(*getattr(self, steps_attr))
+     65         for name in list(six.iterkeys(params)):
+     66             if '__' not in name and name in step_names:
+     67                 self._replace_step(steps_attr, name, params.pop(name))
+     68         # 3. Step parameters and other initilisation arguments
+---> 69         super(_BasePipeline, self).set_params(**params)
+        self.set_params = <bound method Pipeline.set_params of Pipeline(st...1234,
+           verbose=0, warm_start=False))])>
+        params = {'model__n_estimators': 100, 'reducer__n_components': 10}
+     70         return self
+     71 
+     72     def _validate_names(self, names):
+     73         if len(set(names)) != len(names):
+
+...........................................................................
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/base.py in set_params(self=Pipeline(steps=[('scaler', MinMaxScaler(copy=Tru...=1234,
+           verbose=0, warm_start=False))]), **params={'model__n_estimators': 100, 'reducer__n_components': 10})
+    277                 name, sub_name = split
+    278                 if name not in valid_params:
+    279                     raise ValueError('Invalid parameter %s for estimator %s. '
+    280                                      'Check the list of available parameters '
+    281                                      'with `estimator.get_params().keys()`.' %
+--> 282                                      (name, self))
+        name = 'reducer'
+        self = Pipeline(steps=[('scaler', MinMaxScaler(copy=Tru...=1234,
+           verbose=0, warm_start=False))])
+    283                 sub_object = valid_params[name]
+    284                 sub_object.set_params(**{sub_name: value})
+    285             else:
+    286                 # simple objects case
+
+ValueError: Invalid parameter reducer for estimator Pipeline(steps=[('scaler', MinMaxScaler(copy=True, feature_range=(0, 1))), ('model', RandomForestRegressor(bootstrap=True, criterion='mse', max_depth=None,
+           max_features='auto', max_leaf_nodes=None,
+           min_impurity_split=1e-07, min_samples_leaf=1,
+           min_samples_split=2, min_weight_fraction_leaf=0.0,
+           n_estimators=100, n_jobs=-1, oob_score=False, random_state=1234,
+           verbose=0, warm_start=False))]). Check the list of available parameters with `estimator.get_params().keys()`.
+___________________________________________________________________________
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.6/site-packages/sklearn/externals/joblib/parallel.py", line 682, in retrieve
+    self._output.extend(job.get(timeout=self.timeout))
+  File "/opt/anaconda3/lib/python3.6/multiprocessing/pool.py", line 608, in get
+    raise self._value
+sklearn.externals.joblib.my_exceptions.TransportableException: TransportableException
+___________________________________________________________________________
+ValueError                                         Tue Dec 26 04:59:26 2017
+PID: 41174                          Python 3.6.1: /opt/anaconda3/bin/python
+...........................................................................
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/externals/joblib/parallel.py in __call__(self=<sklearn.externals.joblib.parallel.BatchedCalls object>)
+    126     def __init__(self, iterator_slice):
+    127         self.items = list(iterator_slice)
+    128         self._size = len(self.items)
+    129 
+    130     def __call__(self):
+--> 131         return [func(*args, **kwargs) for func, args, kwargs in self.items]
+        self.items = [(<function _fit_and_score>, (Pipeline(steps=[('scaler', MinMaxScaler(copy=Tru...=1234,
+           verbose=0, warm_start=False))]), array([[  4.519     ,  20.421361  ,   4.20256   ...7.75956736,
+          4.4407    ,   3.2785    ]]), array([ 4.0835,  3.9949,  4.1816, ...,  3.4924,  3.2785,  3.3609]), make_scorer(mean_squared_error, greater_is_better=False), array([  0,   1,   2,   3,   4,   5,   6,   7,  ..., 376,
+       377, 378, 379, 380, 381, 382, 383]), array([384, 385, 386, 387, 388, 389, 390, 391, 3..., 758, 759, 760,
+       761, 762, 763, 764, 765]), 3, {'model__n_estimators': 100, 'reducer__n_components': 10}), {'error_score': 'raise', 'fit_params': {}, 'return_n_test_samples': True, 'return_parameters': True, 'return_times': True, 'return_train_score': True})]
+    132 
+    133     def __len__(self):
+    134         return self._size
+    135 
+
+...........................................................................
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/externals/joblib/parallel.py in <listcomp>(.0=<list_iterator object>)
+    126     def __init__(self, iterator_slice):
+    127         self.items = list(iterator_slice)
+    128         self._size = len(self.items)
+    129 
+    130     def __call__(self):
+--> 131         return [func(*args, **kwargs) for func, args, kwargs in self.items]
+        func = <function _fit_and_score>
+        args = (Pipeline(steps=[('scaler', MinMaxScaler(copy=Tru...=1234,
+           verbose=0, warm_start=False))]), array([[  4.519     ,  20.421361  ,   4.20256   ...7.75956736,
+          4.4407    ,   3.2785    ]]), array([ 4.0835,  3.9949,  4.1816, ...,  3.4924,  3.2785,  3.3609]), make_scorer(mean_squared_error, greater_is_better=False), array([  0,   1,   2,   3,   4,   5,   6,   7,  ..., 376,
+       377, 378, 379, 380, 381, 382, 383]), array([384, 385, 386, 387, 388, 389, 390, 391, 3..., 758, 759, 760,
+       761, 762, 763, 764, 765]), 3, {'model__n_estimators': 100, 'reducer__n_components': 10})
+        kwargs = {'error_score': 'raise', 'fit_params': {}, 'return_n_test_samples': True, 'return_parameters': True, 'return_times': True, 'return_train_score': True}
+    132 
+    133     def __len__(self):
+    134         return self._size
+    135 
+
+...........................................................................
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/model_selection/_validation.py in _fit_and_score(estimator=Pipeline(steps=[('scaler', MinMaxScaler(copy=Tru...=1234,
+           verbose=0, warm_start=False))]), X=array([[  4.519     ,  20.421361  ,   4.20256   ...7.75956736,
+          4.4407    ,   3.2785    ]]), y=array([ 4.0835,  3.9949,  4.1816, ...,  3.4924,  3.2785,  3.3609]), scorer=make_scorer(mean_squared_error, greater_is_better=False), train=array([  0,   1,   2,   3,   4,   5,   6,   7,  ..., 376,
+       377, 378, 379, 380, 381, 382, 383]), test=array([384, 385, 386, 387, 388, 389, 390, 391, 3..., 758, 759, 760,
+       761, 762, 763, 764, 765]), verbose=3, parameters={'model__n_estimators': 100, 'reducer__n_components': 10}, fit_params={}, return_train_score=True, return_parameters=True, return_n_test_samples=True, return_times=True, error_score='raise')
+    222     fit_params = fit_params if fit_params is not None else {}
+    223     fit_params = dict([(k, _index_param_value(X, v, train))
+    224                       for k, v in fit_params.items()])
+    225 
+    226     if parameters is not None:
+--> 227         estimator.set_params(**parameters)
+        estimator.set_params = <bound method Pipeline.set_params of Pipeline(st...1234,
+           verbose=0, warm_start=False))])>
+        parameters = {'model__n_estimators': 100, 'reducer__n_components': 10}
+    228 
+    229     start_time = time.time()
+    230 
+    231     X_train, y_train = _safe_split(estimator, X, y, train)
+
+...........................................................................
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/pipeline.py in set_params(self=Pipeline(steps=[('scaler', MinMaxScaler(copy=Tru...=1234,
+           verbose=0, warm_start=False))]), **kwargs={'model__n_estimators': 100, 'reducer__n_components': 10})
+    175 
+    176         Returns
+    177         -------
+    178         self
+    179         """
+--> 180         self._set_params('steps', **kwargs)
+        self._set_params = <bound method _BasePipeline._set_params of Pipel...1234,
+           verbose=0, warm_start=False))])>
+        kwargs = {'model__n_estimators': 100, 'reducer__n_components': 10}
+    181         return self
+    182 
+    183     def _validate_steps(self):
+    184         names, estimators = zip(*self.steps)
+
+...........................................................................
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/pipeline.py in _set_params(self=Pipeline(steps=[('scaler', MinMaxScaler(copy=Tru...=1234,
+           verbose=0, warm_start=False))]), steps_attr='steps', **params={'model__n_estimators': 100, 'reducer__n_components': 10})
+     64         step_names, _ = zip(*getattr(self, steps_attr))
+     65         for name in list(six.iterkeys(params)):
+     66             if '__' not in name and name in step_names:
+     67                 self._replace_step(steps_attr, name, params.pop(name))
+     68         # 3. Step parameters and other initilisation arguments
+---> 69         super(_BasePipeline, self).set_params(**params)
+        self.set_params = <bound method Pipeline.set_params of Pipeline(st...1234,
+           verbose=0, warm_start=False))])>
+        params = {'model__n_estimators': 100, 'reducer__n_components': 10}
+     70         return self
+     71 
+     72     def _validate_names(self, names):
+     73         if len(set(names)) != len(names):
+
+...........................................................................
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/base.py in set_params(self=Pipeline(steps=[('scaler', MinMaxScaler(copy=Tru...=1234,
+           verbose=0, warm_start=False))]), **params={'model__n_estimators': 100, 'reducer__n_components': 10})
+    277                 name, sub_name = split
+    278                 if name not in valid_params:
+    279                     raise ValueError('Invalid parameter %s for estimator %s. '
+    280                                      'Check the list of available parameters '
+    281                                      'with `estimator.get_params().keys()`.' %
+--> 282                                      (name, self))
+        name = 'reducer'
+        self = Pipeline(steps=[('scaler', MinMaxScaler(copy=Tru...=1234,
+           verbose=0, warm_start=False))])
+    283                 sub_object = valid_params[name]
+    284                 sub_object.set_params(**{sub_name: value})
+    285             else:
+    286                 # simple objects case
+
+ValueError: Invalid parameter reducer for estimator Pipeline(steps=[('scaler', MinMaxScaler(copy=True, feature_range=(0, 1))), ('model', RandomForestRegressor(bootstrap=True, criterion='mse', max_depth=None,
+           max_features='auto', max_leaf_nodes=None,
+           min_impurity_split=1e-07, min_samples_leaf=1,
+           min_samples_split=2, min_weight_fraction_leaf=0.0,
+           n_estimators=100, n_jobs=-1, oob_score=False, random_state=1234,
+           verbose=0, warm_start=False))]). Check the list of available parameters with `estimator.get_params().keys()`.
+___________________________________________________________________________
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "train_test_utils.py", line 404, in <module>
+    validation_period_length=args.validation_period_length
+  File "train_test_utils.py", line 280, in search_regression_ml
+    pipeline_param_grid=pipeline_param_grid
+  File "train_test_utils.py", line 133, in train
+    pipeline_2.fit(X_train, y_train)
+  File "/opt/anaconda3/lib/python3.6/site-packages/sklearn/model_selection/_search.py", line 945, in fit
+    return self._fit(X, y, groups, ParameterGrid(self.param_grid))
+  File "/opt/anaconda3/lib/python3.6/site-packages/sklearn/model_selection/_search.py", line 564, in _fit
+    for parameters in parameter_iterable
+  File "/opt/anaconda3/lib/python3.6/site-packages/sklearn/externals/joblib/parallel.py", line 768, in __call__
+    self.retrieve()
+  File "/opt/anaconda3/lib/python3.6/site-packages/sklearn/externals/joblib/parallel.py", line 719, in retrieve
+    raise exception
+sklearn.externals.joblib.my_exceptions.JoblibValueError: JoblibValueError
+___________________________________________________________________________
+Multiprocessing exception:
+...........................................................................
+/home/zhaoyi/code/repurchasing_in_production/train_test/train_test_utils.py in <module>()
+    399         search_regression_ml(
+    400             data=data.copy(),
+    401             save_k_best=args.save_k_best,
+    402             look_ahead_day=args.look_forward_days,
+    403             split_date=datetime.datetime.strptime(args.split_date, "%Y%m%d").date(),
+--> 404             validation_period_length=args.validation_period_length
+    405         )
+    406 
+    407     # set the model results path
+    408     results_path = os.path.join("./../results/model_history/", "regression_results_" + str(args.look_forward_days) + ".csv")
+
+...........................................................................
+/home/zhaoyi/code/repurchasing_in_production/train_test/train_test_utils.py in search_regression_ml(data=                 x1          x2         x3      ...NaN      NaN  3.0297  
+
+[2183 rows x 105 columns], save_k_best=2, look_ahead_day=1, split_date=datetime.date(2017, 12, 18), validation_period_length=30)
+    275                         reducer=PCA(n_components=10),  # temporarily not in use
+    276                         model=model_dict[model_name],
+    277                         X=data.copy(),
+    278                         split_date=split_date - datetime.timedelta(days=validation_period_length),
+    279                         pipeline_mode=model_pipeline_mode_dict[model_name],
+--> 280                         pipeline_param_grid=pipeline_param_grid
+        pipeline_param_grid = {'model__n_estimators': [100, 500, 1000], 'reducer__n_components': [10]}
+    281                     )
+    282                     model_id = str(uuid.uuid4())
+    283                     y_test_predict = test(
+    284                         data.copy(),
+
+...........................................................................
+/home/zhaoyi/code/repurchasing_in_production/train_test/train_test_utils.py in train(imputer=ImputationMethod(method='directly'), engineer=FeatureExtract(changerate=True, diff=True, ind=[...0, log=True,
+        look_forward_days=1, ma=[5]), selector=HardThresholdSelector(alpha=0.05, date_column='d...
+           select_top_k=True, target_column='y'), scaler=MinMaxScaler(copy=True, feature_range=(0, 1)), reducer=PCA(copy=True, iterated_power='auto', n_componen...None,
+  svd_solver='auto', tol=0.0, whiten=False), model=RandomForestRegressor(bootstrap=True, criterion=...  random_state=1234, verbose=0, warm_start=False), X=               x59  x59_ind_2  x59_ma_5     x89 ...07  3.2785     3.3609  
+
+[1530 rows x 12 columns], split_date=datetime.date(2017, 11, 18), pipeline_mode='grid', pipeline_param_grid={'model__n_estimators': [100, 500, 1000], 'reducer__n_components': [10]})
+    128         search_pipeline=pipeline_2,
+    129         pipeline_mode=pipeline_mode,
+    130         param_grid=pipeline_param_grid
+    131     )
+    132 
+--> 133     pipeline_2.fit(X_train, y_train)
+        pipeline_2.fit = <bound method GridSearchCV.fit of GridSearchCV(c...    scoring='neg_mean_squared_error', verbose=3)>
+        X_train = array([[  4.519     ,  20.421361  ,   4.20256   ...7.75956736,
+          4.4407    ,   3.2785    ]])
+        y_train = array([ 4.0835,  3.9949,  4.1816, ...,  3.4924,  3.2785,  3.3609])
+    134     logger.info("It takes {:.2f} seconds to train this model.".format(time.time() - time_init))
+    135     if pipeline_mode != "single":
+    136         pipeline_2 = pipeline_2.best_estimator_
+    137 
+
+...........................................................................
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/model_selection/_search.py in fit(self=GridSearchCV(cv=TimeSeriesSplit(n_splits=3), err...     scoring='neg_mean_squared_error', verbose=3), X=array([[  4.519     ,  20.421361  ,   4.20256   ...7.75956736,
+          4.4407    ,   3.2785    ]]), y=array([ 4.0835,  3.9949,  4.1816, ...,  3.4924,  3.2785,  3.3609]), groups=None)
+    940 
+    941         groups : array-like, with shape (n_samples,), optional
+    942             Group labels for the samples used while splitting the dataset into
+    943             train/test set.
+    944         """
+--> 945         return self._fit(X, y, groups, ParameterGrid(self.param_grid))
+        self._fit = <bound method BaseSearchCV._fit of GridSearchCV(...    scoring='neg_mean_squared_error', verbose=3)>
+        X = array([[  4.519     ,  20.421361  ,   4.20256   ...7.75956736,
+          4.4407    ,   3.2785    ]])
+        y = array([ 4.0835,  3.9949,  4.1816, ...,  3.4924,  3.2785,  3.3609])
+        groups = None
+        self.param_grid = {'model__n_estimators': [100, 500, 1000], 'reducer__n_components': [10]}
+    946 
+    947 
+    948 class RandomizedSearchCV(BaseSearchCV):
+    949     """Randomized search on hyper parameters.
+
+...........................................................................
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/model_selection/_search.py in _fit(self=GridSearchCV(cv=TimeSeriesSplit(n_splits=3), err...     scoring='neg_mean_squared_error', verbose=3), X=array([[  4.519     ,  20.421361  ,   4.20256   ...7.75956736,
+          4.4407    ,   3.2785    ]]), y=array([ 4.0835,  3.9949,  4.1816, ...,  3.4924,  3.2785,  3.3609]), groups=None, parameter_iterable=<sklearn.model_selection._search.ParameterGrid object>)
+    559                                   fit_params=self.fit_params,
+    560                                   return_train_score=self.return_train_score,
+    561                                   return_n_test_samples=True,
+    562                                   return_times=True, return_parameters=True,
+    563                                   error_score=self.error_score)
+--> 564           for parameters in parameter_iterable
+        parameters = undefined
+        parameter_iterable = <sklearn.model_selection._search.ParameterGrid object>
+    565           for train, test in cv_iter)
+    566 
+    567         # if one choose to see train score, "out" will contain train score info
+    568         if self.return_train_score:
+
+...........................................................................
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/externals/joblib/parallel.py in __call__(self=Parallel(n_jobs=-1), iterable=<generator object BaseSearchCV._fit.<locals>.<genexpr>>)
+    763             if pre_dispatch == "all" or n_jobs == 1:
+    764                 # The iterable was consumed all at once by the above for loop.
+    765                 # No need to wait for async callbacks to trigger to
+    766                 # consumption.
+    767                 self._iterating = False
+--> 768             self.retrieve()
+        self.retrieve = <bound method Parallel.retrieve of Parallel(n_jobs=-1)>
+    769             # Make sure that we get a last message telling us we are done
+    770             elapsed_time = time.time() - self._start_time
+    771             self._print('Done %3i out of %3i | elapsed: %s finished',
+    772                         (len(self._output), len(self._output),
+
+---------------------------------------------------------------------------
+Sub-process traceback:
+---------------------------------------------------------------------------
+ValueError                                         Tue Dec 26 04:59:26 2017
+PID: 41174                          Python 3.6.1: /opt/anaconda3/bin/python
+...........................................................................
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/externals/joblib/parallel.py in __call__(self=<sklearn.externals.joblib.parallel.BatchedCalls object>)
+    126     def __init__(self, iterator_slice):
+    127         self.items = list(iterator_slice)
+    128         self._size = len(self.items)
+    129 
+    130     def __call__(self):
+--> 131         return [func(*args, **kwargs) for func, args, kwargs in self.items]
+        self.items = [(<function _fit_and_score>, (Pipeline(steps=[('scaler', MinMaxScaler(copy=Tru...=1234,
+           verbose=0, warm_start=False))]), array([[  4.519     ,  20.421361  ,   4.20256   ...7.75956736,
+          4.4407    ,   3.2785    ]]), array([ 4.0835,  3.9949,  4.1816, ...,  3.4924,  3.2785,  3.3609]), make_scorer(mean_squared_error, greater_is_better=False), array([  0,   1,   2,   3,   4,   5,   6,   7,  ..., 376,
+       377, 378, 379, 380, 381, 382, 383]), array([384, 385, 386, 387, 388, 389, 390, 391, 3..., 758, 759, 760,
+       761, 762, 763, 764, 765]), 3, {'model__n_estimators': 100, 'reducer__n_components': 10}), {'error_score': 'raise', 'fit_params': {}, 'return_n_test_samples': True, 'return_parameters': True, 'return_times': True, 'return_train_score': True})]
+    132 
+    133     def __len__(self):
+    134         return self._size
+    135 
+
+...........................................................................
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/externals/joblib/parallel.py in <listcomp>(.0=<list_iterator object>)
+    126     def __init__(self, iterator_slice):
+    127         self.items = list(iterator_slice)
+    128         self._size = len(self.items)
+    129 
+    130     def __call__(self):
+--> 131         return [func(*args, **kwargs) for func, args, kwargs in self.items]
+        func = <function _fit_and_score>
+        args = (Pipeline(steps=[('scaler', MinMaxScaler(copy=Tru...=1234,
+           verbose=0, warm_start=False))]), array([[  4.519     ,  20.421361  ,   4.20256   ...7.75956736,
+          4.4407    ,   3.2785    ]]), array([ 4.0835,  3.9949,  4.1816, ...,  3.4924,  3.2785,  3.3609]), make_scorer(mean_squared_error, greater_is_better=False), array([  0,   1,   2,   3,   4,   5,   6,   7,  ..., 376,
+       377, 378, 379, 380, 381, 382, 383]), array([384, 385, 386, 387, 388, 389, 390, 391, 3..., 758, 759, 760,
+       761, 762, 763, 764, 765]), 3, {'model__n_estimators': 100, 'reducer__n_components': 10})
+        kwargs = {'error_score': 'raise', 'fit_params': {}, 'return_n_test_samples': True, 'return_parameters': True, 'return_times': True, 'return_train_score': True}
+    132 
+    133     def __len__(self):
+    134         return self._size
+    135 
+
+...........................................................................
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/model_selection/_validation.py in _fit_and_score(estimator=Pipeline(steps=[('scaler', MinMaxScaler(copy=Tru...=1234,
+           verbose=0, warm_start=False))]), X=array([[  4.519     ,  20.421361  ,   4.20256   ...7.75956736,
+          4.4407    ,   3.2785    ]]), y=array([ 4.0835,  3.9949,  4.1816, ...,  3.4924,  3.2785,  3.3609]), scorer=make_scorer(mean_squared_error, greater_is_better=False), train=array([  0,   1,   2,   3,   4,   5,   6,   7,  ..., 376,
+       377, 378, 379, 380, 381, 382, 383]), test=array([384, 385, 386, 387, 388, 389, 390, 391, 3..., 758, 759, 760,
+       761, 762, 763, 764, 765]), verbose=3, parameters={'model__n_estimators': 100, 'reducer__n_components': 10}, fit_params={}, return_train_score=True, return_parameters=True, return_n_test_samples=True, return_times=True, error_score='raise')
+    222     fit_params = fit_params if fit_params is not None else {}
+    223     fit_params = dict([(k, _index_param_value(X, v, train))
+    224                       for k, v in fit_params.items()])
+    225 
+    226     if parameters is not None:
+--> 227         estimator.set_params(**parameters)
+        estimator.set_params = <bound method Pipeline.set_params of Pipeline(st...1234,
+           verbose=0, warm_start=False))])>
+        parameters = {'model__n_estimators': 100, 'reducer__n_components': 10}
+    228 
+    229     start_time = time.time()
+    230 
+    231     X_train, y_train = _safe_split(estimator, X, y, train)
+
+...........................................................................
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/pipeline.py in set_params(self=Pipeline(steps=[('scaler', MinMaxScaler(copy=Tru...=1234,
+           verbose=0, warm_start=False))]), **kwargs={'model__n_estimators': 100, 'reducer__n_components': 10})
+    175 
+    176         Returns
+    177         -------
+    178         self
+    179         """
+--> 180         self._set_params('steps', **kwargs)
+        self._set_params = <bound method _BasePipeline._set_params of Pipel...1234,
+           verbose=0, warm_start=False))])>
+        kwargs = {'model__n_estimators': 100, 'reducer__n_components': 10}
+    181         return self
+    182 
+    183     def _validate_steps(self):
+    184         names, estimators = zip(*self.steps)
+
+...........................................................................
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/pipeline.py in _set_params(self=Pipeline(steps=[('scaler', MinMaxScaler(copy=Tru...=1234,
+           verbose=0, warm_start=False))]), steps_attr='steps', **params={'model__n_estimators': 100, 'reducer__n_components': 10})
+     64         step_names, _ = zip(*getattr(self, steps_attr))
+     65         for name in list(six.iterkeys(params)):
+     66             if '__' not in name and name in step_names:
+     67                 self._replace_step(steps_attr, name, params.pop(name))
+     68         # 3. Step parameters and other initilisation arguments
+---> 69         super(_BasePipeline, self).set_params(**params)
+        self.set_params = <bound method Pipeline.set_params of Pipeline(st...1234,
+           verbose=0, warm_start=False))])>
+        params = {'model__n_estimators': 100, 'reducer__n_components': 10}
+     70         return self
+     71 
+     72     def _validate_names(self, names):
+     73         if len(set(names)) != len(names):
+
+...........................................................................
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/base.py in set_params(self=Pipeline(steps=[('scaler', MinMaxScaler(copy=Tru...=1234,
+           verbose=0, warm_start=False))]), **params={'model__n_estimators': 100, 'reducer__n_components': 10})
+    277                 name, sub_name = split
+    278                 if name not in valid_params:
+    279                     raise ValueError('Invalid parameter %s for estimator %s. '
+    280                                      'Check the list of available parameters '
+    281                                      'with `estimator.get_params().keys()`.' %
+--> 282                                      (name, self))
+        name = 'reducer'
+        self = Pipeline(steps=[('scaler', MinMaxScaler(copy=Tru...=1234,
+           verbose=0, warm_start=False))])
+    283                 sub_object = valid_params[name]
+    284                 sub_object.set_params(**{sub_name: value})
+    285             else:
+    286                 # simple objects case
+
+ValueError: Invalid parameter reducer for estimator Pipeline(steps=[('scaler', MinMaxScaler(copy=True, feature_range=(0, 1))), ('model', RandomForestRegressor(bootstrap=True, criterion='mse', max_depth=None,
+           max_features='auto', max_leaf_nodes=None,
+           min_impurity_split=1e-07, min_samples_leaf=1,
+           min_samples_split=2, min_weight_fraction_leaf=0.0,
+           n_estimators=100, n_jobs=-1, oob_score=False, random_state=1234,
+           verbose=0, warm_start=False))]). Check the list of available parameters with `estimator.get_params().keys()`.
+___________________________________________________________________________
+done
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
+  from pandas.core import datetools
+INFO:__main__:Setting is_training to be true, we run grid search on look_forward_days to be 1
+INFO:__main__:Tuning models, 20171226: 
+INFO:__main__:
+
+
+
+
+impute_method: directly
+
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_train: (1530, 11), y: (1530,)
+Fitting 3 folds for each of 3 candidates, totalling 9 fits
+[CV] model__n_estimators=100 .........................................
+[CV] ......... model__n_estimators=100, score=-0.129227, total=   0.6s
+[CV] model__n_estimators=100 .........................................
+[CV] ......... model__n_estimators=100, score=-0.042354, total=   0.6s
+[CV] model__n_estimators=100 .........................................
+[CV] ......... model__n_estimators=100, score=-0.064369, total=   0.6s
+[Parallel(n_jobs=-1)]: Done   2 out of   9 | elapsed:    0.8s remaining:    2.9s
+[Parallel(n_jobs=-1)]: Done   6 out of   9 | elapsed:    2.4s remaining:    1.2s
+[Parallel(n_jobs=-1)]: Done   9 out of   9 | elapsed:    4.3s finished
+INFO:__main__:It takes 228.26 seconds to train this model.
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_test: (25, 11)
+train_test_utils.py:190: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model 1, model_id: 43277782-ab16-4d66-830a-aa394e6273f4,model_name: random_forest, impute_method: directly, model_selector: hard_threshold_10, eval_metric: 48.0using 449.82 seconds
+INFO:__main__:
+
+
+
+
+impute_method: slinear
+
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1573: RuntimeWarning: overflow encountered in multiply
+  tol = S.max(axis=-1, keepdims=True) * max(M.shape[-2:]) * finfo(S.dtype).eps
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1458: RuntimeWarning: overflow encountered in square
+  eigvals = self._wexog_singular_values ** 2
+/opt/anaconda3/lib/python3.6/site-packages/numpy/core/_methods.py:116: RuntimeWarning: overflow encountered in multiply
+  x = um.multiply(x, x, out=x)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: divide by zero encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+INFO:__main__:X_train: (1530, 11), y: (1530,)
+Fitting 3 folds for each of 3 candidates, totalling 9 fits
+[CV] model__n_estimators=100 .........................................
+[CV] ......... model__n_estimators=100, score=-0.032469, total=   0.6s
+[CV] model__n_estimators=100 .........................................
+[CV] ......... model__n_estimators=100, score=-0.062438, total=   0.6s
+[CV] model__n_estimators=100 .........................................
+[CV] ......... model__n_estimators=100, score=-0.154918, total=   0.6s
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.153874, total=   1.6s
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.032096, total=   1.5s
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.062429, total=   1.9s
+[CV] model__n_estimators=1000 ........................................
+[CV] ........ model__n_estimators=1000, score=-0.154605, total=   2.7s
+[CV] model__n_estimators=1000 ........................................
+[CV] ........ model__n_estimators=1000, score=-0.062217, total=   3.4s
+[CV] model__n_estimators=1000 ........................................
+[CV] ........ model__n_estimators=1000, score=-0.032402, total=   3.1s
+[Parallel(n_jobs=-1)]: Done   2 out of   9 | elapsed:    0.8s remaining:    2.8s
+[Parallel(n_jobs=-1)]: Done   6 out of   9 | elapsed:    2.2s remaining:    1.1s
+[Parallel(n_jobs=-1)]: Done   9 out of   9 | elapsed:    4.0s finished
+INFO:__main__:It takes 229.52 seconds to train this model.
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1573: RuntimeWarning: overflow encountered in multiply
+  tol = S.max(axis=-1, keepdims=True) * max(M.shape[-2:]) * finfo(S.dtype).eps
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1458: RuntimeWarning: overflow encountered in square
+  eigvals = self._wexog_singular_values ** 2
+/opt/anaconda3/lib/python3.6/site-packages/numpy/core/_methods.py:116: RuntimeWarning: overflow encountered in multiply
+  x = um.multiply(x, x, out=x)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: divide by zero encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+INFO:__main__:X_test: (25, 11)
+train_test_utils.py:190: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model 2, model_id: 02a8bbee-19f9-4280-b6e9-f5e6c8ad1a56,model_name: random_forest, impute_method: slinear, model_selector: hard_threshold_10, eval_metric: 48.0using 458.28 seconds
+INFO:__main__:
+
+
+
+
+impute_method: cubic
+
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_train: (1530, 11), y: (1530,)
+Fitting 3 folds for each of 3 candidates, totalling 9 fits
+[CV] model__n_estimators=100 .........................................
+[CV] ......... model__n_estimators=100, score=-0.129227, total=   0.4s
+[CV] model__n_estimators=100 .........................................
+[CV] ......... model__n_estimators=100, score=-0.042354, total=   0.5s
+[CV] model__n_estimators=100 .........................................
+[CV] ......... model__n_estimators=100, score=-0.064369, total=   0.6s
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.042454, total=   1.9s
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.063432, total=   2.1s
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.126654, total=   1.6s
+[CV] model__n_estimators=1000 ........................................
+[CV] ........ model__n_estimators=1000, score=-0.042783, total=   3.4s
+[CV] model__n_estimators=1000 ........................................
+[CV] ........ model__n_estimators=1000, score=-0.127402, total=   3.1s
+[Parallel(n_jobs=-1)]: Done   2 out of   9 | elapsed:    0.7s remaining:    2.4s
+[Parallel(n_jobs=-1)]: Done   6 out of   9 | elapsed:    2.4s remaining:    1.2s
+[Parallel(n_jobs=-1)]: Done   9 out of   9 | elapsed:    4.2s finished
+INFO:__main__:It takes 236.50 seconds to train this model.
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_test: (25, 11)
+train_test_utils.py:190: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model 3, model_id: c7c58713-7888-4ebd-af22-bfcb7a616dfe,model_name: random_forest, impute_method: cubic, model_selector: hard_threshold_10, eval_metric: 48.0using 466.12 seconds
+INFO:__main__:
+
+
+
+
+impute_method: zero
+
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_train: (1530, 11), y: (1530,)
+Fitting 3 folds for each of 3 candidates, totalling 9 fits
+[CV] model__n_estimators=100 .........................................
+[CV] ......... model__n_estimators=100, score=-0.129227, total=   0.5s
+[CV] model__n_estimators=100 .........................................
+[CV] ......... model__n_estimators=100, score=-0.064369, total=   0.7s
+[CV] model__n_estimators=100 .........................................
+[CV] ......... model__n_estimators=100, score=-0.042354, total=   0.6s
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.126654, total=   1.4s
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.042454, total=   1.7s
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.063432, total=   2.2s
+[CV] model__n_estimators=1000 ........................................
+[CV] ........ model__n_estimators=1000, score=-0.127402, total=   2.6s
+[CV] model__n_estimators=1000 ........................................
+[CV] ........ model__n_estimators=1000, score=-0.042783, total=   2.9s
+[CV] model__n_estimators=1000 ........................................
+[CV] ........ model__n_estimators=1000, score=-0.063722, total=   3.7s
+[Parallel(n_jobs=-1)]: Done   2 out of   9 | elapsed:    0.8s remaining:    2.7s
+[Parallel(n_jobs=-1)]: Done   6 out of   9 | elapsed:    2.5s remaining:    1.2s
+[Parallel(n_jobs=-1)]: Done   9 out of   9 | elapsed:    4.3s finished
+INFO:__main__:It takes 233.17 seconds to train this model.
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_test: (25, 11)
+train_test_utils.py:190: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model 4, model_id: e73765f8-6471-4663-a972-f6394bb52ffe,model_name: random_forest, impute_method: zero, model_selector: hard_threshold_10, eval_metric: 48.0using 458.40 seconds
+INFO:__main__:We have run 5 models, using 1832.62 seconds
+INFO:__main__:Saving 43277782-ab16-4d66-830a-aa394e6273f4 to disk...
+INFO:__main__:Model dumped into ../results/models/model_43277782-ab16-4d66-830a-aa394e6273f4.pkl.
+INFO:__main__:Saving 02a8bbee-19f9-4280-b6e9-f5e6c8ad1a56 to disk...
+INFO:__main__:Model dumped into ../results/models/model_02a8bbee-19f9-4280-b6e9-f5e6c8ad1a56.pkl.
+INFO:__main__:Saving c7c58713-7888-4ebd-af22-bfcb7a616dfe to disk...
+INFO:__main__:Model dumped into ../results/models/model_c7c58713-7888-4ebd-af22-bfcb7a616dfe.pkl.
+INFO:__main__:By filtering the best eval_metric, we select the only model 43277782-ab16-4d66-830a-aa394e6273f4, with eval_metric: 48.0
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+INFO:__main__:X_test: (5, 11)
+INFO:__main__:Model: 43277782-ab16-4d66-830a-aa394e6273f4, model_name: random_forest, metric: 48.0
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1573: RuntimeWarning: overflow encountered in multiply
+  tol = S.max(axis=-1, keepdims=True) * max(M.shape[-2:]) * finfo(S.dtype).eps
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1458: RuntimeWarning: overflow encountered in square
+  eigvals = self._wexog_singular_values ** 2
+/opt/anaconda3/lib/python3.6/site-packages/numpy/core/_methods.py:116: RuntimeWarning: overflow encountered in multiply
+  x = um.multiply(x, x, out=x)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: divide by zero encountered in true_divide
+  return self.params / self.bse
+INFO:__main__:X_test: (5, 11)
+INFO:__main__:Model: 02a8bbee-19f9-4280-b6e9-f5e6c8ad1a56, model_name: random_forest, metric: 48.0
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+INFO:__main__:X_test: (5, 11)
+INFO:__main__:Model: c7c58713-7888-4ebd-af22-bfcb7a616dfe, model_name: random_forest, metric: 48.0
+INFO:__main__:Prediction finished!!!
+done
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
+  from pandas.core import datetools
+INFO:__main__:Setting is_training to be true, we run grid search on look_forward_days to be 2
+INFO:__main__:Tuning models, 20171226: 
+INFO:__main__:
+
+
+
+
+impute_method: directly
+
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_train: (1530, 11), y: (1530,)
+Fitting 3 folds for each of 3 candidates, totalling 9 fits
+[CV] model__n_estimators=100 .........................................
+[CV] ......... model__n_estimators=100, score=-0.394484, total=   0.7s
+[CV] model__n_estimators=100 .........................................
+[CV] ......... model__n_estimators=100, score=-0.147422, total=   0.8s
+[CV] model__n_estimators=100 .........................................
+[CV] ......... model__n_estimators=100, score=-0.112713, total=   0.7s
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.383875, total=   1.8s
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.107836, total=   2.0s
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.147082, total=   2.5s
+[CV] model__n_estimators=1000 ........................................
+[CV] ........ model__n_estimators=1000, score=-0.108792, total=   3.5s
+[CV] model__n_estimators=1000 ........................................
+[CV] ........ model__n_estimators=1000, score=-0.375465, total=   2.9s
+[CV] model__n_estimators=1000 ........................................
+[CV] ........ model__n_estimators=1000, score=-0.146583, total=   4.2s
+[Parallel(n_jobs=-1)]: Done   2 out of   9 | elapsed:    0.9s remaining:    3.0s
+[Parallel(n_jobs=-1)]: Done   6 out of   9 | elapsed:    2.8s remaining:    1.4s
+[Parallel(n_jobs=-1)]: Done   9 out of   9 | elapsed:    4.7s finished
+INFO:__main__:It takes 246.51 seconds to train this model.
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_test: (25, 11)
+train_test_utils.py:190: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model 1, model_id: d05c2abb-a2b5-45ec-b73d-9d4796cbc87c,model_name: random_forest, impute_method: directly, model_selector: hard_threshold_10, eval_metric: 56.00000000000001using 472.81 seconds
+INFO:__main__:
+
+
+
+
+impute_method: slinear
+
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1573: RuntimeWarning: overflow encountered in multiply
+  tol = S.max(axis=-1, keepdims=True) * max(M.shape[-2:]) * finfo(S.dtype).eps
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1458: RuntimeWarning: overflow encountered in square
+  eigvals = self._wexog_singular_values ** 2
+/opt/anaconda3/lib/python3.6/site-packages/numpy/core/_methods.py:116: RuntimeWarning: overflow encountered in multiply
+  x = um.multiply(x, x, out=x)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: divide by zero encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+INFO:__main__:X_train: (1530, 11), y: (1530,)
+Fitting 3 folds for each of 3 candidates, totalling 9 fits
+[CV] model__n_estimators=100 .........................................
+[CV] ......... model__n_estimators=100, score=-0.088512, total=   0.5s
+[CV] model__n_estimators=100 .........................................
+[CV] ......... model__n_estimators=100, score=-0.310264, total=   0.6s
+[CV] model__n_estimators=100 .........................................
+[CV] ......... model__n_estimators=100, score=-0.127180, total=   0.6s
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.322302, total=   1.6s
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.089984, total=   1.7s
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.128156, total=   2.0s
+[CV] model__n_estimators=1000 ........................................
+[CV] ........ model__n_estimators=1000, score=-0.323961, total=   2.5s
+[CV] model__n_estimators=1000 ........................................
+[CV] ........ model__n_estimators=1000, score=-0.085193, total=   2.8s
+[CV] model__n_estimators=1000 ........................................
+[CV] ........ model__n_estimators=1000, score=-0.128290, total=   3.4s
+[Parallel(n_jobs=-1)]: Done   2 out of   9 | elapsed:    0.7s remaining:    2.5s
+[Parallel(n_jobs=-1)]: Done   6 out of   9 | elapsed:    2.3s remaining:    1.1s
+[Parallel(n_jobs=-1)]: Done   9 out of   9 | elapsed:    3.9s finished
+INFO:__main__:It takes 225.15 seconds to train this model.
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1573: RuntimeWarning: overflow encountered in multiply
+  tol = S.max(axis=-1, keepdims=True) * max(M.shape[-2:]) * finfo(S.dtype).eps
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1458: RuntimeWarning: overflow encountered in square
+  eigvals = self._wexog_singular_values ** 2
+/opt/anaconda3/lib/python3.6/site-packages/numpy/core/_methods.py:116: RuntimeWarning: overflow encountered in multiply
+  x = um.multiply(x, x, out=x)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: divide by zero encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+INFO:__main__:X_test: (25, 11)
+train_test_utils.py:190: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model 2, model_id: b62e5ca5-0c83-4e21-af61-4122ecda467c,model_name: random_forest, impute_method: slinear, model_selector: hard_threshold_10, eval_metric: 44.0using 433.94 seconds
+INFO:__main__:
+
+
+
+
+impute_method: cubic
+
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_train: (1530, 11), y: (1530,)
+Fitting 3 folds for each of 3 candidates, totalling 9 fits
+[CV] model__n_estimators=100 .........................................
+[CV] ......... model__n_estimators=100, score=-0.394484, total=   0.5s
+[CV] model__n_estimators=100 .........................................
+[CV] ......... model__n_estimators=100, score=-0.112713, total=   0.7s
+[CV] model__n_estimators=100 .........................................
+[CV] ......... model__n_estimators=100, score=-0.147422, total=   0.7s
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.383875, total=   1.5s
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.107836, total=   1.9s
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.147082, total=   2.3s
+[CV] model__n_estimators=1000 ........................................
+[CV] ........ model__n_estimators=1000, score=-0.375465, total=   2.7s
+[CV] model__n_estimators=1000 ........................................
+[CV] ........ model__n_estimators=1000, score=-0.108792, total=   3.2s
+[CV] model__n_estimators=1000 ........................................
+[CV] ........ model__n_estimators=1000, score=-0.146583, total=   3.9s
+[Parallel(n_jobs=-1)]: Done   2 out of   9 | elapsed:    0.8s remaining:    2.8s
+[Parallel(n_jobs=-1)]: Done   6 out of   9 | elapsed:    2.6s remaining:    1.3s
+[Parallel(n_jobs=-1)]: Done   9 out of   9 | elapsed:    4.4s finished
+INFO:__main__:It takes 228.80 seconds to train this model.
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_test: (25, 11)
+train_test_utils.py:190: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model 3, model_id: e93bf204-a8bf-47f1-8b6b-db097c4495b0,model_name: random_forest, impute_method: cubic, model_selector: hard_threshold_10, eval_metric: 56.00000000000001using 452.00 seconds
+INFO:__main__:
+
+
+
+
+impute_method: zero
+
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_train: (1530, 11), y: (1530,)
+Fitting 3 folds for each of 3 candidates, totalling 9 fits
+[CV] model__n_estimators=100 .........................................
+[CV] ......... model__n_estimators=100, score=-0.394484, total=   0.6s
+[CV] model__n_estimators=100 .........................................
+[CV] ......... model__n_estimators=100, score=-0.112713, total=   0.6s
+[CV] model__n_estimators=100 .........................................
+[CV] ......... model__n_estimators=100, score=-0.147422, total=   0.7s
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.383875, total=   1.6s
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.107836, total=   1.9s
+[CV] model__n_estimators=500 .........................................
+[CV] ......... model__n_estimators=500, score=-0.147082, total=   2.3s
+[CV] model__n_estimators=1000 ........................................
+[CV] ........ model__n_estimators=1000, score=-0.375465, total=   2.9s
+[Parallel(n_jobs=-1)]: Done   2 out of   9 | elapsed:    0.8s remaining:    2.7s
+[Parallel(n_jobs=-1)]: Done   6 out of   9 | elapsed:    2.6s remaining:    1.3s
+[Parallel(n_jobs=-1)]: Done   9 out of   9 | elapsed:    4.3s finished
+INFO:__main__:It takes 233.26 seconds to train this model.
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:__main__:X_test: (25, 11)
+train_test_utils.py:190: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  X_copy['predict_y'] = y_predict
+INFO:__main__:Model 4, model_id: 642a8324-585e-4434-82e1-dcbab3dfd55a,model_name: random_forest, impute_method: zero, model_selector: hard_threshold_10, eval_metric: 56.00000000000001using 455.23 seconds
+INFO:__main__:We have run 5 models, using 1813.99 seconds
+INFO:__main__:Saving d05c2abb-a2b5-45ec-b73d-9d4796cbc87c to disk...
+INFO:__main__:Model dumped into ../results/models/model_d05c2abb-a2b5-45ec-b73d-9d4796cbc87c.pkl.
+INFO:__main__:Saving e93bf204-a8bf-47f1-8b6b-db097c4495b0 to disk...
+INFO:__main__:Model dumped into ../results/models/model_e93bf204-a8bf-47f1-8b6b-db097c4495b0.pkl.
+INFO:__main__:By filtering the best eval_metric, we select the only model d05c2abb-a2b5-45ec-b73d-9d4796cbc87c, with eval_metric: 56.00000000000001
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+INFO:__main__:X_test: (5, 11)
+INFO:__main__:Model: d05c2abb-a2b5-45ec-b73d-9d4796cbc87c, model_name: random_forest, metric: 56.00000000000001
+INFO:feature_selecting.hard_thresholding:There are in total 628 columns, while we only need 10 columns
+INFO:__main__:X_test: (5, 11)
+INFO:__main__:Model: e93bf204-a8bf-47f1-8b6b-db097c4495b0, model_name: random_forest, metric: 56.00000000000001
+INFO:__main__:Prediction finished!!!
+done

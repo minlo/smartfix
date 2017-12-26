@@ -35,6 +35,11 @@ Functionalities to be added, checked on 2017-12-26:
 2. pipeline params dumps to json file
     It seems that some objects or steps in the pipeline is not json serizable. Problems have to be fixed to normalize the functionality. 
 
+3. combine two fragmented pipelines into one complete pipeline
+    Currently, the problems hinges where we have to split the train and test manually. Ideally, if we can impute the y_forward at the end of test_data, we may make this process one part of the feature_engineering module. Then we can build one complete pipeline based on this.
+
+4. Combine all variables and soft-thresholding into the picture
+    Currently, we just overlook this two methods as hard thresholding only accepts dataframe while the other two accepts numpy array. How to combine these two into one step, one has to redesign the related modules.
 
 """
 
@@ -259,7 +264,7 @@ def search_regression_ml(data, save_k_best, look_ahead_day, split_date, validati
                     logger.info("\n\n\n\n\nimpute_method: {}\n".format(impute_method))
                     time_start = time.time()
                     pipeline_param_grid = model_param_grid_dict[model_name].copy()
-                    pipeline_param_grid.update(reducer_param_grid)
+                    # pipeline_param_grid.update(reducer_param_grid)
                     # if model_selector == "hard_selector":
                     #     pipeline_param_grid.update(hard_selector_param_grid)
                     pipeline = train(
@@ -340,8 +345,8 @@ def search_regression_ml(data, save_k_best, look_ahead_day, split_date, validati
         results.to_csv(results_path, encoding="utf-8", header=False, index=None, mode="a")
 
     # save model params
-    with open(model_params_json_path, 'w') as fp:
-        json.dump(model_params_dict, fp)
+    # with open(model_params_json_path, 'w') as fp:
+    #     json.dump(model_params_dict, fp)
 
 
 if __name__ == "__main__":
