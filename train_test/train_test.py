@@ -133,7 +133,7 @@ if __name__ == "__main__":
     parser.add_argument("--look_forward_days", help="look_forward_days", required=False, default=1, type=int)
     args = parser.parse_args()    
 
-    data = pd.read_csv('./../data/data_live/data_live_1222_imputated_' + args.impute_way + '.csv', encoding='utf-8')
+    data = pd.read_csv('./../data/data_live/data_live_1225_imputated_' + args.impute_way + '.csv', encoding='utf-8')
     
     # add cross_year column 
     date = pd.to_datetime(data['date'])
@@ -142,9 +142,9 @@ if __name__ == "__main__":
         month = date_i.month
         day = date_i.day
         if month==12 and day+7 > 31:
-            #cross_year.append(1)
+            cross_year.append(1)
         else:
-            #cross_year.append(0)
+            cross_year.append(0)
     data['cross_year'] = cross_year
     
 
@@ -231,13 +231,14 @@ if __name__ == "__main__":
 
     # soft thresholding
     selector_lasso = SelectFromModel(Lasso(alpha=0.1), prefit=False)
+    print(pd.to_datetime(data['date']).dt.date[data.shape[0] - args.look_forward_days])
 
     # train and predict
     print("data shape: {}".format(data.shape))
     data_predict = train_test_model_pipeline(
         data=data.copy(),
         test_year=2017,
-        split_date=datetime.date(2017, 12, 22) - datetime.timedelta(days=args.look_forward_days - 1),
+        split_date=pd.to_datetime(data['date']).dt.date[data.shape[0] - args.look_forward_days],  # pd.to_datetime(data['date']).dt.date[(-1) * args.look_forwad_days], # datetime.date(2017, 12, 25) - datetime.timedelta(days=args.look_forward_days - 1),
         target_column="y",
         response_column="y_forward_" + str(args.look_forward_days),
         imputer=imputer_dataframe,
