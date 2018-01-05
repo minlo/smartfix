@@ -201,7 +201,7 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
         :param y: DataFrame
         :return: DataFrame
         """
-        
+        # print(X)
         data = X.copy()
         # data.index = pd.to_datetime(data.index)
         data_value = data.values
@@ -290,11 +290,13 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
             df_diff = pd.DataFrame(data_diff, index=data_index, columns=data_diff_columns)
             data = pd.concat([data, df_diff], axis=1)
 
-        data['forward_y'] = np.array(forward_y)
+        # data['forward_y'] = np.array(forward_y)
         # del data['银行间质押式回购加权利率:7天'] # print(data['forward_y'])
         # print(data['银行间质押式回购加权利率:7天'])
         # data.rename({"银行间质押式回购加权利率:7天": "y"}, inplace=True)
         # print(data['y'])
+        # print(data[data.isnull()])        
+
         return data
 
 

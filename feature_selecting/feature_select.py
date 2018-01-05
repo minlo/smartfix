@@ -130,7 +130,7 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
 
 class FeatureSelector(BaseEstimator, TransformerMixin):
     def __init__(self, select_method="hard", target_column="y", k=200, alpha=0.05,
-                 date_column="date", select_top_k=True, print_top_k=False):
+                 date_column="date", select_top_k=True, print_top_k=False, is_training=True):
         self.select_method = select_method
         self.target_column = target_column
         self.k = k
@@ -138,6 +138,7 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
         self.date_column = date_column
         self.select_top_k = select_top_k
         self.print_top_k = print_top_k
+        self.is_training = is_training
 
         self.check_select_method()
         self.selector = self._choose_selector()
@@ -147,6 +148,7 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
             raise ValueError("Select method must be one of ['hard', 'soft', 'all']")
 
     def _preprocess_data(self, data):
+        logger.info("select_method: {}, data_type: {}".format(self.select_method, type(data)))
         if self.select_method in ["soft", "all"]:
             data.reset_index(drop=True, inplace=True)
             # del data[self.target_column], data[self.date_column]
@@ -176,6 +178,9 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
 
     def transform(self, X, y=None):
         X = self._preprocess_data(X)
+        if self.is_training:
+            self.selector.fit(X)
+       
         X = self.selector.transform(X)
         logger.info("Just to check if logger could be printed out here!")
         if np.any(np.isnan(X)):

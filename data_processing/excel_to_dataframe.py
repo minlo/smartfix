@@ -27,6 +27,7 @@ class GenerateDataFrame:
             new_column_list.append('x' + str(i + 1))
         new_column_list.append('y')
         data.columns = new_column_list
+        data = data[~data['y'].isnull()]
 
         return data
 

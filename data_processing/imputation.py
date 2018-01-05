@@ -31,7 +31,7 @@ class ImputationMethod (BaseEstimator, TransformerMixin):
         # return data
 
         data.index = pd.to_datetime(data.index)
-        data = data[~np.isnan(data.R007)]
+        data = data[~np.isnan(data['y'])]
 
         return data
 
@@ -95,7 +95,7 @@ class ImputationMethod (BaseEstimator, TransformerMixin):
         return self
 
     def transform(self, X, y=None):
-
+        # print(X)
         data_after_remove_weekend = self.remove_weekend(X)
 
         if self.method == 'directly':
@@ -105,5 +105,6 @@ class ImputationMethod (BaseEstimator, TransformerMixin):
             # return self.diffmethod_imputed(data_after_remove_weekend), y
             X = self.method_imputed(data_after_remove_weekend)
         # print(X.values)
+        # print(X)
         return X
 
