@@ -5,6 +5,7 @@ import logging
 import operator
 from scipy.stats import norm
 import numpy as np
+import time
 
 # setting logging configuration
 logging.basicConfig(level=logging.INFO)
@@ -77,17 +78,21 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
         ctrl_columns, test_columns = self.generate_ctrl_columns(data)
 
         for column_i in test_columns:
+            time_start = time.time()
             # logger.info("regression on {}".format(column_i))
             t_i = self.regression_t_statistic(data.copy(), self.target_column, ctrl_columns, column_i)
             hard_thres_test_t_stats[column_i] = abs(float(t_i))
+            # logger.info("for column_i: {}, it takes {:.2f} seconds to run regression for it!".format(column_i, time.time() - time_start))
 
         sorted_hard_thres_test_t_stats = sorted(hard_thres_test_t_stats.items(), key=operator.itemgetter(1), reverse=True)
 
         return sorted_hard_thres_test_t_stats
 
     def select_top_k_hard(self, data):
+        init_time = time.time()
         selected_features = []
         sorted_hard_thres_t_stats = self.generate_t_statistic(data.copy())
+        logger.info("\nIn total, it takes {:.2f} seconds to run regression for {} columns".format(time.time() - init_time, len(sorted_hard_thres_t_stats)))
         index = 0
         for item_i in sorted_hard_thres_t_stats:
             if self.select_top_k and index < self.k:

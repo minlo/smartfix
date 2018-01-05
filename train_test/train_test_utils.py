@@ -21,10 +21,27 @@ from sklearn.svm import LinearSVC, SVR, SVC
 from sklearn.ensemble import ExtraTreesRegressor, RandomForestClassifier, RandomForestRegressor
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, Imputer
 from sklearn.decomposition import PCA
-# from xgboost import XGBRegressor, XGBClassifier
+from xgboost import XGBRegressor, XGBClassifier
 import logging
 import argparse
 import json
+
+
+"""
+Functionalities to be added, checked on 2017-12-26:
+1. refit when predicting
+    Now there exists some bugs concerning this functionality, changes have to be made to make this functionality useable.
+
+2. pipeline params dumps to json file
+    It seems that some objects or steps in the pipeline is not json serizable. Problems have to be fixed to normalize the functionality. 
+
+3. combine two fragmented pipelines into one complete pipeline
+    Currently, the problems hinges where we have to split the train and test manually. Ideally, if we can impute the y_forward at the end of test_data, we may make this process one part of the feature_engineering module. Then we can build one complete pipeline based on this.
+
+4. Combine all variables and soft-thresholding into the picture
+    Currently, we just overlook this two methods as hard thresholding only accepts dataframe while the other two accepts numpy array. How to combine these two into one step, one has to redesign the related modules.
+
+"""
 
 
 # setting logging configuration
@@ -62,6 +79,7 @@ def generate_grid_search(search_pipeline, pipeline_mode, param_grid, n_iter=5, v
 def train(imputer, engineer, selector, scaler, reducer, model, X, split_date,
           pipeline_mode, pipeline_param_grid):
     """Train historical data and save the model into pickle file."""
+    time_init = time.time()
     pipeline = BuildPipeline(
         imputer=imputer,
         engineer=engineer,
@@ -74,10 +92,10 @@ def train(imputer, engineer, selector, scaler, reducer, model, X, split_date,
     pipeline_1 = pipeline.build_before_selector()
     pipeline_2 = pipeline.build_after_selector()
 
-    time_init = time.time()
     X = pipeline_1.fit_transform(X)
     # logger.info("X head after the feature engineering: {}".format(X.head()))
     # logger.info(X.shape)
+    logger.info("It takes {:.2f} seconds to fit and transform in the first line!".format(time.time() - time_init))
 
     # delete all values after split_date
     X.replace([np.inf, -np.inf], np.nan, inplace=True)
@@ -113,7 +131,9 @@ def train(imputer, engineer, selector, scaler, reducer, model, X, split_date,
         param_grid=pipeline_param_grid
     )
 
+    pipeline_2_init_time = time.time()
     pipeline_2.fit(X_train, y_train)
+    logger.info("It takes {:.2f} seconds to fit in the second pipeline!".format(time.time() - pipeline_2_init_time))
     logger.info("It takes {:.2f} seconds to train this model.".format(time.time() - time_init))
     if pipeline_mode != "single":
         pipeline_2 = pipeline_2.best_estimator_
@@ -132,6 +152,7 @@ def save_pipeline(pipeline_combined, model_id):
 
 
 def test(X, split_date, model_id="", pipeline_combined=None, refit=False):
+    time_init = time.time()
     if pipeline_combined is None:
         model_load_path = os.path.join("../results/models/", "model_" + model_id + ".pkl")
         if not os.path.exists(model_load_path):
@@ -143,7 +164,9 @@ def test(X, split_date, model_id="", pipeline_combined=None, refit=False):
     pipeline_before_selector = pipeline_combined.named_steps["pipeline_before_selector"]
     pipeline_after_selector = pipeline_combined.named_steps["pipeline_after_selector"]
 
+    pipeline_before_selector_init_time = time.time()
     X = pipeline_before_selector.transform(X)
+    logger.info("It takes {:.2f} seconds to fit in the first pipeline!".format(time.time() - pipeline_before_selector_init_time))
 
     # delete all values after split_date
     X.replace([np.inf, -np.inf], np.nan, inplace=True)
@@ -154,6 +177,7 @@ def test(X, split_date, model_id="", pipeline_combined=None, refit=False):
     x_columns.remove('forward_y')
 
     if refit:
+        refit_init_time = time.time()
         data_train = X[X.index < split_date]
         data_train.dropna(inplace=True)
         X_train = data_train.as_matrix(x_columns)
@@ -161,6 +185,7 @@ def test(X, split_date, model_id="", pipeline_combined=None, refit=False):
         y_train = np.ravel(y_train)
         logger.info("X_train: {}, y_train: {}".format(X_train.shape, y_train.shape))
         pipeline_after_selector.fit(X_train, y_train)
+        logger.info("It takes {:.2f} seconds to refit the model.".format(time.time() - refit_init_time))
 
     # predict
     data_test = X[X.index >= split_date]
@@ -171,6 +196,7 @@ def test(X, split_date, model_id="", pipeline_combined=None, refit=False):
     y_predict = pipeline_after_selector.predict(X_test)
     X_copy = data_test[["y", "forward_y"]]
     X_copy['predict_y'] = y_predict
+    logger.info("It takes {:.2f} seconds to predict.".format(time.time() - time_init))
 
     return X_copy
 
@@ -201,28 +227,28 @@ def search_regression_ml(data, save_k_best, look_ahead_day, split_date, validati
     }
     model_dict = {
         "random_forest": RandomForestRegressor(n_estimators=1000, n_jobs=-1, random_state=1234),
-        # "xgboost": XGBRegressor(),
-        # "lasso": Lasso(alpha=0.01, random_state=1234),
+        "xgboost": XGBRegressor(),
+        "lasso": Lasso(alpha=0.01, random_state=1234),
     }
     model_param_grid_dict = {
         "random_forest": {
-            "model__n_estimators": [100]  # [100, 500, 1000]
+            "model__n_estimators": [100, 500, 1000]
         },
-        # "xgboost": {
-        #     "model__max_depth": range(2, 12, 2),
-        #     "model__min_child_weight": range(2, 10, 2),
-        #     "model__subsample": [i / 10.0 for i in range(6, 10)],
-        #     "model__colsample_bytree": [0, 0.1, 0.2, 0.3, 0.4, 0.5],
-        #     "model__learning_rate": [0.01, 0.1]
-        # },
-        # "lasso": {
-        #     "model__alpha": [1 / (10**x) for x in range(2, 10)]
-        # }
+        "xgboost": {
+            "model__max_depth": range(2, 12, 2),
+            "model__min_child_weight": range(2, 10, 2),
+            "model__subsample": [i / 10.0 for i in range(6, 10)],
+            "model__colsample_bytree": [0.1, 0.2, 0.3, 0.4, 0.5],
+            "model__learning_rate": [0.01, 0.1]
+        },
+        "lasso": {
+            "model__alpha": [1 / (10**x) for x in range(2, 10)]
+        }
     }
     model_pipeline_mode_dict = {
         "random_forest": "grid",
-        # "xgboost": "random",
-        # "lasso": "random"
+        "xgboost": "random",
+        "lasso": "random"
     }
     # logger.info("data: {}".format(data.head(5)))
     # logger.info("data value: {}".format(data.values))
@@ -231,75 +257,98 @@ def search_regression_ml(data, save_k_best, look_ahead_day, split_date, validati
                                     "engineer_lag", "model_selector", "eval_metric",
                                     "update_date", "timestamp"])
     model_params_json_path = "./../results/model_history/model_params.json"
-    if os.path.exists(model_params_json_path):
-        model_params_dict = json.loads(model_params_json_path)
-    else:
-        model_params_dict = {}
+    failed_models = []
+    # if os.path.exists(model_params_json_path):
+    #     model_params_dict = json.loads(model_params_json_path)
+    # else:
+    #     model_params_dict = {}
 
     model_count = 0
     time_init = time.time()
     save_model_dict = {}
     logger.info("Tuning models, {}: ".format(datetime.date.today().strftime("%Y%m%d")))
-    for impute_method in ["directly", "slinear", "cubic", "zero"]:
-        for engineer_lag in [10]:   # [10, 20, 30, 40, 50, 60]:
-            for hard_k in [20]:   # [10, 20, 30, 40, 50, 100]:  # for model_selector in selector_dict.keys():
+    for impute_method in ["directly"]:  # , "slinear", "cubic", "zero"]:
+        for engineer_lag in [10]:  # , 20, 30, 40, 50, 60]:
+            for hard_k in [10]:  # , 20, 30, 40, 50, 100]:  # for model_selector in selector_dict.keys():
                 for model_name in model_dict.keys():
                     logger.info("\n\n\n\n\nimpute_method: {}\n".format(impute_method))
                     time_start = time.time()
                     pipeline_param_grid = model_param_grid_dict[model_name].copy()
-                    pipeline_param_grid.update(reducer_param_grid)
+                    # pipeline_param_grid.update(reducer_param_grid)
                     # if model_selector == "hard_selector":
                     #     pipeline_param_grid.update(hard_selector_param_grid)
-                    pipeline = train(
-                        imputer=ImputationMethod(method=impute_method),
-                        engineer=FeatureExtract(lag=engineer_lag, look_forward_days=look_ahead_day),
-                        selector=HardThresholdSelector(k=hard_k),  # selector_dict[model_selector],
-                        scaler=MinMaxScaler(),
-                        reducer=PCA(n_components=20),  # temporarily not in use
-                        model=model_dict[model_name],
-                        X=data.copy(),
-                        split_date=split_date - datetime.timedelta(days=validation_period_length),
-                        pipeline_mode=model_pipeline_mode_dict[model_name],
-                        pipeline_param_grid=pipeline_param_grid
-                    )
-                    model_id = str(uuid.uuid4())
-                    y_test_predict = test(
-                        data.copy(),
-                        split_date - datetime.timedelta(days=30),
-                        model_id=model_id,
-                        pipeline_combined=pipeline
-                    )
                     model_selector = "hard_threshold_" + str(hard_k)
-                    eval_metric = evaluate(np.array(y_test_predict['forward_y']), np.array(y_test_predict['predict_y']))
-                    results.loc[len(results.index)] = [model_id, split_date,
-                                                       model_name, impute_method,
-                                                       engineer_lag, model_selector, eval_metric,
-                                                       datetime.date.today().strftime("%Y%m%d"),
-                                                       int(1000 * time.time())]
-                    save_model_dict[model_id] = pipeline
+                    try:
+                            pipeline = train(
+                                imputer=ImputationMethod(method=impute_method),
+                                engineer=FeatureExtract(lag=engineer_lag, look_forward_days=look_ahead_day),
+                                selector=HardThresholdSelector(k=hard_k),  # selector_dict[model_selector],
+                                scaler=MinMaxScaler(),
+                                reducer=PCA(n_components=10),  # temporarily not in use
+                                model=model_dict[model_name],
+                                X=data.copy(),
+                                split_date=split_date - datetime.timedelta(days=validation_period_length),
+                                pipeline_mode=model_pipeline_mode_dict[model_name],
+                                pipeline_param_grid=pipeline_param_grid
+                            )
+                            model_id = str(uuid.uuid4())
+                            y_test_predict = test(
+                                data.copy(),
+                                split_date - datetime.timedelta(days=validation_period_length),
+                                model_id=model_id,
+                                pipeline_combined=pipeline
+                            )
+                            eval_metric = evaluate(np.array(y_test_predict['forward_y']), np.array(y_test_predict['predict_y']))
+                            results.loc[len(results.index)] = [model_id, split_date,
+                                                               model_name, impute_method,
+                                                               engineer_lag, model_selector, eval_metric,
+                                                               datetime.date.today().strftime("%Y%m%d"),
+                                                               int(1000 * time.time())]
+                            save_model_dict[model_id] = pipeline
 
-                    model_count += 1
-                    logger.info(
-                        "Model {}, "
-                        "model_id: {},"
-                        "model_name: {}, "
-                        "impute_method: {}, "
-                        "model_selector: {}, "
-                        "eval_metric: {}"
-                        "using {:.2f} seconds".format(
-                            model_count,
-                            model_id,
-                            model_name,
-                            impute_method,
-                            model_selector,
-                            eval_metric,
-                            time.time() - time_start
-                        )
-                    )
-    logger.info("We have run {} models, using {:.2f} seconds".format(
+                            model_count += 1
+                            logger.info(
+                                "Model {}, "
+                                "model_id: {},"
+                                "engineer_lag: {}, "
+                                "model_name: {}, "
+                                "impute_method: {}, "
+                                "model_selector: {}, "
+                                "eval_metric: {}, "
+                                "using {:.2f} seconds".format(
+                                    model_count,
+                                    model_id,
+                                    engineer_lag,
+                                    model_name,
+                                    impute_method,
+                                    model_selector,
+                                    eval_metric,
+                                    time.time() - time_start
+                                )
+                            )
+                    except Exception as e:
+                        failed_models.append({
+                            "model_name": model_name,
+                            "impute_method": impute_method,
+                            "model_selector": model_selector
+                        })
+                        logger.info(str(e))
+    logger.info("We have run {} models, with {} failed, using {:.2f} seconds".format(
         model_count + 1,
+        len(failed_models),
         time.time() - time_init
     ))
+    logger.info("\n\nList all the failed models:\n")
+    for failed_model_i in failed_models:
+        logger.info(
+            "failed model_name: {}, "
+            "impute_method: {},"
+            "model_selector: {}".format(
+                failed_model_i["model_name"],
+                failed_model_i["impute_method"],
+                failed_model_i["model_selector"]    
+            )
+        )
 
     # sort the results
     results.sort_values(["eval_metric"], ascending=[False], inplace=True)
@@ -307,13 +356,17 @@ def search_regression_ml(data, save_k_best, look_ahead_day, split_date, validati
 
     results = results.loc[:save_k_best]
 
+    # save the best models during this training process
     for index_i in range(len(results.index)):
         model_id_i = results['model_id'][index_i]
         logger.info("Saving {} to disk...".format(model_id_i))
         save_pipeline(save_model_dict[model_id_i], model_id_i)
 
         # save model params to json file
-        model_params_dict[model_id_i] = save_model_dict[model_id_i].get_params()
+        # model_params_dict[model_id_i] = {
+            # "pipeline_before_selector": save_model_dict[model_id_i].named_steps["pipeline_before_selector"].get_params(),
+        #     "pipeline_after_selector": save_model_dict[model_id_i].named_steps["pipeline_after_selector"].get_params()
+        # }
 
     # save results into a csv
     results_path = os.path.join("./../results/model_history/",
@@ -324,8 +377,8 @@ def search_regression_ml(data, save_k_best, look_ahead_day, split_date, validati
         results.to_csv(results_path, encoding="utf-8", header=False, index=None, mode="a")
 
     # save model params
-    with open(model_params_json_path, 'w') as fp:
-        json.dump(model_params_dict, fp)
+    # with open(model_params_json_path, 'w') as fp:
+    #     json.dump(model_params_dict, fp)
 
 
 if __name__ == "__main__":
@@ -335,7 +388,7 @@ if __name__ == "__main__":
     parser.add_argument("--look_forward_days", help="how many days to look forward",
                         required=False, default=1, type=int)
     parser.add_argument("--data_path", help="select which data to import for training or testing",
-                        required=False, default="./../data/data_live/raw_data_20171222.xls", type=str)
+                        required=False, default="raw_data_20171222.xls", type=str)
     parser.add_argument("--is_training", help="if true, we run the grid search and "
                                               "select the best models in the validation period",
                         required=False, default=False, type=lambda x: (str(x).lower() == "true"))
@@ -344,6 +397,10 @@ if __name__ == "__main__":
     parser.add_argument("--save_k_best", help="if training, select k best models to save after training",
                         required=False, default=1, type=int)
     args = parser.parse_args()
+    
+    # see if there exists confliction between split date and look_forward_days
+    # add code here later, on 2017-12-26 17:27, by Zhao Yi, hopefully to be fixed by Xu Haonan
+
     # X_train = pd.read_excel("./../data/data_live/data_20171221.xls", encoding="utf-8", index_col="指标名称")
     # y_train = pd.read_excel("./../data/data_live/r007_20171221.xls", encoding="utf-8", index_col="指标名称")
     # logger.info(y_train.columns)
@@ -353,7 +410,10 @@ if __name__ == "__main__":
 
     # import data
     # data = pd.read_excel("./../data/data_live/raw_data_20171222.xls", encoding="utf-8", index_col="指标名称")
-    data = pd.read_excel(args.data_path, encoding="utf-8", index_col="指标名称")
+    # data = pd.read_excel(args.data_path, encoding="utf-8", index_col="指标名称")
+    data = GenerateDataFrame(
+        raw_data_url=os.path.join("./../data/data_live/", args.data_path)
+    ).data_to_dataframe()
     data.rename(columns={data.columns[-1]: "y"}, inplace=True)
     # data = data.loc[:data.shape[0]-2, :]
     # import data
@@ -379,6 +439,26 @@ if __name__ == "__main__":
     # set the model results path
     results_path = os.path.join("./../results/model_history/", "regression_results_" + str(args.look_forward_days) + ".csv")
     model_results = pd.read_csv(results_path, encoding="utf-8")
+    # select the relevant models by split_date and eval_metric, so that we are using the best model trained with the most recent updated data
+    model_results['split_date'] = pd.to_datetime(model_results['split_date'])
+    model_results['split_date'] = model_results['split_date'].dt.date
+    most_recent_split_date = model_results['split_date'].max()
+    model_results = model_results[model_results['split_date'] == most_recent_split_date]
+    best_eval_metric = model_results['eval_metric'].max()
+    model_results = model_results[model_results['eval_metric'] == best_eval_metric]
+    model_results.reset_index(drop=True, inplace=True)
+    if model_results.shape[0] == 0:
+        raise ValueError("No model left after filtering the best model recently!")
+
+    logger.info(
+        "By filtering the best eval_metric, "
+        "we select the only model {}, with eval_metric: {}".format(
+            model_results['model_id'][0],
+            model_results['eval_metric'][0]        
+        )
+    )
+
+
     predict_results_dir = "./../results/predict/"
     predict_results_path = os.path.join(predict_results_dir, "regression_predict_step_" + str(args.look_forward_days) + ".csv")
     predict_results = pd.DataFrame(columns=["y", "forward_y", "predict_y", "model_name", "model_id", "prediction_date", "timestamp"])

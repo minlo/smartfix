@@ -8,7 +8,7 @@ class GenerateDataFrame:
     1. transform excel dataset to dataframe
     2. make the columns name to dictionaries
     """
-    def __init__(self, raw_data_url, r007_url, warning_url):
+    def __init__(self, raw_data_url, r007_url="", warning_url=""):
         self.raw_data_url = raw_data_url
         self.r007_url = r007_url
         self.warning_url = warning_url
