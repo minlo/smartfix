@@ -28,38 +28,101 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="train_test.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train_test/train_test.py">
+<<<<<<< HEAD
+      <file leaf-file-name="feature_extract.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/feature_engineering/feature_extract.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2550">
-              <caret line="110" column="38" lean-forward="true" selection-start-line="110" selection-start-column="38" selection-end-line="110" selection-end-column="38" />
+            <state relative-caret-position="-636">
+              <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="56" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="generate_n_order_diff.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/feature_engineering/generate_n_order_diff.py">
+      <file leaf-file-name="magic_feature_extraction.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/feature_engineering/magic_feature_extraction.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-531">
+            <state relative-caret-position="1335">
+              <caret line="75" column="55" lean-forward="true" selection-start-line="75" selection-start-column="55" selection-end-line="75" selection-end-column="55" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="model.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models/model.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="excel_to_dataframe.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data_processing/excel_to_dataframe.py">
+      <file leaf-file-name="LSTM.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models/LSTM.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="29" column="0" lean-forward="true" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+            <state relative-caret-position="725">
+              <caret line="116" column="11" lean-forward="true" selection-start-line="116" selection-start-column="11" selection-end-line="116" selection-end-column="11" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
+              </folding>
+=======
+      <file leaf-file-name="train_test.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/train_test/train_test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2550">
+              <caret line="110" column="38" lean-forward="true" selection-start-line="110" selection-start-column="38" selection-end-line="110" selection-end-column="38" />
+              <folding />
+>>>>>>> 19d8ec17b06f71ac4988b6530111bb0a0994a4a2
+            </state>
+          </provider>
+        </entry>
+      </file>
+<<<<<<< HEAD
+      <file leaf-file-name="ARCH_ARIMA.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models/ARCH_ARIMA.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+=======
+      <file leaf-file-name="generate_n_order_diff.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/feature_engineering/generate_n_order_diff.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-531">
+>>>>>>> 19d8ec17b06f71ac4988b6530111bb0a0994a4a2
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+      <file leaf-file-name="imputation.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/data_processing/imputation.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2143">
+              <caret line="35" column="19" lean-forward="false" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
+=======
+      <file leaf-file-name="excel_to_dataframe.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data_processing/excel_to_dataframe.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="400">
+              <caret line="29" column="0" lean-forward="true" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+>>>>>>> 19d8ec17b06f71ac4988b6530111bb0a0994a4a2
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+<<<<<<< HEAD
+      <file leaf-file-name="build_pipeline.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pipeline_lib/build_pipeline.py">
+=======
       <file leaf-file-name="imputation.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data_processing/imputation.py">
+>>>>>>> 19d8ec17b06f71ac4988b6530111bb0a0994a4a2
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-1406">
               <caret line="17" column="12" lean-forward="false" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
@@ -81,6 +144,13 @@
       <file leaf-file-name="build_pipeline.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pipeline_lib/build_pipeline.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+            <state relative-caret-position="2442">
+              <caret line="73" column="40" lean-forward="false" selection-start-line="73" selection-start-column="40" selection-end-line="73" selection-end-column="40" />
+              <folding>
+                <marker date="1514811344881" expanded="true" signature="3998:4711" ph="..." />
+                <marker date="1514811344881" expanded="true" signature="4670:4711" ph="..." />
+=======
             <state relative-caret-position="-31">
               <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
               <folding />
@@ -95,6 +165,7 @@
               <caret line="154" column="13" lean-forward="true" selection-start-line="154" selection-start-column="13" selection-end-line="154" selection-end-column="13" />
               <folding>
                 <element signature="e#0#56#0" expanded="true" />
+>>>>>>> 19d8ec17b06f71ac4988b6530111bb0a0994a4a2
               </folding>
             </state>
           </provider>
@@ -118,16 +189,28 @@
         <option value="$PROJECT_DIR$/pipeline_lib/pipeline_lib.py" />
         <option value="$PROJECT_DIR$/data_processing/__init__.py" />
         <option value="$PROJECT_DIR$/feature_engineering/__init__.py" />
-        <option value="$PROJECT_DIR$/data_processing/imputation.py" />
         <option value="$PROJECT_DIR$/evaluation/__init__.py" />
         <option value="$PROJECT_DIR$/data_processing/excel_to_dataframe.py" />
         <option value="$PROJECT_DIR$/evaluation/evaluate.py" />
         <option value="$PROJECT_DIR$/feature_selecting/hard_thresholding.py" />
         <option value="$PROJECT_DIR$/feature_selecting/__init__.py" />
         <option value="$PROJECT_DIR$/pipeline_lib/build_pipeline.py" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/feature_selecting/feature_select.py" />
         <option value="$PROJECT_DIR$/train_test/train_test_utils.py" />
         <option value="$PROJECT_DIR$/feature_engineering/feature_extract.py" />
+=======
+        <option value="$PROJECT_DIR$/train_test/train_test_utils.py" />
+<<<<<<< HEAD
+        <option value="$PROJECT_DIR$/data_processing/imputation.py" />
+        <option value="$PROJECT_DIR$/feature_engineering/feature_extract.py" />
+        <option value="$PROJECT_DIR$/feature_engineering/magic_feature_extraction.py" />
+        <option value="$PROJECT_DIR$/models/ARCH_ARIMA.py" />
+        <option value="$PROJECT_DIR$/models/LSTM.py" />
+=======
+        <option value="$PROJECT_DIR$/feature_selecting/feature_select.py" />
+>>>>>>> 19d8ec17b06f71ac4988b6530111bb0a0994a4a2
+>>>>>>> 05c5889a1522502e2fad6ab3d4f900227e2a4e15
       </list>
     </option>
   </component>
@@ -155,8 +238,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -211,8 +294,13 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+<<<<<<< HEAD
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+=======
     <property name="last_opened_file_path" value="F:/PA-DataExtract" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+>>>>>>> 19d8ec17b06f71ac4988b6530111bb0a0994a4a2
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -255,13 +343,13 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18923241" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -300,6 +388,9 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/feature_selecting/hard_thresholding.py">
+=======
     <entry file="file://$PROJECT_DIR$/pipeline_lib/pipeline_lib.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2294">
@@ -317,11 +408,17 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/feature_selecting/feature_select.py">
+>>>>>>> 19d8ec17b06f71ac4988b6530111bb0a0994a4a2
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2442">
           <caret line="72" column="40" lean-forward="false" selection-start-line="72" selection-start-column="40" selection-end-line="72" selection-end-column="40" />
           <folding>
+<<<<<<< HEAD
+            <marker date="1514811344881" expanded="true" signature="3998:4711" ph="..." />
+            <marker date="1514811344881" expanded="true" signature="4670:4711" ph="..." />
+=======
             <element signature="e#0#56#0" expanded="true" />
+>>>>>>> 19d8ec17b06f71ac4988b6530111bb0a0994a4a2
           </folding>
         </state>
       </provider>
@@ -357,7 +454,12 @@
         <state relative-caret-position="2442">
           <caret line="72" column="40" lean-forward="false" selection-start-line="72" selection-start-column="40" selection-end-line="72" selection-end-column="40" />
           <folding>
+<<<<<<< HEAD
+            <marker date="1514811344881" expanded="true" signature="3998:4711" ph="..." />
+            <marker date="1514811344881" expanded="true" signature="4670:4711" ph="..." />
+=======
             <element signature="e#0#56#0" expanded="true" />
+>>>>>>> 19d8ec17b06f71ac4988b6530111bb0a0994a4a2
           </folding>
         </state>
       </provider>
@@ -393,7 +495,12 @@
         <state relative-caret-position="2442">
           <caret line="72" column="40" lean-forward="false" selection-start-line="72" selection-start-column="40" selection-end-line="72" selection-end-column="40" />
           <folding>
+<<<<<<< HEAD
+            <marker date="1514811344881" expanded="true" signature="3998:4711" ph="..." />
+            <marker date="1514811344881" expanded="true" signature="4670:4711" ph="..." />
+=======
             <element signature="e#0#56#0" expanded="true" />
+>>>>>>> 19d8ec17b06f71ac4988b6530111bb0a0994a4a2
           </folding>
         </state>
       </provider>
@@ -421,7 +528,12 @@
         <state relative-caret-position="2368">
           <caret line="70" column="40" lean-forward="false" selection-start-line="70" selection-start-column="40" selection-end-line="70" selection-end-column="40" />
           <folding>
+<<<<<<< HEAD
+            <marker date="1514811344881" expanded="true" signature="3998:4711" ph="..." />
+            <marker date="1514811344881" expanded="true" signature="4670:4711" ph="..." />
+=======
             <element signature="e#0#56#0" expanded="true" />
+>>>>>>> 19d8ec17b06f71ac4988b6530111bb0a0994a4a2
           </folding>
         </state>
       </provider>
@@ -522,7 +634,12 @@
         <state relative-caret-position="925">
           <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
           <folding>
+<<<<<<< HEAD
+            <marker date="1514811344881" expanded="true" signature="3998:4711" ph="..." />
+            <marker date="1514811344881" expanded="true" signature="4670:4711" ph="..." />
+=======
             <element signature="e#0#56#0" expanded="true" />
+>>>>>>> 19d8ec17b06f71ac4988b6530111bb0a0994a4a2
           </folding>
         </state>
       </provider>
@@ -562,6 +679,9 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/train_test/train_test.py">
+=======
     <entry file="file://$PROJECT_DIR$/data_processing/data_frame_to_matrix.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -570,6 +690,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/feature_engineering/__init__.py">
+>>>>>>> 19d8ec17b06f71ac4988b6530111bb0a0994a4a2
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="125">
           <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
@@ -630,7 +751,21 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/data_processing/impute_numeric_data_frame.py">
+=======
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/feature_selecting/hard_thresholding.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2442">
+          <caret line="73" column="40" lean-forward="false" selection-start-line="73" selection-start-column="40" selection-end-line="73" selection-end-column="40" />
+          <folding>
+            <marker date="1514811344881" expanded="true" signature="3998:4711" ph="..." />
+            <marker date="1514811344881" expanded="true" signature="4670:4711" ph="..." />
+          </folding>
+=======
+    <entry file="file://$PROJECT_DIR$/data_processing/imputation.py">
+>>>>>>> 05c5889a1522502e2fad6ab3d4f900227e2a4e15
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1206">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -643,6 +778,7 @@
         <state relative-caret-position="-531">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+>>>>>>> 19d8ec17b06f71ac4988b6530111bb0a0994a4a2
         </state>
       </provider>
     </entry>
@@ -688,6 +824,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/train_test/train_test_utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="719">
@@ -695,13 +832,77 @@
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
+=======
+    <entry file="file://$PROJECT_DIR$/feature_engineering/magic_feature_extraction.py">
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="1335">
+          <caret line="75" column="55" lean-forward="true" selection-start-line="75" selection-start-column="55" selection-end-line="75" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+=======
+        <state relative-caret-position="469">
+          <caret line="291" column="47" lean-forward="true" selection-start-line="291" selection-start-column="47" selection-end-line="291" selection-end-column="47" />
+          <folding />
+>>>>>>> 05c5889a1522502e2fad6ab3d4f900227e2a4e15
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/feature_engineering/feature_extract.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="594">
           <caret line="296" column="19" lean-forward="true" selection-start-line="296" selection-start-column="19" selection-end-line="296" selection-end-column="19" />
+          <folding />
+=======
+        <state relative-caret-position="519">
+          <caret line="149" column="14" lean-forward="false" selection-start-line="149" selection-start-column="14" selection-end-line="149" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#56#0" expanded="true" />
+>>>>>>> 19d8ec17b06f71ac4988b6530111bb0a0994a4a2
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/ARCH_ARIMA.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/LSTM.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="725">
+          <caret line="116" column="11" lean-forward="true" selection-start-line="116" selection-start-column="11" selection-end-line="116" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+>>>>>>> 05c5889a1522502e2fad6ab3d4f900227e2a4e15
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/feature_engineering/feature_extract.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-636">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_processing/imputation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2143">
+          <caret line="35" column="19" lean-forward="false" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
           <folding />
         </state>
       </provider>
