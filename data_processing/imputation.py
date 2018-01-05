@@ -23,11 +23,18 @@ class ImputationMethod (BaseEstimator, TransformerMixin):
         :parameter data :DataFrame
         :return:
         """
+        # the old version of clean data by weekend
+        # data.index = pd.to_datetime(data.index)
+        # for i in data.index:
+            # if i.dayofweek == 5 or i.dayofweek == 6:
+                # data.drop(i, inplace=True)
+        # return data
+
         data.index = pd.to_datetime(data.index)
-        for i in data.index:
-            if i.dayofweek == 5 or i.dayofweek == 6:
-                data.drop(i, inplace=True)
+        data = data[~np.isnan(data.R007)]
+
         return data
+
 
     @staticmethod
     def direct_impute(data):

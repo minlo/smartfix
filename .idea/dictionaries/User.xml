@@ -2,8 +2,16 @@
   <dictionary name="User">
     <words>
       <w>bfill</w>
+      <w>ckpt</w>
+      <w>datax</w>
+      <w>datay</w>
       <w>diffmethod</w>
       <w>lookforward</w>
+      <w>pred</w>
+      <w>tanh</w>
+      <w>testx</w>
+      <w>trainx</w>
+      <w>trainy</w>
       <w>xnew</w>
       <w>ynew</w>
     </words>

@@ -228,7 +228,8 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
         data_array_time_point = np.array(data_time_point).transpose()
         time_point_columns = ['weekday', 'end_of_month', 'end_of_season', 'end_of_year']
         df_time_point = pd.DataFrame(data_array_time_point, index = data_index, columns = time_point_columns)
-        data = pd.concat([data, df_time_point], axis=1)
+        # don't do cross_time feature extract in this class, move it the magic_feature_extract.py
+        # data = pd.concat([data, df_time_point], axis=1)
 
         # add y lag into X
         data_y = data_value[:, -1].copy()
