@@ -1,11 +1,13 @@
 from sklearn.base import BaseEstimator, TransformerMixin
-import pandas as pd
+# import pandas as pd
 import statsmodels.api as sm
 import logging
 import operator
 from scipy.stats import norm
 import numpy as np
 import time
+from sklearn.feature_selection import SelectKBest, SelectFromModel
+from sklearn.linear_model import Lasso
 
 # setting logging configuration
 logging.basicConfig(level=logging.INFO)
@@ -43,7 +45,7 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
         data.replace([np.inf, -np.inf], np.nan, inplace=True)
         data = data.dropna()
 
-        X = data.as_matrix([column_x_list])
+        x = data.as_matrix([column_x_list])
         y = data.as_matrix([target_column])
         y = np.ravel(y)
         # logger.info("target_column: {}, column_x_list: {}".format(target_column, column_x_list))
@@ -51,8 +53,8 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
         # logger.info("X: {}, y: {}".format(X[0], y))
 
         # run regression
-        X2 = sm.add_constant(X)
-        est = sm.OLS(y, X2)
+        x2 = sm.add_constant(x)
+        est = sm.OLS(y, x2)
         est2 = est.fit()
         # logger.info("est2 summary: {}".format(est2.summary()))
         return est2.summary().tables[1].data[-1][3]
@@ -78,13 +80,18 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
         ctrl_columns, test_columns = self.generate_ctrl_columns(data)
 
         for column_i in test_columns:
-            time_start = time.time()
+            # time_start = time.time()
             # logger.info("regression on {}".format(column_i))
             t_i = self.regression_t_statistic(data.copy(), self.target_column, ctrl_columns, column_i)
             hard_thres_test_t_stats[column_i] = abs(float(t_i))
-            # logger.info("for column_i: {}, it takes {:.2f} seconds to run regression for it!".format(column_i, time.time() - time_start))
+            # logger.info("for column_i: {}, it takes {:.2f} seconds to run regression for it!".format(
+            # column_i, time.time() - time_start))
 
-        sorted_hard_thres_test_t_stats = sorted(hard_thres_test_t_stats.items(), key=operator.itemgetter(1), reverse=True)
+        sorted_hard_thres_test_t_stats = sorted(
+            hard_thres_test_t_stats.items(),
+            key=operator.itemgetter(1),
+            reverse=True
+        )
 
         return sorted_hard_thres_test_t_stats
 
@@ -92,7 +99,10 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
         init_time = time.time()
         selected_features = []
         sorted_hard_thres_t_stats = self.generate_t_statistic(data.copy())
-        logger.info("\nIn total, it takes {:.2f} seconds to run regression for {} columns".format(time.time() - init_time, len(sorted_hard_thres_t_stats)))
+        logger.info("\nIn total, it takes {:.2f} seconds to run regression for {} columns".format(
+            time.time() - init_time,
+            len(sorted_hard_thres_t_stats)
+        ))
         index = 0
         for item_i in sorted_hard_thres_t_stats:
             if self.select_top_k and index < self.k:
@@ -105,12 +115,64 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
             logger.info("{}".format("\n".join(selected_features)))
 
         # selected_features.extend([self.date_column, self.target_column])
-        selected_features.extend([self.target_column, "forward_y"])
+        # We may deal with X features only, and leave y as parameter.
+        # selected_features.extend([self.target_column, "forward_y"])
         return data[selected_features]
 
     def fit(self, X, y=None):
         return self
 
     def transform(self, X, y=None):
-        return self.select_top_k_hard(X)
+        data_hard = self.select_top_k_hard(X)
+        return data_hard.values
+
+
+class FeatureSelector(BaseEstimator, TransformerMixin):
+    def __init__(self, select_method="hard", target_column="y", k=200, alpha=0.05,
+                 date_column="date", select_top_k=True, print_top_k=False):
+        self.select_method = select_method
+        self.target_column = target_column
+        self.k = k
+        self.alpha = alpha
+        self.date_column = date_column
+        self.select_top_k = select_top_k
+        self.print_top_k = print_top_k
+
+        self.check_select_method()
+        self.selector = self._choose_selector()
+
+    def check_select_method(self):
+        if self.select_method not in ["hard", "soft", "all"]:
+            raise ValueError("Select method must be one of ['hard', 'soft', 'all']")
+
+    def _preprocess_data(self, data):
+        if self.select_method in ["soft", "all"]:
+            # del data[self.target_column], data[self.date_column]
+            return data.values
+        else:
+            return data
+
+    def _choose_selector(self):
+        if self.select_method == "hard":
+            selector = HardThresholdSelector(
+                target_column=self.target_column,
+                k=self.k,
+                alpha=self.alpha,
+                date_column=self.date_column,
+                select_top_k=self.select_top_k,
+                print_top_k=self.print_top_k
+            )
+        elif self.select_method == "soft":
+            selector = SelectFromModel(Lasso(alpha=0.1), prefit=False)
+        else:
+            selector = SelectKBest(k="all")
+        return selector
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X, y=None):
+        X = self._preprocess_data(X)
+        return self.selector.transform(X)
+
 

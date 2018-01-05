@@ -1,5 +1,4 @@
-from .hard_thresholding import HardThresholdSelector
-from .soft_thresholding import SoftThresholdSelector
+from .feature_select import FeatureSelector
 
-__all__ = ["HardThresholdSelector", "SoftThresholdSelector"]
+__all__ = ["FeatureSelector"]
 
