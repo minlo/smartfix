@@ -23,6 +23,7 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler, Imputer
 from sklearn.decomposition import PCA
 from xgboost import XGBRegressor, XGBClassifier
 import logging
+import logging.config
 import argparse
 import json
 
@@ -259,6 +260,13 @@ def train_test_split_by_position(data, split_position):
     return data_train, y_train, data_val, y_val
 
 
+def check_inf_nan(np_array, array_name):
+    if np.any(np.isnan(np_array)):
+        logger.info("There are np.nan in {}".format(array_name))
+    if np.any(np.isinf(np_array)):
+        logger.info("There are np.inf in {}".format(array_name))
+
+
 def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, validation_period_length):
     imputer_param_grid = {
         "imputer__method": ["directly"],  # ["directly", "quadratic", "slinear", "cubic"]
@@ -318,9 +326,12 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
     logger.info("Tuning models, {}: ".format(datetime.date.today().strftime("%Y%m%d")))
 
     x_train, y_train, x_val, y_val = train_test_split_by_position(data_train, validation_period_length)
+    check_inf_nan(y_train, "y_train")
+    check_inf_nan(y_val, "y_val")
     logger.info("x_train: {}, y_train: {}, x_val: {}, y_val: {}".format(
         x_train.shape, y_train.shape, x_val.shape, y_val.shape
     ))
+
     for model_name in model_dict.keys():
         logger.info("\n\n\n\n\nmodel: {}\n".format(model_name))
         time_start = time.time()

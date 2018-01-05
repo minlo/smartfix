@@ -239,13 +239,13 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
         df_lag = pd.DataFrame(data_lag, index=data_index, columns=y_lag_columns)
         data = pd.concat([data, df_lag], axis=1)
 
-        # predict y_lookforward
-        forward_y = []
-        for i in range(0, len(data_y)-self.look_forward_days):
-            forward_y.append(data_y[i+self.look_forward_days])
-        for i in range(len(data_y)-self.look_forward_days, len(data_y)):
-            forward_y.append(None)
-        # df_y = pd.DataFrame(np.array(forward_y).transpose(), index=data_index, columns=['forward_y'])
+        # # predict y_lookforward
+        # forward_y = []
+        # for i in range(0, len(data_y)-self.look_forward_days):
+        #     forward_y.append(data_y[i+self.look_forward_days])
+        # for i in range(len(data_y)-self.look_forward_days, len(data_y)):
+        #     forward_y.append(None)
+        # # df_y = pd.DataFrame(np.array(forward_y).transpose(), index=data_index, columns=['forward_y'])
 
         if len(self.ma) != 0:
             for ma_days in self.ma:
