@@ -2,17 +2,15 @@
   <dictionary name="User">
     <words>
       <w>bfill</w>
+<<<<<<< HEAD
       <w>changerate</w>
       <w>ckpt</w>
       <w>datax</w>
       <w>datay</w>
+=======
+>>>>>>> 021d824b72e4b499db7f3e2efd2cdbb0338236e3
       <w>diffmethod</w>
       <w>lookforward</w>
-      <w>pred</w>
-      <w>tanh</w>
-      <w>testx</w>
-      <w>trainx</w>
-      <w>trainy</w>
       <w>xnew</w>
       <w>ynew</w>
     </words>

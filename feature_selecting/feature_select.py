@@ -124,7 +124,8 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
 
     def transform(self, X, y=None):
         data_hard = self.select_top_k_hard(X)
-        return data_hard.values
+        data_hard.reset_index(drop=True, inplace=True)
+        return data_hard.as_matrix()
 
 
 class FeatureSelector(BaseEstimator, TransformerMixin):
@@ -147,8 +148,10 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
 
     def _preprocess_data(self, data):
         if self.select_method in ["soft", "all"]:
+            data.reset_index(drop=True, inplace=True)
             # del data[self.target_column], data[self.date_column]
-            return data.values
+            data_values = data.as_matrix()
+            return data_values
         else:
             return data
 
@@ -173,6 +176,13 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
 
     def transform(self, X, y=None):
         X = self._preprocess_data(X)
-        return self.selector.transform(X)
+        X = self.selector.transform(X)
+        logger.info("Just to check if logger could be printed out here!")
+        if np.any(np.isnan(X)):
+            logger.info("There is np.nan in X!")
+        if not np.all(np.isfinite(X)):
+            logger.info("There is np.inf in X!")
+
+        return X
 
 
