@@ -48,8 +48,8 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
         new_data_list = []
         for i in range(0, data.shape[1]):
             ma_list = []
-            for k in range(0, ma_days):
-                ma_list.append(None)
+            for w in range(0, ma_days):
+                ma_list.append(data[w][i])
             for j in range(ma_days, data.shape[0]):
                 ma_add = 0
                 for k in range(j-ma_days, j):
@@ -106,7 +106,7 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
         new_data_list = []
         for i in range(0, data.shape[1]):
             rate_list = []
-            rate_list.append(None)
+            rate_list.append(1)
             for j in range(1, data.shape[0]):
                 if data[j-1][i] != 0:
                     rate_list.append(abs((data[j][i] - data[j-1][i]) / data[j-1][i]))
@@ -125,7 +125,7 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
         new_data_list = []
         for i in range(0, data.shape[1]):
             diff_list = []
-            diff_list.append(None)
+            diff_list.append(0)
             for j in range(1, data.shape[0]):
                 diff_list.append(data[j][i]-data[j-1][i])
             diff_list[0] = diff_list[1]
@@ -145,7 +145,7 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
         for i in range(1, look_back+1):
             lag = []
             for j in range(0, i):
-                lag.append(None)
+                lag.append(y[j])
             for j in range(i, len(y)):
                 lag.append(y[j-i])
             lag_y.append(lag)
