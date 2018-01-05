@@ -147,7 +147,7 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
 
     def _preprocess_data(self, data):
         if self.select_method in ["soft", "all"]:
-            del data[self.target_column], data[self.date_column]
+            # del data[self.target_column], data[self.date_column]
             return data.values
         else:
             return data

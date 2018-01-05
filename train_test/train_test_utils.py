@@ -247,8 +247,9 @@ def evaluate(y_test_true, y_test_predict, error=0.10):
 
 def train_test_split_by_position(data, split_position):
     """Given split_position, subset records from last up to the split_position."""
-    data_train = data.loc[:-split_position]
-    data_val = data.loc[-split_position:]
+    train_len = data.shape[0] - split_position
+    data_train = data.loc[:train_len]
+    data_val = data.loc[train_len:]
     y_train = data_train.as_matrix(["forward_y"])
     y_train = np.ravel(y_train)
     y_val = data_val.as_matrix(["forward_y"])
@@ -317,6 +318,9 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
     logger.info("Tuning models, {}: ".format(datetime.date.today().strftime("%Y%m%d")))
 
     x_train, y_train, x_val, y_val = train_test_split_by_position(data_train, validation_period_length)
+    logger.info("x_train: {}, y_train: {}, x_val: {}, y_val: {}".format(
+        x_train.shape, y_train.shape, x_val.shape, y_val.shape
+    ))
     for model_name in model_dict.keys():
         logger.info("\n\n\n\n\nmodel: {}\n".format(model_name))
         time_start = time.time()
@@ -457,12 +461,14 @@ if __name__ == "__main__":
     # ).data_to_dataframe()
     data["forward_y"] = data["y"].shift((-1) * args.look_forward_days)
     split_date = datetime.datetime.strptime(args.split_date, "%Y%m%d").date()
+    data.index = data.index.date
     data_train = data[data.index < split_date]
     data_train.reset_index(drop=True, inplace=True)
     data_test = data[data.index >= split_date]
     data_test.reset_index(drop=True, inplace=True)
     x_test = data_test.copy()
     del x_test["forward_y"]
+    logger.info("data_train: {}, data_test: {}".format(data_train.shape, data_test.shape))
 
     # if is_training is True, we run grid search on multiple combinations of the pipeline to select the best one
     if args.is_training:
