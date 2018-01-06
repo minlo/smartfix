@@ -64,8 +64,11 @@ Progress on 2018-01-06:
 1. one complete pipeline for all steps
     After several rounds of debugging, we have finished this part. Currently, it is still under test.
 
-2. store hard thresholding results in memory (to be finished)
+2. store hard thresholding results in memory
     We want to store the immediate results in memory for later access so that we can avoid keep repeating.
+    It seems that sklearn provides an official method to cache in version 0.19.1. 
+    See details in:
+    http://scikit-learn.org/stable/auto_examples/plot_compare_reduction.html#caching-transformers-within-a-pipeline
 
 3. add soft thresholding and null thresholding (all variables) (to be finished)
     We would like to add these two kinds of selecting methods during feature_selecting step.
@@ -76,6 +79,11 @@ Progress on 2018-01-06:
 # setting logging configuration
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+
+# define constants
+MODEL_PARAMS_JSON_PATH = "./../results/model_history/model_params.json"
+MODEL_TRAINING_EVAL_RESULTS_PATH = "./../results/model_history/model_train_eval_history_"
 
 
 def generate_grid_search(search_pipeline, pipeline_mode, param_grid, n_iter=5, verbose=3,
@@ -225,15 +233,12 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
         "xgboost": "random",
         "lasso": "random"
     }
-    # logger.info("data: {}".format(data.head(5)))
-    # logger.info("data value: {}".format(data.values))
-
     results = pd.DataFrame(columns=["model_id", "split_date", "model_name", "eval_metric",
                                     "update_date", "timestamp"])
-    model_params_json_path = "./../results/model_history/model_params.json"
+    
     failed_models = []
-    # if os.path.exists(model_params_json_path):
-    #     model_params_dict = json.loads(model_params_json_path)
+    # if os.path.exists(MODEL_PARAMS_JSON_PATH):
+    #     model_params_dict = json.loads(MODEL_PARAMS_JSON_PATH)
     # else:
     #     model_params_dict = {}
 
@@ -317,7 +322,7 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
         )
 
     # sort the results
-    results.sort_values(["eval_metric"], ascending=[False], inplace=True)
+    results.sort_values(["model_name", "eval_metric"], ascending=[True, False], inplace=True)
     results.reset_index(drop=True, inplace=True)
 
     results = results.loc[:save_k_best]
@@ -334,19 +339,20 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
         # }
 
     # save results into a csv
-    results_path = os.path.join("./../results/model_history/",
-                                "regression_results_" + str(look_ahead_day) + ".csv")
     if not os.path.exists(results_path):
-        results.to_csv(results_path, encoding="utf-8", header=True, index=None)
+        results.to_csv(MODEL_TRAINING_EVAL_RESULTS_PATH + str(look_ahead_day) + ".csv",
+                       encoding="utf-8", header=True, index=None)
     else:
-        results.to_csv(results_path, encoding="utf-8", header=False, index=None, mode="a")
+        results.to_csv(MODEL_TRAINING_EVAL_RESULTS_PATH  + str(look_ahead_day) + ".csv",
+                       encoding="utf-8", header=False, index=None, mode="a")
 
     # save model params
-    # with open(model_params_json_path, 'w') as fp:
+    # with open(MODEL_PARAMS_JSON_PATH, 'w') as fp:
     #     json.dump(model_params_dict, fp)
 
 
 if __name__ == "__main__":
+    total_start_time = time.time()
     parser = argparse.ArgumentParser()
     parser.add_argument("--split_date", help="date to split training and testing, must be in YYYYmmdd format",
                         required=False, default=datetime.date.today().strftime("%Y%m%d"), type=str)
@@ -357,6 +363,12 @@ if __name__ == "__main__":
     parser.add_argument("--is_training", help="if true, we run the grid search and "
                                               "select the best models in the validation period",
                         required=False, default=False, type=lambda x: (str(x).lower() == "true"))
+    parser.add_argument("--dynamic_selecting", help="if true, we see which model did best in last period"
+                                                    " (dynamic_eval_last_days). Otherwise, "
+                                                    "we just use the best model to predict ",
+                        required=False, default=False, type=lambda x: (str(x).lower() == "true"))
+    parser.add_argument("--dynamic_eval_last_days", help="period to run dynamic evaluation",
+                        required=False, default=7, type=int)
     parser.add_argument("--validation_period_length", help="run validation on how many natural days before split date",
                         required=False, default=30, type=int)
     parser.add_argument("--save_k_best", help="if training, select k best models to save after training",
@@ -368,13 +380,12 @@ if __name__ == "__main__":
     ).data_to_dataframe()
     data.rename(columns={data.columns[-1]: "y"}, inplace=True)
 
+    # generate forward_y as response variable
     data["forward_y"] = data["y"].shift((-1) * args.look_forward_days)
     split_date = datetime.datetime.strptime(args.split_date, "%Y%m%d").date()
     data.index = data.index.date
     data_train = data[data.index < split_date]
-    # data_train.reset_index(drop=True, inplace=True)
-    data_test = data.copy() # [data.index >= split_date]
-    # data_test.reset_index(drop=True, inplace=True)
+    data_test = data.copy()
     x_test = data_test.copy()
     del x_test["forward_y"]
     logger.info("data_train: {}, data_test: {}".format(data_train.shape, data_test.shape))
@@ -423,13 +434,19 @@ if __name__ == "__main__":
         predict_results_dir,
         "regression_predict_step_" + str(args.look_forward_days) + ".csv"
     )
-    predict_results = pd.DataFrame(columns=["y", "forward_y", "predict_y",
-                                            "model_name", "model_id", "prediction_date", "timestamp"])
+    predict_results = pd.DataFrame(columns=["date", "model_name", "model_id", "y", "forward_y", "predict_y",
+                                            "prediction_date", "timestamp"])
 
     for index_i in range(len(model_results.index)):
         try:
+            logger.info("Model: {}, model_name: {}, metric: {}".format(
+                model_results['model_id'][index_i],
+                model_results['model_name'][index_i],
+                model_results['eval_metric'][index_i]
+            ))
+
+            # save prediction results into file
             predict_results_i = pd.DataFrame(columns=predict_results.columns)
-            # print(data_test.index[:5])
             predict_results_i['date'] = data_test.index
             predict_results_i['date'] = pd.to_datetime(predict_results_i['date'])
             predict_results_i['date'] = predict_results_i['date'].dt.date
@@ -439,16 +456,13 @@ if __name__ == "__main__":
                 x_test=x_test,
                 model_id=model_results['model_id'][index_i]
             )
-            logger.info("Model: {}, model_name: {}, metric: {}".format(
-                model_results['model_id'][index_i],
-                model_results['model_name'][index_i],
-                model_results['eval_metric'][index_i]
-            ))
             predict_results_i["model_name"] = model_results['model_name'][index_i]
             predict_results_i["model_id"] = model_results['model_id'][index_i]
             predict_results_i["prediction_date"] = datetime.date.today().strftime("%Y%m%d")
             predict_results_i["timestamp"] = int(time.time() * 1000)
             predict_results_i = predict_results_i[predict_results_i['date'] >= split_date]
+            predict_results_i = predict_results_i[["date", "model_name", "model_id", "y", "forward_y", "predict_y",
+                                                   "prediction_date", "timestamp"]]
             predict_results = predict_results.append(predict_results_i)
         except ValueError as e:
             logger.info("model {} does not exists".format(model_results['model_id'][index_i]))
@@ -457,10 +471,11 @@ if __name__ == "__main__":
     if not os.path.exists(predict_results_dir):
         os.makedirs(predict_results_dir)
     if not os.path.exists(predict_results_path):
-        predict_results.to_csv(predict_results_path, encoding="utf-8", index=False, mode="a", header=True)
+        predict_results.to_csv(predict_results_path, encoding="utf-8", index=None, mode="a", header=True)
     else:
-        predict_results.to_csv(predict_results_path, encoding="utf-8", index=False, mode="a", header=False)
+        predict_results.to_csv(predict_results_path, encoding="utf-8", index=None, mode="a", header=False)
 
+    logger.info("It takes {:.2f} seconds to run this time.".format(time.time() - total_start_time))
     logger.info("Prediction finished!!!")
     print("Done! This will be removed later on.")
 
