@@ -64,6 +64,16 @@ ChangeLog on 2018-01-05:
 4. to be added...
 
 
+Progress on 2018-01-06:
+1. one complete pipeline for all steps
+    After several rounds of debugging, we have finished this part. Currently, it is still under test.
+
+2. store hard thresholding results in memory (to be finished)
+    We want to store the immediate results in memory for later access so that we can avoid keep repeating.
+
+3. add soft thresholding and null thresholding (all variables) (to be finished)
+    We would like to add these two kinds of selecting methods during feature_selecting step.
+
 """
 
 
@@ -446,6 +456,9 @@ if __name__ == "__main__":
     parser.add_argument("--save_k_best", help="if training, select k best models to save after training",
                         required=False, default=1, type=int)
     args = parser.parse_args()
+
+    # global variable to hold hard thresholding results
+    hard_thres_t_statistics = {}
     
     # see if there exists conflicts between split date and look_forward_days
     # add code here later, on 2017-12-26 17:27, by Zhao Yi, hopefully to be fixed by Xu Haonan
