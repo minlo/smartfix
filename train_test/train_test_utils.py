@@ -129,6 +129,10 @@ def train(imputer, engineer, selector, scaler, reducer, model, x_train, y_train,
     )
     pipeline_grid_search.fit(x_train, y_train)
     logger.info("It takes {:.2f} seconds to train this model.".format(time.time() - time_init))
+
+    # destroy the cached memory for this specific pipeline
+    pipeline.destroy_cache_memory()
+
     if pipeline_mode != "single":
         pipeline_grid_search = pipeline_grid_search.best_estimator_
 
