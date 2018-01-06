@@ -198,7 +198,7 @@ def test(x_test, model_id="", pipeline=None):
     # X_copy = data_test[["y", "forward_y"]]
     # X_copy['predict_y'] = y_predict
     logger.info("It takes {:.2f} seconds to predict.".format(time.time() - time_init))
-
+    # print(y_test_predict)
     # # before selector
     # pipeline_before_selector = pipeline_combined.named_steps["pipeline_before_selector"]
     # pipeline_after_selector = pipeline_combined.named_steps["pipeline_after_selector"]
@@ -248,9 +248,10 @@ def evaluate(y_test_true, y_test_predict, error=0.10):
 
 def train_test_split_by_position(data, split_position):
     """Given split_position, subset records from last up to the split_position."""
-    train_len = data.shape[0] - split_position
-    data_train = data.loc[:train_len]
-    data_val = data.loc[train_len:]
+    # train_len = data.shape[0] - split_position
+    split_date = data.index[data.shape[0] - split_position]
+    data_train = data[data.index < split_date]
+    data_val = data[data.index >= split_date]
     y_train = data_train.as_matrix(["forward_y"])
     y_train = np.ravel(y_train)
     y_val = data_val.as_matrix(["forward_y"])
@@ -269,7 +270,7 @@ def check_inf_nan(np_array, array_name):
 
 def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, validation_period_length):
     imputer_param_grid = {
-        "imputer__method": ["directly"],  # ["directly", "quadratic", "slinear", "cubic"]
+        "imputer__method": ["directly", "zero", "slinear"]
     }
     engineer_param_grid = {
         "engineer__lag": [10],  # [10, 20, 30, 40, 50, 60]
@@ -277,7 +278,7 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
 
     selector_param_grid = {
         "selector__k": [10],  # [10, 20, 30, 40, 50]
-        "selector__select_method": ["all"],  # ["hard", "soft", "all"]
+        "selector__select_method": ["hard"],  # ["hard", "soft", "all"]
     }
     # temporarily not used
     reducer_param_grid = {
@@ -290,7 +291,7 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
     }
     model_param_grid_dict = {
         "random_forest": {
-            "model__n_estimators": [100],  # [100, 500, 1000]
+            "model__n_estimators": [1000]
         },
         "xgboost": {
             "model__max_depth": range(2, 12, 2),
@@ -345,7 +346,7 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
             pipeline = train(
                 imputer=ImputationMethod(method="directly"),
                 engineer=FeatureExtract(lag=10, look_forward_days=look_ahead_day),
-                selector=FeatureSelector(k=10),  # selector_dict[model_selector],
+                selector=FeatureSelector(k=10, select_method="hard"),  # selector_dict[model_selector],
                 scaler=MinMaxScaler(),
                 reducer=PCA(n_components=10),  # temporarily not in use
                 model=model_dict[model_name],
@@ -360,7 +361,7 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
                 model_id=model_id,
                 pipeline=pipeline
             )
-            eval_metric = evaluate(np.array(y_test_predict['forward_y']), np.array(y_test_predict['predict_y']))
+            eval_metric = evaluate(np.array(y_test_predict), np.array(y_val))
             results.loc[len(results.index)] = [model_id, split_date,
                                                model_name, eval_metric,
                                                datetime.date.today().strftime("%Y%m%d"),
@@ -474,9 +475,9 @@ if __name__ == "__main__":
     split_date = datetime.datetime.strptime(args.split_date, "%Y%m%d").date()
     data.index = data.index.date
     data_train = data[data.index < split_date]
-    data_train.reset_index(drop=True, inplace=True)
-    data_test = data[data.index >= split_date]
-    data_test.reset_index(drop=True, inplace=True)
+    # data_train.reset_index(drop=True, inplace=True)
+    data_test = data.copy() # [data.index >= split_date]
+    # data_test.reset_index(drop=True, inplace=True)
     x_test = data_test.copy()
     del x_test["forward_y"]
     logger.info("data_train: {}, data_test: {}".format(data_train.shape, data_test.shape))
@@ -498,6 +499,7 @@ if __name__ == "__main__":
     results_path = os.path.join("./../results/model_history/",
                                 "regression_results_" + str(args.look_forward_days) + ".csv")
     model_results = pd.read_csv(results_path, encoding="utf-8")
+    # print(model_results)
     # select the relevant models by split_date and eval_metric, so that we are using the best model trained with
     # the most recent updated data
     model_results['split_date'] = pd.to_datetime(model_results['split_date'])
@@ -507,6 +509,7 @@ if __name__ == "__main__":
     best_eval_metric = model_results['eval_metric'].max()
     model_results = model_results[model_results['eval_metric'] == best_eval_metric]
     model_results.reset_index(drop=True, inplace=True)
+    # print(most_recent_split_date, best_eval_metric)
     if model_results.shape[0] == 0:
         raise ValueError("No model left after filtering the best model recently!")
 
@@ -529,6 +532,10 @@ if __name__ == "__main__":
     for index_i in range(len(model_results.index)):
         try:
             predict_results_i = pd.DataFrame(columns=predict_results.columns)
+            # print(data_test.index[:5])
+            predict_results_i['date'] = data_test.index
+            predict_results_i['date'] = pd.to_datetime(predict_results_i['date'])
+            predict_results_i['date'] = predict_results_i['date'].dt.date
             predict_results_i["y"] = data_test["y"]
             predict_results_i["forward_y"] = data_test["forward_y"]
             predict_results_i["predict_y"] = test(
@@ -544,6 +551,7 @@ if __name__ == "__main__":
             predict_results_i["model_id"] = model_results['model_id'][index_i]
             predict_results_i["prediction_date"] = datetime.date.today().strftime("%Y%m%d")
             predict_results_i["timestamp"] = int(time.time() * 1000)
+            predict_results_i = predict_results_i[predict_results_i['date'] >= split_date]
             predict_results = predict_results.append(predict_results_i)
         except ValueError as e:
             logger.info("model {} does not exists".format(model_results['model_id'][index_i]))
@@ -552,9 +560,9 @@ if __name__ == "__main__":
     if not os.path.exists(predict_results_dir):
         os.makedirs(predict_results_dir)
     if not os.path.exists(predict_results_path):
-        predict_results.to_csv(predict_results_path, encoding="utf-8", index=True, mode="a", header=True)
+        predict_results.to_csv(predict_results_path, encoding="utf-8", index=False, mode="a", header=True)
     else:
-        predict_results.to_csv(predict_results_path, encoding="utf-8", index=True, mode="a", header=False)
+        predict_results.to_csv(predict_results_path, encoding="utf-8", index=False, mode="a", header=False)
 
     logger.info("Prediction finished!!!")
 

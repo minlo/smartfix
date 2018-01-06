@@ -1,1 +1,1 @@
-model_id,split_date,model_name,impute_method,engineer_lag,model_selector,eval_metric,update_date,timestamp
+model_id,split_date,model_name,eval_metric,update_date,timestamp

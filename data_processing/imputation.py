@@ -4,6 +4,18 @@ import numpy as np
 from scipy import interpolate
 
 
+"""
+Bugs to fix:
+
+Notes on 2018-01-06:
+1. problem hinges in function method_imputed()
+    When we call "cubic" method, a ValueError would be raised concerning the index of x. Specific code is this: 
+            xnew = np.linspace(x[0], x[-1], x[-1] - x[0] + 1)
+
+"""
+
+
+
 class ImputationMethod (BaseEstimator, TransformerMixin):
     """
     make merged data(which have day,month,year frequency data) imputated by different method
@@ -31,7 +43,7 @@ class ImputationMethod (BaseEstimator, TransformerMixin):
         # return data
 
         data.index = pd.to_datetime(data.index)
-        data = data[~np.isnan(data.R007)]
+        data = data[~np.isnan(data['y'])]
 
         return data
 
@@ -41,8 +53,15 @@ class ImputationMethod (BaseEstimator, TransformerMixin):
         """
         :return:
         """
+        # print("Before filling na, data: {}, dropna {}".format(data.shape, data.dropna().shape))
         data_directly = data.fillna(method='pad')
+        # print("After padding, data: {}, dropna: {}".format(data_directly.shape, data_directly.dropna().shape))
         data_directly = data_directly.fillna(method='bfill')
+        # print("After bfilling, data: {}, dropna: {}".format(data_directly.shape, data_directly.dropna().shape))
+        # exit(1)
+        # Drop those columns where we cannot find any valid value in both backward and 
+        # forward directions to fill the column. That is, we simply drop these columns with no sympathy.
+
         return data_directly
 
     # @staticmethod
@@ -73,6 +92,8 @@ class ImputationMethod (BaseEstimator, TransformerMixin):
             x = data_filled_position
             y = data_filled_value
             # f=interpolate.CubicSpline(x,y)
+            print("length of x: ", len(x))
+            print("x0: ", x[0])
             xnew = np.linspace(x[0], x[-1], x[-1] - x[0] + 1)
             if self.method == 'cubic':
                 f = interpolate.CubicSpline(x, y)
@@ -95,15 +116,19 @@ class ImputationMethod (BaseEstimator, TransformerMixin):
         return self
 
     def transform(self, X, y=None):
-
-        data_after_remove_weekend = self.remove_weekend(X)
+        # print(X)
+        # X = self.remove_weekend(X)
+        print("before imputation", X.shape, X.dropna().shape)
 
         if self.method == 'directly':
-            # return self.direct_impute(data_after_remove_weekend), y
-            X = self.direct_impute(data_after_remove_weekend)
+            # return self.direct_impute(X), y
+            X = self.direct_impute(X)
         else:
-            # return self.diffmethod_imputed(data_after_remove_weekend), y
-            X = self.method_imputed(data_after_remove_weekend)
-        # print(X.values)
+            # return self.diffmethod_imputed(X), y
+            X = self.method_imputed(X)
+        X = X.dropna(axis=1, how="any")      
+        # print("After imputation", X.shape, X.dropna().shape)
+        # print("After imputation, X: {}".format(X[X.isnull()].shape))
+        # print(X[X.isnull()].reset_index().loc[:5])
         return X
 

@@ -201,7 +201,8 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
         :param y: DataFrame
         :return: DataFrame
         """
-        
+        # print(X)
+        print("Before extracting, ", X.shape, X.dropna().shape)
         data = X.copy()
         # data.index = pd.to_datetime(data.index)
         data_value = data.values
@@ -210,24 +211,24 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
         # print(data_value)
 
         # add important time point feature
-        weekdays = []
-        end_of_month = []
-        end_of_season = []
-        end_of_year = []
-        for i in data_index:
-            weekdays.append(i.dayofweek)
-            is_end_of_month, is_end_of_season, is_end_of_year = self.date_is_which(i, self.look_forward_days)
-            end_of_month.append(is_end_of_month)
-            end_of_season.append(is_end_of_season)
-            end_of_year.append(is_end_of_year)
-        data_time_point = []
-        data_time_point.append(weekdays)
-        data_time_point.append(end_of_month)
-        data_time_point.append(end_of_season)
-        data_time_point.append(end_of_year)
-        data_array_time_point = np.array(data_time_point).transpose()
-        time_point_columns = ['weekday', 'end_of_month', 'end_of_season', 'end_of_year']
-        df_time_point = pd.DataFrame(data_array_time_point, index = data_index, columns = time_point_columns)
+        # weekdays = []
+        # end_of_month = []
+        # end_of_season = []
+        # end_of_year = []
+        # for i in data_index:
+        #     weekdays.append(i.dayofweek)
+        #     is_end_of_month, is_end_of_season, is_end_of_year = self.date_is_which(i, self.look_forward_days)
+        #     end_of_month.append(is_end_of_month)
+        #     end_of_season.append(is_end_of_season)
+        #     end_of_year.append(is_end_of_year)
+        # data_time_point = []
+        # data_time_point.append(weekdays)
+        # data_time_point.append(end_of_month)
+        # data_time_point.append(end_of_season)
+        # data_time_point.append(end_of_year)
+        # data_array_time_point = np.array(data_time_point).transpose()
+        # time_point_columns = ['weekday', 'end_of_month', 'end_of_season', 'end_of_year']
+        # df_time_point = pd.DataFrame(data_array_time_point, index = data_index, columns = time_point_columns)
         # don't do cross_time feature extract in this class, move it the magic_feature_extract.py
         # data = pd.concat([data, df_time_point], axis=1)
 
@@ -290,11 +291,14 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
             df_diff = pd.DataFrame(data_diff, index=data_index, columns=data_diff_columns)
             data = pd.concat([data, df_diff], axis=1)
 
-        data['forward_y'] = np.array(forward_y)
+        # data['forward_y'] = np.array(forward_y)
         # del data['银行间质押式回购加权利率:7天'] # print(data['forward_y'])
         # print(data['银行间质押式回购加权利率:7天'])
         # data.rename({"银行间质押式回购加权利率:7天": "y"}, inplace=True)
         # print(data['y'])
+        # print(data[data.isnull()])        
+        # print("Feature extracting: ", data.shape, data.dropna().shape)
+
         return data
 
 
