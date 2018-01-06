@@ -152,7 +152,7 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
             raise ValueError("Select method must be one of ['hard', 'soft', 'all']")
 
     def _preprocess_data(self, data):
-        logger.info("select_method: {}, data_type: {}".format(self.select_method, type(data)))
+        # logger.info("select_method: {}, data_type: {}".format(self.select_method, type(data)))
         if self.select_method in ["soft", "all"]:
             data.reset_index(drop=True, inplace=True)
             # del data[self.target_column], data[self.date_column]

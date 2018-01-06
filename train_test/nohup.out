@@ -4,7 +4,7 @@
   "This module will be removed in 0.20.", DeprecationWarning)
 INFO:__main__:data_train: (1488, 106), data_test: (1493, 106)
 INFO:__main__:Setting is_training to be true, we run grid search on look_forward_days to be 1
-INFO:__main__:Tuning models, 20180105: 
+INFO:__main__:Tuning models, 20180106: 
 INFO:__main__:x_train: (1458, 105), y_train: (1458,), x_val: (30, 105), y_val: (30,)
 INFO:__main__:
 
@@ -13,872 +13,275 @@ INFO:__main__:
 
 model: random_forest
 
-Fitting 3 folds for each of 1 candidates, totalling 3 fits
-INFO:feature_selecting.feature_select:select_method: hard, data_type: <class 'pandas.core.frame.DataFrame'>
+Fitting 3 folds for each of 4 candidates, totalling 12 fits
+INFO:feature_selecting.feature_select:There are in total 1133 columns, while we only need 10 columns
 INFO:feature_selecting.feature_select:There are in total 1144 columns, while we only need 10 columns
-INFO:feature_selecting.feature_select:select_method: hard, data_type: <class 'pandas.core.frame.DataFrame'>
 INFO:feature_selecting.feature_select:There are in total 1144 columns, while we only need 10 columns
-[CV] engineer__lag=10, imputer__method=directly, model__n_estimators=1000, selector__k=10, selector__select_method=hard 
-INFO:__main__:JoblibValueError
-___________________________________________________________________________
-Multiprocessing exception:
-...........................................................................
-/home/zhaoyi/code/repurchasing_in_production/train_test/train_test_utils.py in <module>()
-    490         search_regression_ml(
-    491             data_train=data_train,
-    492             save_k_best=args.save_k_best,
-    493             look_ahead_day=args.look_forward_days,
-    494             split_date=split_date,
---> 495             validation_period_length=args.validation_period_length
-    496         )
-    497 
-    498     # set the model results path
-    499     results_path = os.path.join("./../results/model_history/",
-
-...........................................................................
-/home/zhaoyi/code/repurchasing_in_production/train_test/train_test_utils.py in search_regression_ml(data_train=                 x1          x2         x3      ...0  3.3518     3.4240  
-
-[1488 rows x 106 columns], save_k_best=1, look_ahead_day=1, split_date=datetime.date(2017, 12, 18), validation_period_length=30)
-    351                 reducer=PCA(n_components=10),  # temporarily not in use
-    352                 model=model_dict[model_name],
-    353                 x_train=x_train,
-    354                 y_train=y_train,
-    355                 pipeline_mode=model_pipeline_mode_dict[model_name],
---> 356                 pipeline_param_grid=pipeline_param_grid
-        pipeline_param_grid = {'engineer__lag': [10], 'imputer__method': ['directly'], 'model__n_estimators': [1000], 'selector__k': [10], 'selector__select_method': ['hard']}
-    357             )
-    358             model_id = str(uuid.uuid4())
-    359             y_test_predict = test(
-    360                 x_test=x_val,
-
-...........................................................................
-/home/zhaoyi/code/repurchasing_in_production/train_test/train_test_utils.py in train(imputer=ImputationMethod(method='directly'), engineer=FeatureExtract(changerate=True, diff=True, ind=[...
-        look_forward_days=1, ma=[1, 2, 3, 4, 5]), selector=FeatureSelector(alpha=0.05, date_column='date', ...d', select_top_k=True,
-        target_column='y'), scaler=MinMaxScaler(copy=True, feature_range=(0, 1)), reducer=PCA(copy=True, iterated_power='auto', n_componen...None,
-  svd_solver='auto', tol=0.0, whiten=False), model=RandomForestRegressor(bootstrap=True, criterion=...  random_state=1234, verbose=0, warm_start=False), x_train=                 x1          x2         x3      ...444  1.24322  2.9142  
-
-[1458 rows x 105 columns], y_train=array([ 4.4785,  4.3063,  4.519 , ...,  3.0997,  2.9142,  2.9302]), pipeline_mode='grid', pipeline_param_grid={'engineer__lag': [10], 'imputer__method': ['directly'], 'model__n_estimators': [1000], 'selector__k': [10], 'selector__select_method': ['hard']})
-    115     pipeline_grid_search = generate_grid_search(
-    116         search_pipeline=pipeline,
-    117         pipeline_mode=pipeline_mode,
-    118         param_grid=pipeline_param_grid
-    119     )
---> 120     pipeline_grid_search.fit(x_train, y_train)
-        pipeline_grid_search.fit = <bound method GridSearchCV.fit of GridSearchCV(c...    scoring='neg_mean_squared_error', verbose=3)>
-        x_train =                  x1          x2         x3      ...444  1.24322  2.9142  
-
-[1458 rows x 105 columns]
-        y_train = array([ 4.4785,  4.3063,  4.519 , ...,  3.0997,  2.9142,  2.9302])
-    121     logger.info("It takes {:.2f} seconds to train this model.".format(time.time() - time_init))
-    122     if pipeline_mode != "single":
-    123         pipeline_grid_search = pipeline_grid_search.best_estimator_
-    124 
-
-...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/sklearn/model_selection/_search.py in fit(self=GridSearchCV(cv=TimeSeriesSplit(n_splits=3), err...     scoring='neg_mean_squared_error', verbose=3), X=                 x1          x2         x3      ...444  1.24322  2.9142  
-
-[1458 rows x 105 columns], y=array([ 4.4785,  4.3063,  4.519 , ...,  3.0997,  2.9142,  2.9302]), groups=None)
-    940 
-    941         groups : array-like, with shape (n_samples,), optional
-    942             Group labels for the samples used while splitting the dataset into
-    943             train/test set.
-    944         """
---> 945         return self._fit(X, y, groups, ParameterGrid(self.param_grid))
-        self._fit = <bound method BaseSearchCV._fit of GridSearchCV(...    scoring='neg_mean_squared_error', verbose=3)>
-        X =                  x1          x2         x3      ...444  1.24322  2.9142  
-
-[1458 rows x 105 columns]
-        y = array([ 4.4785,  4.3063,  4.519 , ...,  3.0997,  2.9142,  2.9302])
-        groups = None
-        self.param_grid = {'engineer__lag': [10], 'imputer__method': ['directly'], 'model__n_estimators': [1000], 'selector__k': [10], 'selector__select_method': ['hard']}
-    946 
-    947 
-    948 class RandomizedSearchCV(BaseSearchCV):
-    949     """Randomized search on hyper parameters.
-
-...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/sklearn/model_selection/_search.py in _fit(self=GridSearchCV(cv=TimeSeriesSplit(n_splits=3), err...     scoring='neg_mean_squared_error', verbose=3), X=                 x1          x2         x3      ...444  1.24322  2.9142  
-
-[1458 rows x 105 columns], y=array([ 4.4785,  4.3063,  4.519 , ...,  3.0997,  2.9142,  2.9302]), groups=None, parameter_iterable=<sklearn.model_selection._search.ParameterGrid object>)
-    559                                   fit_params=self.fit_params,
-    560                                   return_train_score=self.return_train_score,
-    561                                   return_n_test_samples=True,
-    562                                   return_times=True, return_parameters=True,
-    563                                   error_score=self.error_score)
---> 564           for parameters in parameter_iterable
-        parameters = undefined
-        parameter_iterable = <sklearn.model_selection._search.ParameterGrid object>
-    565           for train, test in cv_iter)
-    566 
-    567         # if one choose to see train score, "out" will contain train score info
-    568         if self.return_train_score:
-
-...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/sklearn/externals/joblib/parallel.py in __call__(self=Parallel(n_jobs=-1), iterable=<generator object BaseSearchCV._fit.<locals>.<genexpr>>)
-    763             if pre_dispatch == "all" or n_jobs == 1:
-    764                 # The iterable was consumed all at once by the above for loop.
-    765                 # No need to wait for async callbacks to trigger to
-    766                 # consumption.
-    767                 self._iterating = False
---> 768             self.retrieve()
-        self.retrieve = <bound method Parallel.retrieve of Parallel(n_jobs=-1)>
-    769             # Make sure that we get a last message telling us we are done
-    770             elapsed_time = time.time() - self._start_time
-    771             self._print('Done %3i out of %3i | elapsed: %s finished',
-    772                         (len(self._output), len(self._output),
-
----------------------------------------------------------------------------
-Sub-process traceback:
----------------------------------------------------------------------------
-ValueError                                         Fri Jan  5 07:32:19 2018
-PID: 74518                          Python 3.6.1: /opt/anaconda3/bin/python
-...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/sklearn/externals/joblib/parallel.py in __call__(self=<sklearn.externals.joblib.parallel.BatchedCalls object>)
-    126     def __init__(self, iterator_slice):
-    127         self.items = list(iterator_slice)
-    128         self._size = len(self.items)
-    129 
-    130     def __call__(self):
---> 131         return [func(*args, **kwargs) for func, args, kwargs in self.items]
-        self.items = [(<function _fit_and_score>, (Pipeline(steps=[('imputer', ImputationMethod(met...andom_state=1234, verbose=0, warm_start=False))]),                  x1          x2         x3      ...444  1.24322  2.9142  
-
-[1458 rows x 105 columns], array([ 4.4785,  4.3063,  4.519 , ...,  3.0997,  2.9142,  2.9302]), make_scorer(mean_squared_error, greater_is_better=False), array([  0,   1,   2,   3,   4,   5,   6,   7,  ..., 358, 359, 360, 361, 362, 363,
-       364, 365]), array([366, 367, 368, 369, 370, 371, 372, 373, 3...20, 721, 722, 723, 724, 725, 726, 727, 728, 729]), 3, {'engineer__lag': 10, 'imputer__method': 'directly', 'model__n_estimators': 1000, 'selector__k': 10, 'selector__select_method': 'hard'}), {'error_score': 'raise', 'fit_params': {}, 'return_n_test_samples': True, 'return_parameters': True, 'return_times': True, 'return_train_score': True})]
-    132 
-    133     def __len__(self):
-    134         return self._size
-    135 
-
-...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/sklearn/externals/joblib/parallel.py in <listcomp>(.0=<list_iterator object>)
-    126     def __init__(self, iterator_slice):
-    127         self.items = list(iterator_slice)
-    128         self._size = len(self.items)
-    129 
-    130     def __call__(self):
---> 131         return [func(*args, **kwargs) for func, args, kwargs in self.items]
-        func = <function _fit_and_score>
-        args = (Pipeline(steps=[('imputer', ImputationMethod(met...andom_state=1234, verbose=0, warm_start=False))]),                  x1          x2         x3      ...444  1.24322  2.9142  
-
-[1458 rows x 105 columns], array([ 4.4785,  4.3063,  4.519 , ...,  3.0997,  2.9142,  2.9302]), make_scorer(mean_squared_error, greater_is_better=False), array([  0,   1,   2,   3,   4,   5,   6,   7,  ..., 358, 359, 360, 361, 362, 363,
-       364, 365]), array([366, 367, 368, 369, 370, 371, 372, 373, 3...20, 721, 722, 723, 724, 725, 726, 727, 728, 729]), 3, {'engineer__lag': 10, 'imputer__method': 'directly', 'model__n_estimators': 1000, 'selector__k': 10, 'selector__select_method': 'hard'})
-        kwargs = {'error_score': 'raise', 'fit_params': {}, 'return_n_test_samples': True, 'return_parameters': True, 'return_times': True, 'return_train_score': True}
-    132 
-    133     def __len__(self):
-    134         return self._size
-    135 
-
-...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/sklearn/model_selection/_validation.py in _fit_and_score(estimator=Pipeline(steps=[('imputer', ImputationMethod(met...andom_state=1234, verbose=0, warm_start=False))]), X=                 x1          x2         x3      ...444  1.24322  2.9142  
-
-[1458 rows x 105 columns], y=array([ 4.4785,  4.3063,  4.519 , ...,  3.0997,  2.9142,  2.9302]), scorer=make_scorer(mean_squared_error, greater_is_better=False), train=array([  0,   1,   2,   3,   4,   5,   6,   7,  ..., 358, 359, 360, 361, 362, 363,
-       364, 365]), test=array([366, 367, 368, 369, 370, 371, 372, 373, 3...20, 721, 722, 723, 724, 725, 726, 727, 728, 729]), verbose=3, parameters={'engineer__lag': 10, 'imputer__method': 'directly', 'model__n_estimators': 1000, 'selector__k': 10, 'selector__select_method': 'hard'}, fit_params={}, return_train_score=True, return_parameters=True, return_n_test_samples=True, return_times=True, error_score='raise')
-    233 
-    234     try:
-    235         if y_train is None:
-    236             estimator.fit(X_train, **fit_params)
-    237         else:
---> 238             estimator.fit(X_train, y_train, **fit_params)
-        estimator.fit = <bound method Pipeline.fit of Pipeline(steps=[('...ndom_state=1234, verbose=0, warm_start=False))])>
-        X_train =                  x1         x2         x3       ...001  0.19300   9.2485  
-
-[366 rows x 105 columns]
-        y_train = array([  4.4785,   4.3063,   4.519 ,   4.0835,  ... 6.8207,   8.2624,  11.6217,   9.2485,   7.5326])
-        fit_params = {}
-    239 
-    240     except Exception as e:
-    241         # Note fit time as time until error
-    242         fit_time = time.time() - start_time
-
-...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/sklearn/pipeline.py in fit(self=Pipeline(steps=[('imputer', ImputationMethod(met...andom_state=1234, verbose=0, warm_start=False))]), X=                 x1         x2         x3       ...001  0.19300   9.2485  
-
-[366 rows x 105 columns], y=array([  4.4785,   4.3063,   4.519 ,   4.0835,  ... 6.8207,   8.2624,  11.6217,   9.2485,   7.5326]), **fit_params={})
-    263         Returns
-    264         -------
-    265         self : Pipeline
-    266             This estimator
-    267         """
---> 268         Xt, fit_params = self._fit(X, y, **fit_params)
-        Xt = undefined
-        fit_params = {}
-        self._fit = <bound method Pipeline._fit of Pipeline(steps=[(...ndom_state=1234, verbose=0, warm_start=False))])>
-        X =                  x1         x2         x3       ...001  0.19300   9.2485  
-
-[366 rows x 105 columns]
-        y = array([  4.4785,   4.3063,   4.519 ,   4.0835,  ... 6.8207,   8.2624,  11.6217,   9.2485,   7.5326])
-    269         if self._final_estimator is not None:
-    270             self._final_estimator.fit(Xt, y, **fit_params)
-    271         return self
-    272 
-
-...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/sklearn/pipeline.py in _fit(self=Pipeline(steps=[('imputer', ImputationMethod(met...andom_state=1234, verbose=0, warm_start=False))]), X=                 x1         x2         x3       ...001  0.19300   9.2485  
-
-[366 rows x 105 columns], y=array([  4.4785,   4.3063,   4.519 ,   4.0835,  ... 6.8207,   8.2624,  11.6217,   9.2485,   7.5326]), **fit_params={})
-    229         Xt = X
-    230         for name, transform in self.steps[:-1]:
-    231             if transform is None:
-    232                 pass
-    233             elif hasattr(transform, "fit_transform"):
---> 234                 Xt = transform.fit_transform(Xt, y, **fit_params_steps[name])
-        Xt =                  x1         x2         x3       ...  0.00100    0.00000  
-
-[366 rows x 1155 columns]
-        transform.fit_transform = <bound method TransformerMixin.fit_transform of ...', select_top_k=True,
-        target_column='y')>
-        y = array([  4.4785,   4.3063,   4.519 ,   4.0835,  ... 6.8207,   8.2624,  11.6217,   9.2485,   7.5326])
-        fit_params_steps = {'engineer': {}, 'imputer': {}, 'model': {}, 'reducer': {}, 'scaler': {}, 'selector': {}}
-        name = 'selector'
-    235             else:
-    236                 Xt = transform.fit(Xt, y, **fit_params_steps[name]) \
-    237                               .transform(Xt)
-    238         if self._final_estimator is None:
-
-...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/sklearn/base.py in fit_transform(self=FeatureSelector(alpha=0.05, date_column='date', ...d', select_top_k=True,
-        target_column='y'), X=                 x1         x2         x3       ...  0.00100    0.00000  
-
-[366 rows x 1155 columns], y=array([  4.4785,   4.3063,   4.519 ,   4.0835,  ... 6.8207,   8.2624,  11.6217,   9.2485,   7.5326]), **fit_params={})
-    492         if y is None:
-    493             # fit method of arity 1 (unsupervised transformation)
-    494             return self.fit(X, **fit_params).transform(X)
-    495         else:
-    496             # fit method of arity 2 (supervised transformation)
---> 497             return self.fit(X, y, **fit_params).transform(X)
-        self.fit = <bound method FeatureSelector.fit of FeatureSele...', select_top_k=True,
-        target_column='y')>
-        X =                  x1         x2         x3       ...  0.00100    0.00000  
-
-[366 rows x 1155 columns]
-        y = array([  4.4785,   4.3063,   4.519 ,   4.0835,  ... 6.8207,   8.2624,  11.6217,   9.2485,   7.5326])
-        fit_params.transform = undefined
-    498 
-    499 
-    500 class DensityMixin(object):
-    501     """Mixin class for all density estimators in scikit-learn."""
-
-...........................................................................
-/home/zhaoyi/code/repurchasing_in_production/feature_selecting/feature_select.py in transform(self=FeatureSelector(alpha=0.05, date_column='date', ...d', select_top_k=True,
-        target_column='y'), X=                 x1         x2         x3       ...  0.00100    0.00000  
-
-[366 rows x 1155 columns], y=None)
-    179     def transform(self, X, y=None):
-    180         X = self._preprocess_data(X)
-    181         if self.is_training:
-    182             self.selector.fit(X)
-    183        
---> 184         X = self.selector.transform(X)
-        X =                  x1         x2         x3       ...  0.00100    0.00000  
-
-[366 rows x 1155 columns]
-        self.selector.transform = <bound method HardThresholdSelector.transform of...           select_top_k=True, target_column='y')>
-    185         logger.info("Just to check if logger could be printed out here!")
-    186         if np.any(np.isnan(X)):
-    187             logger.info("There is np.nan in X!")
-    188         if not np.all(np.isfinite(X)):
-
-...........................................................................
-/home/zhaoyi/code/repurchasing_in_production/feature_selecting/feature_select.py in transform(self=HardThresholdSelector(alpha=0.05, date_column='d...
-           select_top_k=True, target_column='y'), X=                 x1         x2         x3       ...  0.00100    0.00000  
-
-[366 rows x 1155 columns], y=None)
-    121 
-    122     def fit(self, X, y=None):
-    123         return self
-    124 
-    125     def transform(self, X, y=None):
---> 126         data_hard = self.select_top_k_hard(X)
-        data_hard = undefined
-        self.select_top_k_hard = <bound method HardThresholdSelector.select_top_k...           select_top_k=True, target_column='y')>
-        X =                  x1         x2         x3       ...  0.00100    0.00000  
-
-[366 rows x 1155 columns]
-    127         data_hard.reset_index(drop=True, inplace=True)
-    128         return data_hard.as_matrix()
-    129 
-    130 
-
-...........................................................................
-/home/zhaoyi/code/repurchasing_in_production/feature_selecting/feature_select.py in select_top_k_hard(self=HardThresholdSelector(alpha=0.05, date_column='d...
-           select_top_k=True, target_column='y'), data=                 x1         x2         x3       ...  0.00100    0.00000  
-
-[366 rows x 1155 columns])
-     96         return sorted_hard_thres_test_t_stats
-     97 
-     98     def select_top_k_hard(self, data):
-     99         init_time = time.time()
-    100         selected_features = []
---> 101         sorted_hard_thres_t_stats = self.generate_t_statistic(data.copy())
-        sorted_hard_thres_t_stats = undefined
-        self.generate_t_statistic = <bound method HardThresholdSelector.generate_t_s...           select_top_k=True, target_column='y')>
-        data.copy = <bound method NDFrame.copy of                  x... 0.00100    0.00000  
-
-[366 rows x 1155 columns]>
-    102         logger.info("\nIn total, it takes {:.2f} seconds to run regression for {} columns".format(
-    103             time.time() - init_time,
-    104             len(sorted_hard_thres_t_stats)
-    105         ))
-
-...........................................................................
-/home/zhaoyi/code/repurchasing_in_production/feature_selecting/feature_select.py in generate_t_statistic(self=HardThresholdSelector(alpha=0.05, date_column='d...
-           select_top_k=True, target_column='y'), data=                 x1         x2         x3       ...  0.00100    0.00000  
-
-[366 rows x 1155 columns])
-     80         ctrl_columns, test_columns = self.generate_ctrl_columns(data)
-     81 
-     82         for column_i in test_columns:
-     83             # time_start = time.time()
-     84             # logger.info("regression on {}".format(column_i))
----> 85             t_i = self.regression_t_statistic(data.copy(), self.target_column, ctrl_columns, column_i)
-        t_i = undefined
-        self.regression_t_statistic = <function HardThresholdSelector.regression_t_statistic>
-        data.copy = <bound method NDFrame.copy of                  x... 0.00100    0.00000  
-
-[366 rows x 1155 columns]>
-        self.target_column = 'y'
-        ctrl_columns = ['y_lag_1', 'y_lag_2', 'y_lag_3', 'y_lag_4', 'y_lag_5', 'y_lag_6', 'y_lag_7', 'y_lag_8', 'y_lag_9', 'y_lag_10']
-        column_i = 'x1'
-     86             hard_thres_test_t_stats[column_i] = abs(float(t_i))
-     87             # logger.info("for column_i: {}, it takes {:.2f} seconds to run regression for it!".format(
-     88             # column_i, time.time() - time_start))
-     89 
-
-...........................................................................
-/home/zhaoyi/code/repurchasing_in_production/feature_selecting/feature_select.py in regression_t_statistic(data=Empty DataFrame
-Columns: [x1, x2, x3, x4, x5, x6...99, x100, ...]
-Index: []
-
-[0 rows x 1155 columns], target_column='y', ctrl_columns=['y_lag_1', 'y_lag_2', 'y_lag_3', 'y_lag_4', 'y_lag_5', 'y_lag_6', 'y_lag_7', 'y_lag_8', 'y_lag_9', 'y_lag_10'], feature_column='x1')
-     51         # logger.info("target_column: {}, column_x_list: {}".format(target_column, column_x_list))
-     52         # logger.info("X: {}, y: {}".format(X.shape, y.shape))
-     53         # logger.info("X: {}, y: {}".format(X[0], y))
-     54 
-     55         # run regression
----> 56         x2 = sm.add_constant(x)
-        x2 = undefined
-        x = array([], shape=(0, 11), dtype=float64)
-     57         est = sm.OLS(y, x2)
-     58         est2 = est.fit()
-     59         # logger.info("est2 summary: {}".format(est2.summary()))
-     60         return est2.summary().tables[1].data[-1][3]
-
-...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/statsmodels/tools/tools.py in add_constant(data=array([], shape=(0, 11), dtype=float64), prepend=True, has_constant='skip')
-    274     if x.ndim == 1:
-    275         x = x[:,None]
-    276     elif x.ndim > 2:
-    277         raise ValueError('Only implementd 2-dimensional arrays')
-    278 
---> 279     is_nonzero_const = np.ptp(x, axis=0) == 0
-        is_nonzero_const = undefined
-        x = array([], shape=(0, 11), dtype=float64)
-    280     is_nonzero_const &= np.all(x != 0.0, axis=0)
-    281     if is_nonzero_const.any():
-    282         if has_constant == 'skip':
-    283             return x
-
-...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/numpy/core/fromnumeric.py in ptp(a=array([], shape=(0, 11), dtype=float64), axis=0, out=None)
-   2166 
-   2167     >>> np.ptp(x, axis=1)
-   2168     array([1, 1])
-   2169 
-   2170     """
--> 2171     return _wrapfunc(a, 'ptp', axis=axis, out=out)
-        a = array([], shape=(0, 11), dtype=float64)
-        axis = 0
-        out = None
-   2172 
-   2173 
-   2174 def amax(a, axis=None, out=None, keepdims=np._NoValue):
-   2175     """
-
-...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/numpy/core/fromnumeric.py in _wrapfunc(obj=array([], shape=(0, 11), dtype=float64), method='ptp', *args=(), **kwds={'axis': 0, 'out': None})
-     52     return result
-     53 
-     54 
-     55 def _wrapfunc(obj, method, *args, **kwds):
-     56     try:
----> 57         return getattr(obj, method)(*args, **kwds)
-        obj = array([], shape=(0, 11), dtype=float64)
-        method = 'ptp'
-        args = ()
-        kwds = {'axis': 0, 'out': None}
-     58 
-     59     # An AttributeError occurs if the object does not have
-     60     # such a method in its class.
-     61 
-
-ValueError: zero-size array to reduction operation maximum which has no identity
-___________________________________________________________________________
-INFO:__main__:We have run 1 models, with 1 failed, using 2.28 seconds
-INFO:__main__:
-
-List all the failed models:
-
-INFO:__main__:failed model_name: random_forest
-Empty DataFrame
-Columns: [model_id, split_date, model_name, eval_metric, update_date, timestamp]
-Index: []
-nan nan
-Traceback (most recent call last):
-  File "train_test_utils.py", line 514, in <module>
-    raise ValueError("No model left after filtering the best model recently!")
-ValueError: No model left after filtering the best model recently!
-/opt/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
-  from pandas.core import datetools
-/opt/anaconda3/lib/python3.6/site-packages/sklearn/cross_validation.py:44: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
-  "This module will be removed in 0.20.", DeprecationWarning)
-INFO:__main__:data_train: (1488, 106), data_test: (1493, 106)
-INFO:__main__:Setting is_training to be true, we run grid search on look_forward_days to be 1
-INFO:__main__:Tuning models, 20180105: 
-INFO:__main__:x_train: (1458, 105), y_train: (1458,), x_val: (30, 105), y_val: (30,)
-INFO:__main__:
-
-
-
-
-model: random_forest
-
-Fitting 3 folds for each of 1 candidates, totalling 3 fits
-INFO:feature_selecting.feature_select:select_method: hard, data_type: <class 'pandas.core.frame.DataFrame'>
 INFO:feature_selecting.feature_select:There are in total 1144 columns, while we only need 10 columns
-INFO:feature_selecting.feature_select:select_method: hard, data_type: <class 'pandas.core.frame.DataFrame'>
 INFO:feature_selecting.feature_select:There are in total 1144 columns, while we only need 10 columns
-[CV] engineer__lag=10, imputer__method=directly, model__n_estimators=1000, selector__k=10, selector__select_method=hard 
-INFO:__main__:JoblibValueError
-___________________________________________________________________________
-Multiprocessing exception:
-...........................................................................
-/home/zhaoyi/code/repurchasing_in_production/train_test/train_test_utils.py in <module>()
-    490         search_regression_ml(
-    491             data_train=data_train,
-    492             save_k_best=args.save_k_best,
-    493             look_ahead_day=args.look_forward_days,
-    494             split_date=split_date,
---> 495             validation_period_length=args.validation_period_length
-    496         )
-    497 
-    498     # set the model results path
-    499     results_path = os.path.join("./../results/model_history/",
+INFO:feature_selecting.feature_select:There are in total 1144 columns, while we only need 10 columns
+INFO:feature_selecting.feature_select:There are in total 1144 columns, while we only need 10 columns
+INFO:feature_selecting.feature_select:There are in total 1144 columns, while we only need 10 columns
+INFO:feature_selecting.feature_select:There are in total 1144 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: divide by zero encountered in double_scalars
+  return self.ess/self.df_model
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: invalid value encountered in double_scalars
+  return self.ess/self.df_model
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1471: RuntimeWarning: divide by zero encountered in double_scalars
+  return np.sqrt(eigvals[0]/eigvals[-1])
+INFO:feature_selecting.feature_select:
+In total, it takes 74.01 seconds to run regression for 1133 columns
+INFO:feature_selecting.feature_select:There are in total 1111 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: divide by zero encountered in double_scalars
+  return self.ess/self.df_model
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1471: RuntimeWarning: divide by zero encountered in double_scalars
+  return np.sqrt(eigvals[0]/eigvals[-1])
+INFO:feature_selecting.feature_select:
+In total, it takes 99.74 seconds to run regression for 1144 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: divide by zero encountered in double_scalars
+  return self.ess/self.df_model
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1471: RuntimeWarning: divide by zero encountered in double_scalars
+  return np.sqrt(eigvals[0]/eigvals[-1])
+INFO:feature_selecting.feature_select:
+In total, it takes 102.67 seconds to run regression for 1144 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: divide by zero encountered in double_scalars
+  return self.ess/self.df_model
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1471: RuntimeWarning: divide by zero encountered in double_scalars
+  return np.sqrt(eigvals[0]/eigvals[-1])
+INFO:feature_selecting.feature_select:
+In total, it takes 104.65 seconds to run regression for 1144 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1573: RuntimeWarning: overflow encountered in multiply
+  tol = S.max(axis=-1, keepdims=True) * max(M.shape[-2:]) * finfo(S.dtype).eps
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1458: RuntimeWarning: overflow encountered in square
+  eigvals = self._wexog_singular_values ** 2
+/opt/anaconda3/lib/python3.6/site-packages/numpy/core/_methods.py:116: RuntimeWarning: overflow encountered in multiply
+  x = um.multiply(x, x, out=x)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: divide by zero encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: divide by zero encountered in double_scalars
+  return self.ess/self.df_model
+INFO:feature_selecting.feature_select:
+In total, it takes 113.50 seconds to run regression for 1144 columns
+INFO:feature_selecting.feature_select:There are in total 1133 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1458: RuntimeWarning: overflow encountered in square
+  eigvals = self._wexog_singular_values ** 2
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1471: RuntimeWarning: divide by zero encountered in double_scalars
+  return np.sqrt(eigvals[0]/eigvals[-1])
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: divide by zero encountered in double_scalars
+  return self.ess/self.df_model
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: invalid value encountered in double_scalars
+  return self.ess/self.df_model
+INFO:feature_selecting.feature_select:
+In total, it takes 69.91 seconds to run regression for 1111 columns
+INFO:feature_selecting.feature_select:There are in total 1133 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1471: RuntimeWarning: divide by zero encountered in double_scalars
+  return np.sqrt(eigvals[0]/eigvals[-1])
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: divide by zero encountered in double_scalars
+  return self.ess/self.df_model
+INFO:feature_selecting.feature_select:
+In total, it takes 73.43 seconds to run regression for 1133 columns
+INFO:feature_selecting.feature_select:There are in total 1144 columns, while we only need 10 columns
+INFO:feature_selecting.feature_select:
+In total, it takes 77.78 seconds to run regression for 1133 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1471: RuntimeWarning: divide by zero encountered in double_scalars
+  return np.sqrt(eigvals[0]/eigvals[-1])
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: divide by zero encountered in double_scalars
+  return self.ess/self.df_model
+INFO:feature_selecting.feature_select:
+In total, it takes 251.60 seconds to run regression for 1144 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1471: RuntimeWarning: divide by zero encountered in double_scalars
+  return np.sqrt(eigvals[0]/eigvals[-1])
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: divide by zero encountered in double_scalars
+  return self.ess/self.df_model
+INFO:feature_selecting.feature_select:
+In total, it takes 261.04 seconds to run regression for 1144 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: divide by zero encountered in double_scalars
+  return self.ess/self.df_model
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1471: RuntimeWarning: divide by zero encountered in double_scalars
+  return np.sqrt(eigvals[0]/eigvals[-1])
+INFO:feature_selecting.feature_select:
+In total, it takes 262.51 seconds to run regression for 1144 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: divide by zero encountered in double_scalars
+  return self.ess/self.df_model
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1471: RuntimeWarning: divide by zero encountered in double_scalars
+  return np.sqrt(eigvals[0]/eigvals[-1])
+INFO:feature_selecting.feature_select:
+In total, it takes 260.03 seconds to run regression for 1144 columns
+INFO:feature_selecting.feature_select:There are in total 1122 columns, while we only need 10 columns
+INFO:feature_selecting.feature_select:
+In total, it takes 68.01 seconds to run regression for 1144 columns
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1471: RuntimeWarning: divide by zero encountered in double_scalars
+  return np.sqrt(eigvals[0]/eigvals[-1])
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: divide by zero encountered in double_scalars
+  return self.ess/self.df_model
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+INFO:feature_selecting.feature_select:
+In total, it takes 21.37 seconds to run regression for 1122 columns
+INFO:feature_selecting.feature_select:There are in total 1144 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+INFO:feature_selecting.feature_select:
+In total, it takes 105.04 seconds to run regression for 1144 columns
+[CV] engineer__lag=10, imputer__method=cubic, model__n_estimators=1000, selector__k=10, selector__select_method=hard 
+before imputation (366, 105) (0, 105)
+[CV] engineer__lag=10, imputer__method=slinear, model__n_estimators=1000, selector__k=10, selector__select_method=hard 
+before imputation (366, 105) (0, 105)
 
-...........................................................................
-/home/zhaoyi/code/repurchasing_in_production/train_test/train_test_utils.py in search_regression_ml(data_train=                 x1          x2         x3      ...0  3.3518     3.4240  
+Joblib's exception reporting continues...
 
-[1488 rows x 106 columns], save_k_best=1, look_ahead_day=1, split_date=datetime.date(2017, 12, 18), validation_period_length=30)
-    351                 reducer=PCA(n_components=10),  # temporarily not in use
-    352                 model=model_dict[model_name],
-    353                 x_train=x_train,
-    354                 y_train=y_train,
-    355                 pipeline_mode=model_pipeline_mode_dict[model_name],
---> 356                 pipeline_param_grid=pipeline_param_grid
-        pipeline_param_grid = {'engineer__lag': [10], 'imputer__method': ['directly'], 'model__n_estimators': [1000], 'selector__k': [10], 'selector__select_method': ['hard']}
-    357             )
-    358             model_id = str(uuid.uuid4())
-    359             y_test_predict = test(
-    360                 x_test=x_val,
-
-...........................................................................
-/home/zhaoyi/code/repurchasing_in_production/train_test/train_test_utils.py in train(imputer=ImputationMethod(method='directly'), engineer=FeatureExtract(changerate=True, diff=True, ind=[...
-        look_forward_days=1, ma=[1, 2, 3, 4, 5]), selector=FeatureSelector(alpha=0.05, date_column='date', ...d', select_top_k=True,
-        target_column='y'), scaler=MinMaxScaler(copy=True, feature_range=(0, 1)), reducer=PCA(copy=True, iterated_power='auto', n_componen...None,
-  svd_solver='auto', tol=0.0, whiten=False), model=RandomForestRegressor(bootstrap=True, criterion=...  random_state=1234, verbose=0, warm_start=False), x_train=                 x1          x2         x3      ...444  1.24322  2.9142  
-
-[1458 rows x 105 columns], y_train=array([ 4.4785,  4.3063,  4.519 , ...,  3.0997,  2.9142,  2.9302]), pipeline_mode='grid', pipeline_param_grid={'engineer__lag': [10], 'imputer__method': ['directly'], 'model__n_estimators': [1000], 'selector__k': [10], 'selector__select_method': ['hard']})
-    115     pipeline_grid_search = generate_grid_search(
-    116         search_pipeline=pipeline,
-    117         pipeline_mode=pipeline_mode,
-    118         param_grid=pipeline_param_grid
-    119     )
---> 120     pipeline_grid_search.fit(x_train, y_train)
-        pipeline_grid_search.fit = <bound method GridSearchCV.fit of GridSearchCV(c...    scoring='neg_mean_squared_error', verbose=3)>
-        x_train =                  x1          x2         x3      ...444  1.24322  2.9142  
-
-[1458 rows x 105 columns]
-        y_train = array([ 4.4785,  4.3063,  4.519 , ...,  3.0997,  2.9142,  2.9302])
-    121     logger.info("It takes {:.2f} seconds to train this model.".format(time.time() - time_init))
-    122     if pipeline_mode != "single":
-    123         pipeline_grid_search = pipeline_grid_search.best_estimator_
-    124 
-
-...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/sklearn/model_selection/_search.py in fit(self=GridSearchCV(cv=TimeSeriesSplit(n_splits=3), err...     scoring='neg_mean_squared_error', verbose=3), X=                 x1          x2         x3      ...444  1.24322  2.9142  
-
-[1458 rows x 105 columns], y=array([ 4.4785,  4.3063,  4.519 , ...,  3.0997,  2.9142,  2.9302]), groups=None)
-    940 
-    941         groups : array-like, with shape (n_samples,), optional
-    942             Group labels for the samples used while splitting the dataset into
-    943             train/test set.
-    944         """
---> 945         return self._fit(X, y, groups, ParameterGrid(self.param_grid))
-        self._fit = <bound method BaseSearchCV._fit of GridSearchCV(...    scoring='neg_mean_squared_error', verbose=3)>
-        X =                  x1          x2         x3      ...444  1.24322  2.9142  
-
-[1458 rows x 105 columns]
-        y = array([ 4.4785,  4.3063,  4.519 , ...,  3.0997,  2.9142,  2.9302])
-        groups = None
-        self.param_grid = {'engineer__lag': [10], 'imputer__method': ['directly'], 'model__n_estimators': [1000], 'selector__k': [10], 'selector__select_method': ['hard']}
-    946 
-    947 
-    948 class RandomizedSearchCV(BaseSearchCV):
-    949     """Randomized search on hyper parameters.
-
-...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/sklearn/model_selection/_search.py in _fit(self=GridSearchCV(cv=TimeSeriesSplit(n_splits=3), err...     scoring='neg_mean_squared_error', verbose=3), X=                 x1          x2         x3      ...444  1.24322  2.9142  
-
-[1458 rows x 105 columns], y=array([ 4.4785,  4.3063,  4.519 , ...,  3.0997,  2.9142,  2.9302]), groups=None, parameter_iterable=<sklearn.model_selection._search.ParameterGrid object>)
-    559                                   fit_params=self.fit_params,
-    560                                   return_train_score=self.return_train_score,
-    561                                   return_n_test_samples=True,
-    562                                   return_times=True, return_parameters=True,
-    563                                   error_score=self.error_score)
---> 564           for parameters in parameter_iterable
-        parameters = undefined
-        parameter_iterable = <sklearn.model_selection._search.ParameterGrid object>
-    565           for train, test in cv_iter)
-    566 
-    567         # if one choose to see train score, "out" will contain train score info
-    568         if self.return_train_score:
-
-...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/sklearn/externals/joblib/parallel.py in __call__(self=Parallel(n_jobs=-1), iterable=<generator object BaseSearchCV._fit.<locals>.<genexpr>>)
-    763             if pre_dispatch == "all" or n_jobs == 1:
-    764                 # The iterable was consumed all at once by the above for loop.
-    765                 # No need to wait for async callbacks to trigger to
-    766                 # consumption.
-    767                 self._iterating = False
---> 768             self.retrieve()
-        self.retrieve = <bound method Parallel.retrieve of Parallel(n_jobs=-1)>
-    769             # Make sure that we get a last message telling us we are done
-    770             elapsed_time = time.time() - self._start_time
-    771             self._print('Done %3i out of %3i | elapsed: %s finished',
-    772                         (len(self._output), len(self._output),
-
----------------------------------------------------------------------------
-Sub-process traceback:
----------------------------------------------------------------------------
-ValueError                                         Fri Jan  5 07:33:32 2018
-PID: 74699                          Python 3.6.1: /opt/anaconda3/bin/python
-...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/sklearn/externals/joblib/parallel.py in __call__(self=<sklearn.externals.joblib.parallel.BatchedCalls object>)
-    126     def __init__(self, iterator_slice):
-    127         self.items = list(iterator_slice)
-    128         self._size = len(self.items)
-    129 
-    130     def __call__(self):
---> 131         return [func(*args, **kwargs) for func, args, kwargs in self.items]
-        self.items = [(<function _fit_and_score>, (Pipeline(steps=[('imputer', ImputationMethod(met...andom_state=1234, verbose=0, warm_start=False))]),                  x1          x2         x3      ...444  1.24322  2.9142  
-
-[1458 rows x 105 columns], array([ 4.4785,  4.3063,  4.519 , ...,  3.0997,  2.9142,  2.9302]), make_scorer(mean_squared_error, greater_is_better=False), array([  0,   1,   2,   3,   4,   5,   6,   7,  ..., 358, 359, 360, 361, 362, 363,
-       364, 365]), array([366, 367, 368, 369, 370, 371, 372, 373, 3...20, 721, 722, 723, 724, 725, 726, 727, 728, 729]), 3, {'engineer__lag': 10, 'imputer__method': 'directly', 'model__n_estimators': 1000, 'selector__k': 10, 'selector__select_method': 'hard'}), {'error_score': 'raise', 'fit_params': {}, 'return_n_test_samples': True, 'return_parameters': True, 'return_times': True, 'return_train_score': True})]
-    132 
-    133     def __len__(self):
-    134         return self._size
-    135 
-
-...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/sklearn/externals/joblib/parallel.py in <listcomp>(.0=<list_iterator object>)
-    126     def __init__(self, iterator_slice):
-    127         self.items = list(iterator_slice)
-    128         self._size = len(self.items)
-    129 
-    130     def __call__(self):
---> 131         return [func(*args, **kwargs) for func, args, kwargs in self.items]
-        func = <function _fit_and_score>
-        args = (Pipeline(steps=[('imputer', ImputationMethod(met...andom_state=1234, verbose=0, warm_start=False))]),                  x1          x2         x3      ...444  1.24322  2.9142  
-
-[1458 rows x 105 columns], array([ 4.4785,  4.3063,  4.519 , ...,  3.0997,  2.9142,  2.9302]), make_scorer(mean_squared_error, greater_is_better=False), array([  0,   1,   2,   3,   4,   5,   6,   7,  ..., 358, 359, 360, 361, 362, 363,
-       364, 365]), array([366, 367, 368, 369, 370, 371, 372, 373, 3...20, 721, 722, 723, 724, 725, 726, 727, 728, 729]), 3, {'engineer__lag': 10, 'imputer__method': 'directly', 'model__n_estimators': 1000, 'selector__k': 10, 'selector__select_method': 'hard'})
-        kwargs = {'error_score': 'raise', 'fit_params': {}, 'return_n_test_samples': True, 'return_parameters': True, 'return_times': True, 'return_train_score': True}
-    132 
-    133     def __len__(self):
-    134         return self._size
-    135 
-
-...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/sklearn/model_selection/_validation.py in _fit_and_score(estimator=Pipeline(steps=[('imputer', ImputationMethod(met...andom_state=1234, verbose=0, warm_start=False))]), X=                 x1          x2         x3      ...444  1.24322  2.9142  
-
-[1458 rows x 105 columns], y=array([ 4.4785,  4.3063,  4.519 , ...,  3.0997,  2.9142,  2.9302]), scorer=make_scorer(mean_squared_error, greater_is_better=False), train=array([  0,   1,   2,   3,   4,   5,   6,   7,  ..., 358, 359, 360, 361, 362, 363,
-       364, 365]), test=array([366, 367, 368, 369, 370, 371, 372, 373, 3...20, 721, 722, 723, 724, 725, 726, 727, 728, 729]), verbose=3, parameters={'engineer__lag': 10, 'imputer__method': 'directly', 'model__n_estimators': 1000, 'selector__k': 10, 'selector__select_method': 'hard'}, fit_params={}, return_train_score=True, return_parameters=True, return_n_test_samples=True, return_times=True, error_score='raise')
-    233 
-    234     try:
-    235         if y_train is None:
-    236             estimator.fit(X_train, **fit_params)
-    237         else:
---> 238             estimator.fit(X_train, y_train, **fit_params)
-        estimator.fit = <bound method Pipeline.fit of Pipeline(steps=[('...ndom_state=1234, verbose=0, warm_start=False))])>
-        X_train =                  x1         x2         x3       ...001  0.19300   9.2485  
-
-[366 rows x 105 columns]
-        y_train = array([  4.4785,   4.3063,   4.519 ,   4.0835,  ... 6.8207,   8.2624,  11.6217,   9.2485,   7.5326])
-        fit_params = {}
-    239 
-    240     except Exception as e:
-    241         # Note fit time as time until error
-    242         fit_time = time.time() - start_time
-
-...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/sklearn/pipeline.py in fit(self=Pipeline(steps=[('imputer', ImputationMethod(met...andom_state=1234, verbose=0, warm_start=False))]), X=                 x1         x2         x3       ...001  0.19300   9.2485  
-
-[366 rows x 105 columns], y=array([  4.4785,   4.3063,   4.519 ,   4.0835,  ... 6.8207,   8.2624,  11.6217,   9.2485,   7.5326]), **fit_params={})
-    263         Returns
-    264         -------
-    265         self : Pipeline
-    266             This estimator
-    267         """
---> 268         Xt, fit_params = self._fit(X, y, **fit_params)
-        Xt = undefined
-        fit_params = {}
-        self._fit = <bound method Pipeline._fit of Pipeline(steps=[(...ndom_state=1234, verbose=0, warm_start=False))])>
-        X =                  x1         x2         x3       ...001  0.19300   9.2485  
-
-[366 rows x 105 columns]
-        y = array([  4.4785,   4.3063,   4.519 ,   4.0835,  ... 6.8207,   8.2624,  11.6217,   9.2485,   7.5326])
-    269         if self._final_estimator is not None:
-    270             self._final_estimator.fit(Xt, y, **fit_params)
-    271         return self
-    272 
-
-...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/sklearn/pipeline.py in _fit(self=Pipeline(steps=[('imputer', ImputationMethod(met...andom_state=1234, verbose=0, warm_start=False))]), X=                 x1         x2         x3       ...001  0.19300   9.2485  
-
-[366 rows x 105 columns], y=array([  4.4785,   4.3063,   4.519 ,   4.0835,  ... 6.8207,   8.2624,  11.6217,   9.2485,   7.5326]), **fit_params={})
-    229         Xt = X
-    230         for name, transform in self.steps[:-1]:
-    231             if transform is None:
-    232                 pass
-    233             elif hasattr(transform, "fit_transform"):
---> 234                 Xt = transform.fit_transform(Xt, y, **fit_params_steps[name])
-        Xt =                  x1         x2         x3       ...  0.00100    0.00000  
-
-[366 rows x 1155 columns]
-        transform.fit_transform = <bound method TransformerMixin.fit_transform of ...', select_top_k=True,
-        target_column='y')>
-        y = array([  4.4785,   4.3063,   4.519 ,   4.0835,  ... 6.8207,   8.2624,  11.6217,   9.2485,   7.5326])
-        fit_params_steps = {'engineer': {}, 'imputer': {}, 'model': {}, 'reducer': {}, 'scaler': {}, 'selector': {}}
-        name = 'selector'
-    235             else:
-    236                 Xt = transform.fit(Xt, y, **fit_params_steps[name]) \
-    237                               .transform(Xt)
-    238         if self._final_estimator is None:
-
-...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/sklearn/base.py in fit_transform(self=FeatureSelector(alpha=0.05, date_column='date', ...d', select_top_k=True,
-        target_column='y'), X=                 x1         x2         x3       ...  0.00100    0.00000  
-
-[366 rows x 1155 columns], y=array([  4.4785,   4.3063,   4.519 ,   4.0835,  ... 6.8207,   8.2624,  11.6217,   9.2485,   7.5326]), **fit_params={})
-    492         if y is None:
-    493             # fit method of arity 1 (unsupervised transformation)
-    494             return self.fit(X, **fit_params).transform(X)
-    495         else:
-    496             # fit method of arity 2 (supervised transformation)
---> 497             return self.fit(X, y, **fit_params).transform(X)
-        self.fit = <bound method FeatureSelector.fit of FeatureSele...', select_top_k=True,
-        target_column='y')>
-        X =                  x1         x2         x3       ...  0.00100    0.00000  
-
-[366 rows x 1155 columns]
-        y = array([  4.4785,   4.3063,   4.519 ,   4.0835,  ... 6.8207,   8.2624,  11.6217,   9.2485,   7.5326])
-        fit_params.transform = undefined
-    498 
-    499 
-    500 class DensityMixin(object):
-    501     """Mixin class for all density estimators in scikit-learn."""
-
-...........................................................................
-/home/zhaoyi/code/repurchasing_in_production/feature_selecting/feature_select.py in transform(self=FeatureSelector(alpha=0.05, date_column='date', ...d', select_top_k=True,
-        target_column='y'), X=                 x1         x2         x3       ...  0.00100    0.00000  
-
-[366 rows x 1155 columns], y=None)
-    179     def transform(self, X, y=None):
-    180         X = self._preprocess_data(X)
-    181         if self.is_training:
-    182             self.selector.fit(X)
-    183        
---> 184         X = self.selector.transform(X)
-        X =                  x1         x2         x3       ...  0.00100    0.00000  
-
-[366 rows x 1155 columns]
-        self.selector.transform = <bound method HardThresholdSelector.transform of...           select_top_k=True, target_column='y')>
-    185         logger.info("Just to check if logger could be printed out here!")
-    186         if np.any(np.isnan(X)):
-    187             logger.info("There is np.nan in X!")
-    188         if not np.all(np.isfinite(X)):
-
-...........................................................................
-/home/zhaoyi/code/repurchasing_in_production/feature_selecting/feature_select.py in transform(self=HardThresholdSelector(alpha=0.05, date_column='d...
-           select_top_k=True, target_column='y'), X=                 x1         x2         x3       ...  0.00100    0.00000  
-
-[366 rows x 1155 columns], y=None)
-    121 
-    122     def fit(self, X, y=None):
-    123         return self
-    124 
-    125     def transform(self, X, y=None):
---> 126         data_hard = self.select_top_k_hard(X)
-        data_hard = undefined
-        self.select_top_k_hard = <bound method HardThresholdSelector.select_top_k...           select_top_k=True, target_column='y')>
-        X =                  x1         x2         x3       ...  0.00100    0.00000  
-
-[366 rows x 1155 columns]
-    127         data_hard.reset_index(drop=True, inplace=True)
-    128         return data_hard.as_matrix()
-    129 
-    130 
-
-...........................................................................
-/home/zhaoyi/code/repurchasing_in_production/feature_selecting/feature_select.py in select_top_k_hard(self=HardThresholdSelector(alpha=0.05, date_column='d...
-           select_top_k=True, target_column='y'), data=                 x1         x2         x3       ...  0.00100    0.00000  
-
-[366 rows x 1155 columns])
-     96         return sorted_hard_thres_test_t_stats
-     97 
-     98     def select_top_k_hard(self, data):
-     99         init_time = time.time()
-    100         selected_features = []
---> 101         sorted_hard_thres_t_stats = self.generate_t_statistic(data.copy())
-        sorted_hard_thres_t_stats = undefined
-        self.generate_t_statistic = <bound method HardThresholdSelector.generate_t_s...           select_top_k=True, target_column='y')>
-        data.copy = <bound method NDFrame.copy of                  x... 0.00100    0.00000  
-
-[366 rows x 1155 columns]>
-    102         logger.info("\nIn total, it takes {:.2f} seconds to run regression for {} columns".format(
-    103             time.time() - init_time,
-    104             len(sorted_hard_thres_t_stats)
-    105         ))
-
-...........................................................................
-/home/zhaoyi/code/repurchasing_in_production/feature_selecting/feature_select.py in generate_t_statistic(self=HardThresholdSelector(alpha=0.05, date_column='d...
-           select_top_k=True, target_column='y'), data=                 x1         x2         x3       ...  0.00100    0.00000  
-
-[366 rows x 1155 columns])
-     80         ctrl_columns, test_columns = self.generate_ctrl_columns(data)
-     81 
-     82         for column_i in test_columns:
-     83             # time_start = time.time()
-     84             # logger.info("regression on {}".format(column_i))
----> 85             t_i = self.regression_t_statistic(data.copy(), self.target_column, ctrl_columns, column_i)
-        t_i = undefined
-        self.regression_t_statistic = <function HardThresholdSelector.regression_t_statistic>
-        data.copy = <bound method NDFrame.copy of                  x... 0.00100    0.00000  
-
-[366 rows x 1155 columns]>
-        self.target_column = 'y'
-        ctrl_columns = ['y_lag_1', 'y_lag_2', 'y_lag_3', 'y_lag_4', 'y_lag_5', 'y_lag_6', 'y_lag_7', 'y_lag_8', 'y_lag_9', 'y_lag_10']
-        column_i = 'x1'
-     86             hard_thres_test_t_stats[column_i] = abs(float(t_i))
-     87             # logger.info("for column_i: {}, it takes {:.2f} seconds to run regression for it!".format(
-     88             # column_i, time.time() - time_start))
-     89 
-
-...........................................................................
-/home/zhaoyi/code/repurchasing_in_production/feature_selecting/feature_select.py in regression_t_statistic(data=Empty DataFrame
-Columns: [x1, x2, x3, x4, x5, x6...99, x100, ...]
-Index: []
-
-[0 rows x 1155 columns], target_column='y', ctrl_columns=['y_lag_1', 'y_lag_2', 'y_lag_3', 'y_lag_4', 'y_lag_5', 'y_lag_6', 'y_lag_7', 'y_lag_8', 'y_lag_9', 'y_lag_10'], feature_column='x1')
-     51         # logger.info("target_column: {}, column_x_list: {}".format(target_column, column_x_list))
-     52         # logger.info("X: {}, y: {}".format(X.shape, y.shape))
-     53         # logger.info("X: {}, y: {}".format(X[0], y))
-     54 
-     55         # run regression
----> 56         x2 = sm.add_constant(x)
-        x2 = undefined
-        x = array([], shape=(0, 11), dtype=float64)
-     57         est = sm.OLS(y, x2)
-     58         est2 = est.fit()
-     59         # logger.info("est2 summary: {}".format(est2.summary()))
-     60         return est2.summary().tables[1].data[-1][3]
-
-...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/statsmodels/tools/tools.py in add_constant(data=array([], shape=(0, 11), dtype=float64), prepend=True, has_constant='skip')
-    274     if x.ndim == 1:
-    275         x = x[:,None]
-    276     elif x.ndim > 2:
-    277         raise ValueError('Only implementd 2-dimensional arrays')
-    278 
---> 279     is_nonzero_const = np.ptp(x, axis=0) == 0
-        is_nonzero_const = undefined
-        x = array([], shape=(0, 11), dtype=float64)
-    280     is_nonzero_const &= np.all(x != 0.0, axis=0)
-    281     if is_nonzero_const.any():
-    282         if has_constant == 'skip':
-    283             return x
-
-...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/numpy/core/fromnumeric.py in ptp(a=array([], shape=(0, 11), dtype=float64), axis=0, out=None)
-   2166 
-   2167     >>> np.ptp(x, axis=1)
-   2168     array([1, 1])
-   2169 
-   2170     """
--> 2171     return _wrapfunc(a, 'ptp', axis=axis, out=out)
-        a = array([], shape=(0, 11), dtype=float64)
-        axis = 0
-        out = None
-   2172 
-   2173 
-   2174 def amax(a, axis=None, out=None, keepdims=np._NoValue):
-   2175     """
-
-...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/numpy/core/fromnumeric.py in _wrapfunc(obj=array([], shape=(0, 11), dtype=float64), method='ptp', *args=(), **kwds={'axis': 0, 'out': None})
-     52     return result
-     53 
-     54 
-     55 def _wrapfunc(obj, method, *args, **kwds):
-     56     try:
----> 57         return getattr(obj, method)(*args, **kwds)
-        obj = array([], shape=(0, 11), dtype=float64)
-        method = 'ptp'
-        args = ()
-        kwds = {'axis': 0, 'out': None}
-     58 
-     59     # An AttributeError occurs if the object does not have
-     60     # such a method in its class.
-     61 
-
-ValueError: zero-size array to reduction operation maximum which has no identity
-___________________________________________________________________________
-INFO:__main__:We have run 1 models, with 1 failed, using 2.02 seconds
-INFO:__main__:
-
-List all the failed models:
-
-INFO:__main__:failed model_name: random_forest
-Empty DataFrame
-Columns: [model_id, split_date, model_name, eval_metric, update_date, timestamp]
-Index: []
-nan nan
-Traceback (most recent call last):
-  File "train_test_utils.py", line 514, in <module>
-    raise ValueError("No model left after filtering the best model recently!")
-ValueError: No model left after filtering the best model recently!
-/opt/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
-  from pandas.core import datetools
-/opt/anaconda3/lib/python3.6/site-packages/sklearn/cross_validation.py:44: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
-  "This module will be removed in 0.20.", DeprecationWarning)
-INFO:__main__:data_train: (1488, 106), data_test: (1493, 106)
-INFO:__main__:Setting is_training to be true, we run grid search on look_forward_days to be 1
-INFO:__main__:Tuning models, 20180105: 
-INFO:__main__:x_train: (1458, 105), y_train: (1458,), x_val: (30, 105), y_val: (30,)
-INFO:__main__:
-
-
-
-
-model: random_forest
-
-Fitting 3 folds for each of 1 candidates, totalling 3 fits
+[CV] engineer__lag=10, imputer__method=zero, model__n_estimators=1000, selector__k=10, selector__select_method=hard 
+before imputation (366, 105) (0, 105)
+[CV] engineer__lag=10, imputer__method=zero, model__n_estimators=1000, selector__k=10, selector__select_method=hard 
+before imputation (730, 105) (0, 105)
+Before extracting,  (730, 105) (730, 105)
+before imputation (364, 105) (0, 105)
+[CV] engineer__lag=10, imputer__method=cubic, model__n_estimators=1000, selector__k=10, selector__select_method=hard 
+before imputation (730, 105) (0, 105)
+Before extracting,  (730, 105) (730, 105)
+before imputation (364, 105) (0, 105)
+[CV] engineer__lag=10, imputer__method=slinear, model__n_estimators=1000, selector__k=10, selector__select_method=hard 
+before imputation (730, 105) (0, 105)
+Before extracting,  (730, 105) (730, 105)
+before imputation (364, 105) (0, 105)
+[CV] engineer__lag=10, imputer__method=zero, model__n_estimators=1000, selector__k=10, selector__select_method=hard 
+before imputation (1094, 105) (0, 105)
+Before extracting,  (1094, 105) (1094, 105)
+before imputation (364, 105) (0, 105)
+[CV] engineer__lag=10, imputer__method=cubic, model__n_estimators=1000, selector__k=10, selector__select_method=hard 
+before imputation (1094, 105) (0, 105)
+Before extracting,  (1094, 105) (1094, 105)
+before imputation (364, 105) (0, 105)
+[CV] engineer__lag=10, imputer__method=slinear, model__n_estimators=1000, selector__k=10, selector__select_method=hard 
+before imputation (1094, 105) (0, 105)
+Before extracting,  (1094, 105) (1094, 105)
+before imputation (364, 105) (0, 105)
 [CV] engineer__lag=10, imputer__method=directly, model__n_estimators=1000, selector__k=10, selector__select_method=hard 
 before imputation (1094, 105) (0, 105)
-[CV] engineer__lag=10, imputer__method=directly, model__n_estimators=1000, selector__k=10, selector__select_method=hard 
-before imputation (730, 105) (0, 105)
-[CV] engineer__lag=10, imputer__method=directly, model__n_estimators=1000, selector__k=10, selector__select_method=hard 
-before imputation (366, 105) (0, 105)
-INFO:__main__:JoblibUnboundLocalError
+Before extracting,  (1094, 105) (1094, 105)
+before imputation (364, 105) (0, 105)
+Before extracting,  (364, 103) (364, 103)
+before imputation (1094, 105) (0, 105)
+Before extracting,  (1094, 105) (1094, 105)
+[CV]  engineer__lag=10, imputer__method=directly, model__n_estimators=1000, selector__k=10, selector__select_method=hard, score=-13.171066, total= 5.0min
+[Parallel(n_jobs=-1)]: Done   3 out of  12 | elapsed:  6.8min remaining: 20.5min
+INFO:__main__:JoblibIndexError
 ___________________________________________________________________________
 Multiprocessing exception:
 ...........................................................................
@@ -904,7 +307,7 @@ Multiprocessing exception:
     354                 y_train=y_train,
     355                 pipeline_mode=model_pipeline_mode_dict[model_name],
 --> 356                 pipeline_param_grid=pipeline_param_grid
-        pipeline_param_grid = {'engineer__lag': [10], 'imputer__method': ['directly'], 'model__n_estimators': [1000], 'selector__k': [10], 'selector__select_method': ['hard']}
+        pipeline_param_grid = {'engineer__lag': [10], 'imputer__method': ['directly', 'zero', 'slinear', 'cubic'], 'model__n_estimators': [1000], 'selector__k': [10], 'selector__select_method': ['hard']}
     357             )
     358             model_id = str(uuid.uuid4())
     359             y_test_predict = test(
@@ -916,7 +319,7 @@ Multiprocessing exception:
         target_column='y'), scaler=MinMaxScaler(copy=True, feature_range=(0, 1)), reducer=PCA(copy=True, iterated_power='auto', n_componen...None,
   svd_solver='auto', tol=0.0, whiten=False), model=RandomForestRegressor(bootstrap=True, criterion=...  random_state=1234, verbose=0, warm_start=False), x_train=                 x1          x2         x3      ...444  1.24322  2.9142  
 
-[1458 rows x 105 columns], y_train=array([ 4.4785,  4.3063,  4.519 , ...,  3.0997,  2.9142,  2.9302]), pipeline_mode='grid', pipeline_param_grid={'engineer__lag': [10], 'imputer__method': ['directly'], 'model__n_estimators': [1000], 'selector__k': [10], 'selector__select_method': ['hard']})
+[1458 rows x 105 columns], y_train=array([ 4.4785,  4.3063,  4.519 , ...,  3.0997,  2.9142,  2.9302]), pipeline_mode='grid', pipeline_param_grid={'engineer__lag': [10], 'imputer__method': ['directly', 'zero', 'slinear', 'cubic'], 'model__n_estimators': [1000], 'selector__k': [10], 'selector__select_method': ['hard']})
     115     pipeline_grid_search = generate_grid_search(
     116         search_pipeline=pipeline,
     117         pipeline_mode=pipeline_mode,
@@ -949,7 +352,7 @@ Multiprocessing exception:
 [1458 rows x 105 columns]
         y = array([ 4.4785,  4.3063,  4.519 , ...,  3.0997,  2.9142,  2.9302])
         groups = None
-        self.param_grid = {'engineer__lag': [10], 'imputer__method': ['directly'], 'model__n_estimators': [1000], 'selector__k': [10], 'selector__select_method': ['hard']}
+        self.param_grid = {'engineer__lag': [10], 'imputer__method': ['directly', 'zero', 'slinear', 'cubic'], 'model__n_estimators': [1000], 'selector__k': [10], 'selector__select_method': ['hard']}
     946 
     947 
     948 class RandomizedSearchCV(BaseSearchCV):
@@ -989,8 +392,8 @@ Multiprocessing exception:
 ---------------------------------------------------------------------------
 Sub-process traceback:
 ---------------------------------------------------------------------------
-UnboundLocalError                                  Fri Jan  5 22:41:46 2018
-PID: 115973                         Python 3.6.1: /opt/anaconda3/bin/python
+IndexError                                         Sat Jan  6 01:29:15 2018
+PID: 122346                         Python 3.6.1: /opt/anaconda3/bin/python
 ...........................................................................
 /opt/anaconda3/lib/python3.6/site-packages/sklearn/externals/joblib/parallel.py in __call__(self=<sklearn.externals.joblib.parallel.BatchedCalls object>)
     126     def __init__(self, iterator_slice):
@@ -1002,7 +405,7 @@ PID: 115973                         Python 3.6.1: /opt/anaconda3/bin/python
         self.items = [(<function _fit_and_score>, (Pipeline(steps=[('imputer', ImputationMethod(met...andom_state=1234, verbose=0, warm_start=False))]),                  x1          x2         x3      ...444  1.24322  2.9142  
 
 [1458 rows x 105 columns], array([ 4.4785,  4.3063,  4.519 , ...,  3.0997,  2.9142,  2.9302]), make_scorer(mean_squared_error, greater_is_better=False), array([  0,   1,   2,   3,   4,   5,   6,   7,  ..., 358, 359, 360, 361, 362, 363,
-       364, 365]), array([366, 367, 368, 369, 370, 371, 372, 373, 3...20, 721, 722, 723, 724, 725, 726, 727, 728, 729]), 3, {'engineer__lag': 10, 'imputer__method': 'directly', 'model__n_estimators': 1000, 'selector__k': 10, 'selector__select_method': 'hard'}), {'error_score': 'raise', 'fit_params': {}, 'return_n_test_samples': True, 'return_parameters': True, 'return_times': True, 'return_train_score': True})]
+       364, 365]), array([366, 367, 368, 369, 370, 371, 372, 373, 3...20, 721, 722, 723, 724, 725, 726, 727, 728, 729]), 3, {'engineer__lag': 10, 'imputer__method': 'zero', 'model__n_estimators': 1000, 'selector__k': 10, 'selector__select_method': 'hard'}), {'error_score': 'raise', 'fit_params': {}, 'return_n_test_samples': True, 'return_parameters': True, 'return_times': True, 'return_train_score': True})]
     132 
     133     def __len__(self):
     134         return self._size
@@ -1020,7 +423,7 @@ PID: 115973                         Python 3.6.1: /opt/anaconda3/bin/python
         args = (Pipeline(steps=[('imputer', ImputationMethod(met...andom_state=1234, verbose=0, warm_start=False))]),                  x1          x2         x3      ...444  1.24322  2.9142  
 
 [1458 rows x 105 columns], array([ 4.4785,  4.3063,  4.519 , ...,  3.0997,  2.9142,  2.9302]), make_scorer(mean_squared_error, greater_is_better=False), array([  0,   1,   2,   3,   4,   5,   6,   7,  ..., 358, 359, 360, 361, 362, 363,
-       364, 365]), array([366, 367, 368, 369, 370, 371, 372, 373, 3...20, 721, 722, 723, 724, 725, 726, 727, 728, 729]), 3, {'engineer__lag': 10, 'imputer__method': 'directly', 'model__n_estimators': 1000, 'selector__k': 10, 'selector__select_method': 'hard'})
+       364, 365]), array([366, 367, 368, 369, 370, 371, 372, 373, 3...20, 721, 722, 723, 724, 725, 726, 727, 728, 729]), 3, {'engineer__lag': 10, 'imputer__method': 'zero', 'model__n_estimators': 1000, 'selector__k': 10, 'selector__select_method': 'hard'})
         kwargs = {'error_score': 'raise', 'fit_params': {}, 'return_n_test_samples': True, 'return_parameters': True, 'return_times': True, 'return_train_score': True}
     132 
     133     def __len__(self):
@@ -1031,7 +434,7 @@ PID: 115973                         Python 3.6.1: /opt/anaconda3/bin/python
 /opt/anaconda3/lib/python3.6/site-packages/sklearn/model_selection/_validation.py in _fit_and_score(estimator=Pipeline(steps=[('imputer', ImputationMethod(met...andom_state=1234, verbose=0, warm_start=False))]), X=                 x1          x2         x3      ...444  1.24322  2.9142  
 
 [1458 rows x 105 columns], y=array([ 4.4785,  4.3063,  4.519 , ...,  3.0997,  2.9142,  2.9302]), scorer=make_scorer(mean_squared_error, greater_is_better=False), train=array([  0,   1,   2,   3,   4,   5,   6,   7,  ..., 358, 359, 360, 361, 362, 363,
-       364, 365]), test=array([366, 367, 368, 369, 370, 371, 372, 373, 3...20, 721, 722, 723, 724, 725, 726, 727, 728, 729]), verbose=3, parameters={'engineer__lag': 10, 'imputer__method': 'directly', 'model__n_estimators': 1000, 'selector__k': 10, 'selector__select_method': 'hard'}, fit_params={}, return_train_score=True, return_parameters=True, return_n_test_samples=True, return_times=True, error_score='raise')
+       364, 365]), test=array([366, 367, 368, 369, 370, 371, 372, 373, 3...20, 721, 722, 723, 724, 725, 726, 727, 728, 729]), verbose=3, parameters={'engineer__lag': 10, 'imputer__method': 'zero', 'model__n_estimators': 1000, 'selector__k': 10, 'selector__select_method': 'hard'}, fit_params={}, return_train_score=True, return_parameters=True, return_n_test_samples=True, return_times=True, error_score='raise')
     233 
     234     try:
     235         if y_train is None:
@@ -1084,7 +487,7 @@ PID: 115973                         Python 3.6.1: /opt/anaconda3/bin/python
         Xt =                  x1         x2         x3       ...001  0.19300   9.2485  
 
 [366 rows x 105 columns]
-        transform.fit_transform = <bound method TransformerMixin.fit_transform of ImputationMethod(method='directly')>
+        transform.fit_transform = <bound method TransformerMixin.fit_transform of ImputationMethod(method='zero')>
         y = array([  4.4785,   4.3063,   4.519 ,   4.0835,  ... 6.8207,   8.2624,  11.6217,   9.2485,   7.5326])
         fit_params_steps = {'engineer': {}, 'imputer': {}, 'model': {}, 'reducer': {}, 'scaler': {}, 'selector': {}}
         name = 'imputer'
@@ -1094,7 +497,7 @@ PID: 115973                         Python 3.6.1: /opt/anaconda3/bin/python
     238         if self._final_estimator is None:
 
 ...........................................................................
-/opt/anaconda3/lib/python3.6/site-packages/sklearn/base.py in fit_transform(self=ImputationMethod(method='directly'), X=                 x1         x2         x3       ...001  0.19300   9.2485  
+/opt/anaconda3/lib/python3.6/site-packages/sklearn/base.py in fit_transform(self=ImputationMethod(method='zero'), X=                 x1         x2         x3       ...001  0.19300   9.2485  
 
 [366 rows x 105 columns], y=array([  4.4785,   4.3063,   4.519 ,   4.0835,  ... 6.8207,   8.2624,  11.6217,   9.2485,   7.5326]), **fit_params={})
     492         if y is None:
@@ -1103,7 +506,7 @@ PID: 115973                         Python 3.6.1: /opt/anaconda3/bin/python
     495         else:
     496             # fit method of arity 2 (supervised transformation)
 --> 497             return self.fit(X, y, **fit_params).transform(X)
-        self.fit = <bound method ImputationMethod.fit of ImputationMethod(method='directly')>
+        self.fit = <bound method ImputationMethod.fit of ImputationMethod(method='zero')>
         X =                  x1         x2         x3       ...001  0.19300   9.2485  
 
 [366 rows x 105 columns]
@@ -1115,64 +518,60 @@ PID: 115973                         Python 3.6.1: /opt/anaconda3/bin/python
     501     """Mixin class for all density estimators in scikit-learn."""
 
 ...........................................................................
-/home/zhaoyi/code/repurchasing_in_production/data_processing/imputation.py in transform(self=ImputationMethod(method='directly'), X=                 x1         x2         x3       ...001  0.19300   9.2485  
+/home/zhaoyi/code/repurchasing_in_production/data_processing/imputation.py in transform(self=ImputationMethod(method='zero'), X=                 x1         x2         x3       ...001  0.19300   9.2485  
 
 [366 rows x 105 columns], y=None)
+    109         if self.method == 'directly':
     110             # return self.direct_impute(X), y
     111             X = self.direct_impute(X)
     112         else:
     113             # return self.diffmethod_imputed(X), y
-    114             X = self.method_imputed(X)
---> 115         data_directly = data_directly.dropna(axis=1, how="any")      
-        data_directly = undefined
-        data_directly.dropna = undefined
+--> 114             X = self.method_imputed(X)
+        X =                  x1         x2         x3       ...001  0.19300   9.2485  
+
+[366 rows x 105 columns]
+        self.method_imputed = <bound method ImputationMethod.method_imputed of ImputationMethod(method='zero')>
+    115         X = X.dropna(axis=1, how="any")      
     116         # print("After imputation", X.shape, X.dropna().shape)
     117         # print("After imputation, X: {}".format(X[X.isnull()].shape))
     118         # print(X[X.isnull()].reset_index().loc[:5])
-    119         return X
 
-UnboundLocalError: local variable 'data_directly' referenced before assignment
+...........................................................................
+/home/zhaoyi/code/repurchasing_in_production/data_processing/imputation.py in method_imputed(self=ImputationMethod(method='zero'), data=                 x1         x2         x3       ...001  0.19300   9.2485  
+
+[366 rows x 105 columns])
+     78                     data_filled_position.append(j)
+     79 
+     80             x = data_filled_position
+     81             y = data_filled_value
+     82             # f=interpolate.CubicSpline(x,y)
+---> 83             xnew = np.linspace(x[0], x[-1], x[-1] - x[0] + 1)
+        xnew = array([ 175.,  176.,  177.,  178.,  179.,  180.,... 247.,  248.,  249.,  250.,  251.,  252.,  253.])
+        x = []
+     84             if self.method == 'cubic':
+     85                 f = interpolate.CubicSpline(x, y)
+     86             elif self.method == 'quadratic':
+     87                 f = interpolate.interp1d(x, y, kind=self.method)
+
+IndexError: list index out of range
 ___________________________________________________________________________
-INFO:__main__:We have run 1 models, with 1 failed, using 2.51 seconds
+INFO:__main__:We have run 1 models, with 1 failed, using 410.96 seconds
 INFO:__main__:
 
 List all the failed models:
 
 INFO:__main__:failed model_name: random_forest
-INFO:__main__:By filtering the best eval_metric, we select the only model 59570bcd-e2ab-482a-a5e9-806134ac7ee9, with eval_metric: 16.666666666666664
-                               model_id  split_date     model_name  \
-0  59570bcd-e2ab-482a-a5e9-806134ac7ee9  2017-12-18  random_forest   
-1  dd4f41ee-02aa-4a3a-96a7-b4b35421df98  2017-12-18  random_forest   
-2  bf27b466-da38-4613-a2e6-503b501151df  2017-12-18  random_forest   
-3  b1eb99e2-847d-4b83-aa6a-fb65bf409c0a  2017-12-18  random_forest   
-
-   eval_metric  update_date      timestamp  
-0    16.666667     20180105  1515206161595  
-1    16.666667     20180105  1515206356030  
-2    16.666667     20180105  1515206458162  
-3    16.666667     20180105  1515206540743  
-2017-12-18 16.6666666667
-Index([2012-01-04, 2012-01-05, 2012-01-06, 2012-01-09, 2012-01-10], dtype='object')
-before imputation (1493, 105) (0, 105)
 Traceback (most recent call last):
-  File "train_test_utils.py", line 543, in <module>
-    model_id=model_results['model_id'][index_i]
-  File "train_test_utils.py", line 197, in test
-    y_test_predict = pipeline.predict(x_test)
-  File "/opt/anaconda3/lib/python3.6/site-packages/sklearn/utils/metaestimators.py", line 54, in <lambda>
-    out = lambda *args, **kwargs: self.fn(obj, *args, **kwargs)
-  File "/opt/anaconda3/lib/python3.6/site-packages/sklearn/pipeline.py", line 326, in predict
-    Xt = transform.transform(Xt)
-  File "./../data_processing/imputation.py", line 115, in transform
-    data_directly = data_directly.dropna(axis=1, how="any")      
-UnboundLocalError: local variable 'data_directly' referenced before assignment
+  File "train_test_utils.py", line 514, in <module>
+    raise ValueError("No model left after filtering the best model recently!")
+ValueError: No model left after filtering the best model recently!
 /opt/anaconda3/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
   from pandas.core import datetools
 /opt/anaconda3/lib/python3.6/site-packages/sklearn/cross_validation.py:44: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
   "This module will be removed in 0.20.", DeprecationWarning)
 INFO:__main__:data_train: (1488, 106), data_test: (1493, 106)
 INFO:__main__:Setting is_training to be true, we run grid search on look_forward_days to be 1
-INFO:__main__:Tuning models, 20180105: 
+INFO:__main__:Tuning models, 20180106: 
 INFO:__main__:x_train: (1458, 105), y_train: (1458,), x_val: (30, 105), y_val: (30,)
 INFO:__main__:
 
@@ -1181,12 +580,13 @@ INFO:__main__:
 
 model: random_forest
 
-Fitting 3 folds for each of 1 candidates, totalling 3 fits
-INFO:feature_selecting.feature_select:select_method: hard, data_type: <class 'pandas.core.frame.DataFrame'>
+Fitting 3 folds for each of 3 candidates, totalling 9 fits
 INFO:feature_selecting.feature_select:There are in total 1133 columns, while we only need 10 columns
-INFO:feature_selecting.feature_select:select_method: hard, data_type: <class 'pandas.core.frame.DataFrame'>
 INFO:feature_selecting.feature_select:There are in total 1144 columns, while we only need 10 columns
-INFO:feature_selecting.feature_select:select_method: hard, data_type: <class 'pandas.core.frame.DataFrame'>
+INFO:feature_selecting.feature_select:There are in total 1144 columns, while we only need 10 columns
+INFO:feature_selecting.feature_select:There are in total 1144 columns, while we only need 10 columns
+INFO:feature_selecting.feature_select:There are in total 1144 columns, while we only need 10 columns
+INFO:feature_selecting.feature_select:There are in total 1144 columns, while we only need 10 columns
 INFO:feature_selecting.feature_select:There are in total 1144 columns, while we only need 10 columns
 /opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
   return (S > tol).sum(axis=-1)
@@ -1205,9 +605,30 @@ INFO:feature_selecting.feature_select:There are in total 1144 columns, while we 
 /opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1471: RuntimeWarning: divide by zero encountered in double_scalars
   return np.sqrt(eigvals[0]/eigvals[-1])
 INFO:feature_selecting.feature_select:
-In total, it takes 52.95 seconds to run regression for 1133 columns
-INFO:feature_selecting.feature_select:select_method: hard, data_type: <class 'pandas.core.frame.DataFrame'>
+In total, it takes 71.62 seconds to run regression for 1133 columns
 INFO:feature_selecting.feature_select:There are in total 1111 columns, while we only need 10 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1573: RuntimeWarning: overflow encountered in multiply
+  tol = S.max(axis=-1, keepdims=True) * max(M.shape[-2:]) * finfo(S.dtype).eps
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1458: RuntimeWarning: overflow encountered in square
+  eigvals = self._wexog_singular_values ** 2
+/opt/anaconda3/lib/python3.6/site-packages/numpy/core/_methods.py:116: RuntimeWarning: overflow encountered in multiply
+  x = um.multiply(x, x, out=x)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: divide by zero encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: divide by zero encountered in double_scalars
+  return self.ess/self.df_model
+INFO:feature_selecting.feature_select:
+In total, it takes 95.88 seconds to run regression for 1144 columns
 /opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
   return (S > tol).sum(axis=-1)
 /opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
@@ -1223,8 +644,23 @@ INFO:feature_selecting.feature_select:There are in total 1111 columns, while we 
 /opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1471: RuntimeWarning: divide by zero encountered in double_scalars
   return np.sqrt(eigvals[0]/eigvals[-1])
 INFO:feature_selecting.feature_select:
-In total, it takes 67.10 seconds to run regression for 1144 columns
-INFO:feature_selecting.feature_select:select_method: hard, data_type: <class 'pandas.core.frame.DataFrame'>
+In total, it takes 97.31 seconds to run regression for 1144 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: divide by zero encountered in double_scalars
+  return self.ess/self.df_model
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1471: RuntimeWarning: divide by zero encountered in double_scalars
+  return np.sqrt(eigvals[0]/eigvals[-1])
+INFO:feature_selecting.feature_select:
+In total, it takes 101.19 seconds to run regression for 1144 columns
 INFO:feature_selecting.feature_select:There are in total 1133 columns, while we only need 10 columns
 /opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
   return (S > tol).sum(axis=-1)
@@ -1245,8 +681,7 @@ INFO:feature_selecting.feature_select:There are in total 1133 columns, while we 
 /opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: invalid value encountered in double_scalars
   return self.ess/self.df_model
 INFO:feature_selecting.feature_select:
-In total, it takes 43.34 seconds to run regression for 1111 columns
-INFO:feature_selecting.feature_select:select_method: hard, data_type: <class 'pandas.core.frame.DataFrame'>
+In total, it takes 54.84 seconds to run regression for 1111 columns
 INFO:feature_selecting.feature_select:There are in total 1133 columns, while we only need 10 columns
 /opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
   return (S > tol).sum(axis=-1)
@@ -1263,7 +698,10 @@ INFO:feature_selecting.feature_select:There are in total 1133 columns, while we 
 /opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: divide by zero encountered in double_scalars
   return self.ess/self.df_model
 INFO:feature_selecting.feature_select:
-In total, it takes 107.76 seconds to run regression for 1144 columns
+In total, it takes 45.87 seconds to run regression for 1133 columns
+INFO:feature_selecting.feature_select:There are in total 1144 columns, while we only need 10 columns
+INFO:feature_selecting.feature_select:
+In total, it takes 59.74 seconds to run regression for 1133 columns
 /opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
   return (S > tol).sum(axis=-1)
 /opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
@@ -1279,158 +717,39 @@ In total, it takes 107.76 seconds to run regression for 1144 columns
 /opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: divide by zero encountered in double_scalars
   return self.ess/self.df_model
 INFO:feature_selecting.feature_select:
-In total, it takes 37.88 seconds to run regression for 1133 columns
-INFO:feature_selecting.feature_select:select_method: hard, data_type: <class 'pandas.core.frame.DataFrame'>
+In total, it takes 227.60 seconds to run regression for 1144 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1471: RuntimeWarning: divide by zero encountered in double_scalars
+  return np.sqrt(eigvals[0]/eigvals[-1])
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: divide by zero encountered in double_scalars
+  return self.ess/self.df_model
+INFO:feature_selecting.feature_select:
+In total, it takes 231.99 seconds to run regression for 1144 columns
+/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
+  return (S > tol).sum(axis=-1)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
+  return self.params / self.bse
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
+  return (self.a < x) & (x < self.b)
+/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
+  cond2 = cond0 & (x <= self.a)
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: divide by zero encountered in double_scalars
+  return self.ess/self.df_model
+/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1471: RuntimeWarning: divide by zero encountered in double_scalars
+  return np.sqrt(eigvals[0]/eigvals[-1])
+INFO:feature_selecting.feature_select:
+In total, it takes 230.67 seconds to run regression for 1144 columns
+INFO:feature_selecting.feature_select:
+In total, it takes 72.04 seconds to run regression for 1144 columns
 INFO:feature_selecting.feature_select:There are in total 1122 columns, while we only need 10 columns
-INFO:feature_selecting.feature_select:select_method: hard, data_type: <class 'pandas.core.frame.DataFrame'>
-INFO:feature_selecting.feature_select:There are in total 1144 columns, while we only need 10 columns
-INFO:feature_selecting.feature_select:
-In total, it takes 24.26 seconds to run regression for 1133 columns
-/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1471: RuntimeWarning: divide by zero encountered in double_scalars
-  return np.sqrt(eigvals[0]/eigvals[-1])
-/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: divide by zero encountered in double_scalars
-  return self.ess/self.df_model
-/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
-  return self.params / self.bse
-/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
-  return (self.a < x) & (x < self.b)
-/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
-  return (self.a < x) & (x < self.b)
-/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
-  cond2 = cond0 & (x <= self.a)
-INFO:feature_selecting.feature_select:
-In total, it takes 19.18 seconds to run regression for 1122 columns
-INFO:feature_selecting.feature_select:select_method: hard, data_type: <class 'pandas.core.frame.DataFrame'>
-INFO:feature_selecting.feature_select:There are in total 1144 columns, while we only need 10 columns
-INFO:feature_selecting.feature_select:
-In total, it takes 45.17 seconds to run regression for 1144 columns
-/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
-  return (S > tol).sum(axis=-1)
-INFO:feature_selecting.feature_select:
-In total, it takes 104.98 seconds to run regression for 1144 columns
-[CV] engineer__lag=10, imputer__method=directly, model__n_estimators=1000, selector__k=10, selector__select_method=hard 
-before imputation (366, 105) (0, 105)
-Before extracting,  (366, 104) (366, 104)
-before imputation (364, 105) (0, 105)
-Before extracting,  (364, 102) (364, 102)
-before imputation (366, 105) (0, 105)
-Before extracting,  (366, 104) (366, 104)
-[CV]  engineer__lag=10, imputer__method=directly, model__n_estimators=1000, selector__k=10, selector__select_method=hard, score=-23.151719, total= 1.8min
-[Parallel(n_jobs=-1)]: Done   3 out of   3 | elapsed:  4.2min finished
-INFO:feature_selecting.feature_select:select_method: hard, data_type: <class 'pandas.core.frame.DataFrame'>
-INFO:feature_selecting.feature_select:There are in total 1144 columns, while we only need 10 columns
-/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
-  return (S > tol).sum(axis=-1)
-/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
-  return self.params / self.bse
-/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
-  return (self.a < x) & (x < self.b)
-/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
-  return (self.a < x) & (x < self.b)
-/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
-  cond2 = cond0 & (x <= self.a)
-/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1471: RuntimeWarning: divide by zero encountered in double_scalars
-  return np.sqrt(eigvals[0]/eigvals[-1])
-/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: divide by zero encountered in double_scalars
-  return self.ess/self.df_model
-INFO:feature_selecting.feature_select:
-In total, it takes 133.62 seconds to run regression for 1144 columns
-INFO:__main__:It takes 399.70 seconds to train this model.
-INFO:feature_selecting.feature_select:select_method: hard, data_type: <class 'pandas.core.frame.DataFrame'>
-INFO:feature_selecting.feature_select:There are in total 891 columns, while we only need 10 columns
-/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1471: RuntimeWarning: divide by zero encountered in double_scalars
-  return np.sqrt(eigvals[0]/eigvals[-1])
-/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: invalid value encountered in double_scalars
-  return self.ess/self.df_model
-/opt/anaconda3/lib/python3.6/site-packages/statsmodels/base/model.py:1036: RuntimeWarning: invalid value encountered in true_divide
-  return self.params / self.bse
-/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in greater
-  return (self.a < x) & (x < self.b)
-/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:879: RuntimeWarning: invalid value encountered in less
-  return (self.a < x) & (x < self.b)
-/opt/anaconda3/lib/python3.6/site-packages/scipy/stats/_distn_infrastructure.py:1821: RuntimeWarning: invalid value encountered in less_equal
-  cond2 = cond0 & (x <= self.a)
-/opt/anaconda3/lib/python3.6/site-packages/statsmodels/regression/linear_model.py:1396: RuntimeWarning: divide by zero encountered in double_scalars
-  return self.ess/self.df_model
-INFO:feature_selecting.feature_select:
-In total, it takes 12.62 seconds to run regression for 891 columns
-INFO:__main__:It takes 13.45 seconds to predict.
-INFO:__main__:Model 1, model_id: 1f7c4f6d-25b3-4990-a52c-439eaef9e197,model_name: random_forest, eval_metric: 0.0, using 413.16 seconds
-INFO:__main__:We have run 2 models, with 0 failed, using 413.17 seconds
-INFO:__main__:
-
-List all the failed models:
-
-INFO:__main__:Saving 1f7c4f6d-25b3-4990-a52c-439eaef9e197 to disk...
-INFO:__main__:Model dumped into ../results/models/model_1f7c4f6d-25b3-4990-a52c-439eaef9e197.pkl.
-INFO:__main__:By filtering the best eval_metric, we select the only model 59570bcd-e2ab-482a-a5e9-806134ac7ee9, with eval_metric: 16.666666666666664
-INFO:feature_selecting.feature_select:select_method: hard, data_type: <class 'pandas.core.frame.DataFrame'>
-INFO:feature_selecting.feature_select:There are in total 1144 columns, while we only need 10 columns
-/opt/anaconda3/lib/python3.6/site-packages/numpy/linalg/linalg.py:1574: RuntimeWarning: invalid value encountered in greater
-  return (S > tol).sum(axis=-1)
-INFO:feature_selecting.feature_select:
-In total, it takes 132.41 seconds to run regression for 1144 columns
-INFO:__main__:It takes 143.36 seconds to predict.
-INFO:__main__:Model: 59570bcd-e2ab-482a-a5e9-806134ac7ee9, model_name: random_forest, metric: 16.666666666666664
-INFO:feature_selecting.feature_select:select_method: hard, data_type: <class 'pandas.core.frame.DataFrame'>
-INFO:feature_selecting.feature_select:There are in total 1144 columns, while we only need 10 columns
-INFO:feature_selecting.feature_select:
-In total, it takes 98.49 seconds to run regression for 1144 columns
-INFO:__main__:It takes 106.92 seconds to predict.
-INFO:__main__:Model: dd4f41ee-02aa-4a3a-96a7-b4b35421df98, model_name: random_forest, metric: 16.666666666666664
-INFO:feature_selecting.feature_select:select_method: hard, data_type: <class 'pandas.core.frame.DataFrame'>
-INFO:feature_selecting.feature_select:There are in total 1144 columns, while we only need 10 columns
-INFO:feature_selecting.feature_select:
-In total, it takes 95.31 seconds to run regression for 1144 columns
-INFO:__main__:It takes 104.07 seconds to predict.
-INFO:__main__:Model: bf27b466-da38-4613-a2e6-503b501151df, model_name: random_forest, metric: 16.666666666666664
-INFO:feature_selecting.feature_select:select_method: hard, data_type: <class 'pandas.core.frame.DataFrame'>
-INFO:feature_selecting.feature_select:There are in total 1144 columns, while we only need 10 columns
-INFO:feature_selecting.feature_select:
-In total, it takes 96.25 seconds to run regression for 1144 columns
-INFO:__main__:It takes 105.74 seconds to predict.
-INFO:__main__:Model: b1eb99e2-847d-4b83-aa6a-fb65bf409c0a, model_name: random_forest, metric: 16.666666666666664
-INFO:__main__:Prediction finished!!!
-before imputation (1458, 105) (0, 105)
-Before extracting,  (1458, 105) (1458, 105)
-before imputation (30, 105) (0, 105)
-Before extracting,  (30, 82) (30, 82)
-[ 8.6789613  8.6789613  8.6789613  8.6789613  8.6789613  8.6789613
-  8.6789613  8.6789613  8.6789613  8.6789613  8.6789613  8.6789613
-  8.6789613  8.6789613  8.6789613  8.6789613  8.6789613  8.6789613
-  8.6789613  8.6789613  8.6789613  8.6789613  8.6789613  8.6789613
-  8.6789613  8.6789613  8.6789613  8.6789613  8.6789613  8.6789613]
-                               model_id  split_date     model_name  \
-0  59570bcd-e2ab-482a-a5e9-806134ac7ee9  2017-12-18  random_forest   
-1  dd4f41ee-02aa-4a3a-96a7-b4b35421df98  2017-12-18  random_forest   
-2  bf27b466-da38-4613-a2e6-503b501151df  2017-12-18  random_forest   
-3  b1eb99e2-847d-4b83-aa6a-fb65bf409c0a  2017-12-18  random_forest   
-4  1f7c4f6d-25b3-4990-a52c-439eaef9e197  2017-12-18  random_forest   
-
-   eval_metric  update_date      timestamp  
-0    16.666667     20180105  1515206161595  
-1    16.666667     20180105  1515206356030  
-2    16.666667     20180105  1515206458162  
-3    16.666667     20180105  1515206540743  
-4     0.000000     20180105  1515210570081  
-2017-12-18 16.6666666667
-Index([2012-01-04, 2012-01-05, 2012-01-06, 2012-01-09, 2012-01-10], dtype='object')
-before imputation (1493, 105) (0, 105)
-Before extracting,  (1493, 105) (1493, 105)
-[ 4.70578251  4.44294728  4.72912033 ...,  3.98948451  4.01996599
-  3.99137764]
-Index([2012-01-04, 2012-01-05, 2012-01-06, 2012-01-09, 2012-01-10], dtype='object')
-before imputation (1493, 105) (0, 105)
-Before extracting,  (1493, 105) (1493, 105)
-[ 4.70578251  4.44294728  4.72912033 ...,  3.98948451  4.01996599
-  3.99137764]
-Index([2012-01-04, 2012-01-05, 2012-01-06, 2012-01-09, 2012-01-10], dtype='object')
-before imputation (1493, 105) (0, 105)
-Before extracting,  (1493, 105) (1493, 105)
-[ 4.70578251  4.44294728  4.72912033 ...,  3.98948451  4.01996599
-  3.99137764]
-Index([2012-01-04, 2012-01-05, 2012-01-06, 2012-01-09, 2012-01-10], dtype='object')
-before imputation (1493, 105) (0, 105)
-Before extracting,  (1493, 105) (1493, 105)
-[ 4.70578251  4.44294728  4.72912033 ...,  3.98948451  4.01996599
-  3.99137764]
