@@ -206,7 +206,7 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
         # print(X)
         print("Before extracting, ", X.shape, X.dropna().shape)
         data = X.copy()
-        # data.index = pd.to_datetime(data.index)
+        data.index = pd.to_datetime(data.index)
         data_value = data.values
         data_index = data.index
         data_columns = data.columns
