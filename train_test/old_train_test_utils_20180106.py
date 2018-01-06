@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import datetime
 import time
-# import sys
+import sys
 import uuid
 sys.path.append('./../')
 from pipeline_lib import BuildPipeline
@@ -13,13 +13,17 @@ from data_processing import ImputationMethod, GenerateDataFrame
 from evaluation import Evaluate
 
 from sklearn.externals import joblib
+from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV, TimeSeriesSplit
-from sklearn.linear_model import Lasso
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.linear_model import Lasso, Ridge, ElasticNet, least_angle, LassoLars, LinearRegression
+# from sklearn.feature_selection import chi2, SelectKBest, VarianceThreshold, SelectFromModel
+from sklearn.svm import LinearSVC, SVR, SVC
+from sklearn.ensemble import ExtraTreesRegressor, RandomForestClassifier, RandomForestRegressor
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, Imputer
 from sklearn.decomposition import PCA
 from xgboost import XGBRegressor, XGBClassifier
 import logging
+import logging.config
 import argparse
 import json
 
