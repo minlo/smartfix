@@ -133,59 +133,6 @@ def train(imputer, engineer, selector, scaler, reducer, model, x_train, y_train,
     if pipeline_mode != "single":
         pipeline_grid_search = pipeline_grid_search.best_estimator_
 
-    # pipeline_1 = pipeline.build_before_selector()
-    # pipeline_2 = pipeline.build_after_selector()
-    #
-    # X = pipeline_1.fit_transform(X)
-    # # logger.info("X head after the feature engineering: {}".format(X.head()))
-    # # logger.info(X.shape)
-    # logger.info("It takes {:.2f} seconds to fit and transform in the first line!".format(time.time() - time_init))
-    #
-    # # delete all values after split_date
-    # X.replace([np.inf, -np.inf], np.nan, inplace=True)
-    # X = X.dropna()
-    # # logger.info("X head after dropping na: {}".format(X.head()))
-    # X.index = pd.to_datetime(X.index)
-    # X.index = X.index.date
-    # X = X[X.index < split_date]
-    #
-    # # logger.info("X head: {}".format(X.head()))
-    # # maybe change to X = X.drop_na()
-    # x_columns = list(X.columns)
-    # x_columns.remove('forward_y')
-    # # logger.info("x_columns: {}, unique: {}".format(len(x_columns), len(set(x_columns))))
-    # # x_columns_set = []
-    # # for index_i in range(len(x_columns)):
-    # #     if x_columns[index_i] not in x_columns_set:
-    # #         x_columns_set.append(x_columns[index_i])
-    # #     else:
-    # #         logger.info("duplicate column: {}".format(x_columns[index_i]))
-    # #         break
-    #
-    # X_train = X.as_matrix(x_columns)
-    # y_train = X.as_matrix(['forward_y'])
-    # y_train = np.ravel(y_train)
-    # logger.info("X_train: {}, y: {}".format(X_train.shape, y_train.shape))
-    # # logger.info(np.where(X.values >= np.finfo(np.float64).max))
-    # # logger.info(X.ix[339, 462])
-    #
-    # pipeline_2 = generate_grid_search(
-    #     search_pipeline=pipeline_2,
-    #     pipeline_mode=pipeline_mode,
-    #     param_grid=pipeline_param_grid
-    # )
-    #
-    # pipeline_2_init_time = time.time()
-    # pipeline_2.fit(X_train, y_train)
-    # logger.info("It takes {:.2f} seconds to fit in the second pipeline!".format(time.time() - pipeline_2_init_time))
-    # logger.info("It takes {:.2f} seconds to train this model.".format(time.time() - time_init))
-    # if pipeline_mode != "single":
-    #     pipeline_2 = pipeline_2.best_estimator_
-    #
-    # pipeline_combined = Pipeline([
-    #     ("pipeline_before_selector", pipeline_1),
-    #     ("pipeline_after_selector", pipeline_2)
-    # ])
     return pipeline_grid_search
 
 
@@ -206,49 +153,7 @@ def test(x_test, model_id="", pipeline=None):
 
     # predict
     y_test_predict = pipeline.predict(x_test)
-    # X_copy = data_test[["y", "forward_y"]]
-    # X_copy['predict_y'] = y_predict
     logger.info("It takes {:.2f} seconds to predict.".format(time.time() - time_init))
-    # print(y_test_predict)
-    # # before selector
-    # pipeline_before_selector = pipeline_combined.named_steps["pipeline_before_selector"]
-    # pipeline_after_selector = pipeline_combined.named_steps["pipeline_after_selector"]
-    #
-    # pipeline_before_selector_init_time = time.time()
-    # X = pipeline_before_selector.transform(X)
-    # logger.info("It takes {:.2f} seconds to fit in the first pipeline!".format(
-    #     time.time() - pipeline_before_selector_init_time)
-    # )
-    #
-    # # delete all values after split_date
-    # X.replace([np.inf, -np.inf], np.nan, inplace=True)
-    # X.index = pd.to_datetime(X.index)
-    # X.index = X.index.date
-    #
-    # x_columns = list(X.columns)
-    # x_columns.remove('forward_y')
-    #
-    # if refit:
-    #     refit_init_time = time.time()
-    #     data_train = X[X.index < split_date]
-    #     data_train.dropna(inplace=True)
-    #     X_train = data_train.as_matrix(x_columns)
-    #     y_train = data_train.as_matrix(['forward_y'])
-    #     y_train = np.ravel(y_train)
-    #     logger.info("X_train: {}, y_train: {}".format(X_train.shape, y_train.shape))
-    #     pipeline_after_selector.fit(X_train, y_train)
-    #     logger.info("It takes {:.2f} seconds to refit the model.".format(time.time() - refit_init_time))
-    #
-    # # predict
-    # data_test = X[X.index >= split_date]
-    # X_test = data_test.as_matrix(x_columns)
-    # logger.info("X_test: {}".format(X_test.shape))
-    #
-    # # predict
-    # y_predict = pipeline_after_selector.predict(X_test)
-    # X_copy = data_test[["y", "forward_y"]]
-    # X_copy['predict_y'] = y_predict
-    # logger.info("It takes {:.2f} seconds to predict.".format(time.time() - time_init))
 
     return y_test_predict
 
@@ -458,33 +363,11 @@ if __name__ == "__main__":
                         required=False, default=1, type=int)
     args = parser.parse_args()
 
-    # global variable to hold hard thresholding results
-    hard_thres_t_statistics = {}
-    
-    # see if there exists conflicts between split date and look_forward_days
-    # add code here later, on 2017-12-26 17:27, by Zhao Yi, hopefully to be fixed by Xu Haonan
-
-    # X_train = pd.read_excel("./../data/data_live/data_20171221.xls", encoding="utf-8", index_col="指标名称")
-    # y_train = pd.read_excel("./../data/data_live/r007_20171221.xls", encoding="utf-8", index_col="指标名称")
-    # logger.info(y_train.columns)
-    # y_train.rename(columns={y_train.columns[0]: "y"}, inplace=True)
-    # logger.info(y_train.columns)
-    # data = pd.concat([X_train, y_train], axis=1)
-
-    # import data
-    # data = pd.read_excel("./../data/data_live/raw_data_20171222.xls", encoding="utf-8", index_col="指标名称")
-    # data = pd.read_excel(args.data_path, encoding="utf-8", index_col="指标名称")
     data = GenerateDataFrame(
         raw_data_url=os.path.join("./../data/data_live/", args.data_path)
     ).data_to_dataframe()
     data.rename(columns={data.columns[-1]: "y"}, inplace=True)
-    # data = data.loc[:data.shape[0]-2, :]
-    # import data
-    # data = GenerateDataFrame(
-    #     raw_data_url="./../data/data_live/raw_data_20171222.xls",
-    #     r007_url=None,
-    #     warning_url=None
-    # ).data_to_dataframe()
+
     data["forward_y"] = data["y"].shift((-1) * args.look_forward_days)
     split_date = datetime.datetime.strptime(args.split_date, "%Y%m%d").date()
     data.index = data.index.date
@@ -513,7 +396,7 @@ if __name__ == "__main__":
     results_path = os.path.join("./../results/model_history/",
                                 "regression_results_" + str(args.look_forward_days) + ".csv")
     model_results = pd.read_csv(results_path, encoding="utf-8")
-    # print(model_results)
+
     # select the relevant models by split_date and eval_metric, so that we are using the best model trained with
     # the most recent updated data
     model_results['split_date'] = pd.to_datetime(model_results['split_date'])
