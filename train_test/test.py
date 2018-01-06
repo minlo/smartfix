@@ -254,7 +254,7 @@ if __name__ == "__main__":
         selected_features_list=None,
         look_forward_days=1,
         model_name="random_forest",
-        timestamp_current=1
+        timestamp_current=1513652173586
     )
 
     # t+1, lasso
@@ -281,7 +281,7 @@ if __name__ == "__main__":
         selected_features_list=None,
         look_forward_days=1,
         model_name="lasso",
-        timestamp_current=1
+        timestamp_current=1513652175070
     )
 
     # t+1, xgb
@@ -315,7 +315,7 @@ if __name__ == "__main__":
         selected_features_list=None,
         look_forward_days=1,
         model_name="xgboost",
-        timestamp_current=1
+        timestamp_current=1513652178639
     )
 
     print("predict complete!")

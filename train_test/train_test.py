@@ -5,7 +5,7 @@ import time
 import datetime
 import sys
 import operator
-
+import argparse
 import matplotlib.pyplot as plt
 sys.path.append('./../')
 
@@ -26,7 +26,6 @@ from sklearn.feature_selection import SelectFromModel
 
 # from scipy import stats
 import statsmodels.api as sm
-
 # from xgboost import XGBRegressor, XGBClassifier
 
 
@@ -81,7 +80,7 @@ def test_accuracy(y_predict, y_test):
 
 def train_test_model_pipeline(data, test_year, split_date, target_column, response_column, imputer, feature_engineer, scaler,
                               selector, model, pipeline_mode="single", param_grid=None, n_iter=5, verbose=1,
-                              selected_features_list=None):
+                              selected_features_list=None, look_forward_days=1):
     """
     Train and test a single model pipeline.
     """
@@ -121,15 +120,33 @@ def train_test_model_pipeline(data, test_year, split_date, target_column, respon
 
     # calculate fluctuation
     data_test_save = data_test[['date', target_column]]
-    data_test_save['today'] = y_test
-    data_test_save['predict_next_day'] = y_predict
+    data_test_save['look_forward_days'] = look_forward_days
+    data_test_save['predict'] = y_predict
     data_test_save.reset_index(drop=True, inplace=True)
 
     return data_test_save
 
 
 if __name__ == "__main__":
-    data = pd.read_csv('./../data/data_live/data_live_imputated_cubic.csv', encoding='utf-8')
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--impute_way", help="choose the way to impute", required=False, default="directly", type=str)
+    parser.add_argument("--look_forward_days", help="look_forward_days", required=False, default=1, type=int)
+    args = parser.parse_args()    
+
+    data = pd.read_csv('./../data/data_live/data_live_1225_imputated_' + args.impute_way + '.csv', encoding='utf-8')
+    
+    # add cross_year column 
+    date = pd.to_datetime(data['date'])
+    cross_year = []
+    for date_i in date:
+        month = date_i.month
+        day = date_i.day
+        if month==12 and day+7 > 31:
+            cross_year.append(1)
+        else:
+            cross_year.append(0)
+    data['cross_year'] = cross_year
+    
 
     # delete column x_59 and warning
     del data['x59'], data['warning']
@@ -154,7 +171,7 @@ if __name__ == "__main__":
     # t + 1, for hard thresholding
     generate_features_t_1_0_order_diff = GenerateNDiffFeatures(
         target_column='y',
-        look_forward_days=1,
+        look_forward_days=args.look_forward_days,
         look_backward_days=60,
         diff_order=0,
         addition_time_features=True,
@@ -214,35 +231,37 @@ if __name__ == "__main__":
 
     # soft thresholding
     selector_lasso = SelectFromModel(Lasso(alpha=0.1), prefit=False)
+    print(pd.to_datetime(data['date']).dt.date[data.shape[0] - args.look_forward_days])
 
     # train and predict
     print("data shape: {}".format(data.shape))
     data_predict = train_test_model_pipeline(
         data=data.copy(),
         test_year=2017,
-        split_date=datetime.date(2017, 12, 15),
+        split_date=pd.to_datetime(data['date']).dt.date[data.shape[0] - args.look_forward_days],  # pd.to_datetime(data['date']).dt.date[(-1) * args.look_forwad_days], # datetime.date(2017, 12, 25) - datetime.timedelta(days=args.look_forward_days - 1),
         target_column="y",
-        response_column="y_forward_1",
+        response_column="y_forward_" + str(args.look_forward_days),
         imputer=imputer_dataframe,
         feature_engineer=GenerateNDiffFeatures(
             target_column="y",
-            look_forward_days=1,
-            look_backward_days=10,
+            look_forward_days=args.look_forward_days,
+            look_backward_days=20,
             diff_order=0,
             addition_time_features=True,
             date_column="date"
         ),
         scaler=scaler_minmax,
-        selector=SelectKBest(k="all"),
-        model=RandomForestRegressor(n_estimators=500, n_jobs=-1, random_state=1234),
+        selector=SelectFromModel(Lasso(alpha=0.0001), prefit=False),  # SelectKBest(k="all"),
+        model=RandomForestRegressor(n_estimators=1000, n_jobs=-1, random_state=1234),
         pipeline_mode="single",
         param_grid=None,
-        selected_features_list=None
+        selected_features_list=None,
+        look_forward_days=args.look_forward_days
     )
     print(data_predict)
 
     # save results
-    data_predict.to_csv("./../results/data_predict_" + datetime.date.today().strftime("%Y%m%d") + ".csv",
+    data_predict.to_csv("./../results/data_predict_" + str(args.look_forward_days) + "_days_" + datetime.date.today().strftime("%Y%m%d") + ".csv",
                         encoding="utf-8",
                         index=None,
                         header=True)
