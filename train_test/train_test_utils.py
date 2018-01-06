@@ -214,8 +214,8 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
     }
     model_dict = {
         "random_forest": RandomForestRegressor(n_estimators=1000, n_jobs=-1, random_state=1234),
-        # "xgboost": XGBRegressor(),
-        # "lasso": Lasso(alpha=0.01, random_state=1234),
+        "xgboost": XGBRegressor(),
+        "lasso": Lasso(alpha=0.01, random_state=1234),
     }
     model_param_grid_dict = {
         "random_forest": {
