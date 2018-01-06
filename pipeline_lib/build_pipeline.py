@@ -1,4 +1,4 @@
-from sklearn.pipeline import Pipeline
+from sklearn.pipeline import Pipeline, FeatureUnion
 from sklearn.preprocessing import FunctionTransformer
 import logging
 
@@ -20,10 +20,20 @@ class BuildPipeline(object):
         self.reducer = reducer
         self.model = model
 
+        # self.magic_feature_extractor = magic_feature_extractor
+
     def build(self):
         """Finally, we still failed here. This method will be deprecated in later versions."""
         pipeline = Pipeline([
             ("imputer", self.imputer),
+            # ("magic_features_union", FeatureUnion([
+            #     ("ordinary_features", Pipeline([
+            #
+            #     ])),
+            #     ("magic_features", Pipeline([
+            #         ("magic_features_extractor", self.magic_feature_extractor)
+            #     ]))
+            # ])),
             ("engineer", self.engineer),
             ("selector", self.selector),
             ("scaler", self.scaler),

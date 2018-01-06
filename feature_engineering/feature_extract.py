@@ -18,7 +18,8 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
 
     """
     def __init__(self, ma=[1, 2, 3, 4, 5], log=True, ind=[2, 3], changerate=True,
-                 diff=True, lag=10, look_forward_days=1):
+                 diff=True, lag=10, look_forward_days=1,
+                 magic_feature_list=['weekday', 'end_of_month', 'end_of_season', 'end_of_year']):
         """
         :param ma: int list, what ma days need to calculate
         :param log: bool, whether to calculate log
@@ -35,6 +36,7 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
         self.diff = diff
         self.lag = lag
         self.look_forward_days = look_forward_days
+        self.magic_feature_list = magic_feature_list
 
     @staticmethod
     def generate_ma(data, ma_days):
@@ -204,33 +206,33 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
         # print(X)
         print("Before extracting, ", X.shape, X.dropna().shape)
         data = X.copy()
-        # data.index = pd.to_datetime(data.index)
+        data.index = pd.to_datetime(data.index)
         data_value = data.values
         data_index = data.index
         data_columns = data.columns
         # print(data_value)
 
         # add important time point feature
-        # weekdays = []
-        # end_of_month = []
-        # end_of_season = []
-        # end_of_year = []
-        # for i in data_index:
-        #     weekdays.append(i.dayofweek)
-        #     is_end_of_month, is_end_of_season, is_end_of_year = self.date_is_which(i, self.look_forward_days)
-        #     end_of_month.append(is_end_of_month)
-        #     end_of_season.append(is_end_of_season)
-        #     end_of_year.append(is_end_of_year)
-        # data_time_point = []
-        # data_time_point.append(weekdays)
-        # data_time_point.append(end_of_month)
-        # data_time_point.append(end_of_season)
-        # data_time_point.append(end_of_year)
-        # data_array_time_point = np.array(data_time_point).transpose()
-        # time_point_columns = ['weekday', 'end_of_month', 'end_of_season', 'end_of_year']
-        # df_time_point = pd.DataFrame(data_array_time_point, index = data_index, columns = time_point_columns)
+        weekdays = []
+        end_of_month = []
+        end_of_season = []
+        end_of_year = []
+        for i in data_index:
+             weekdays.append(i.dayofweek)
+             is_end_of_month, is_end_of_season, is_end_of_year = self.date_is_which(i, self.look_forward_days)
+             end_of_month.append(is_end_of_month)
+             end_of_season.append(is_end_of_season)
+             end_of_year.append(is_end_of_year)
+        data_time_point = []
+        data_time_point.append(weekdays)
+        data_time_point.append(end_of_month)
+        data_time_point.append(end_of_season)
+        data_time_point.append(end_of_year)
+        data_array_time_point = np.array(data_time_point).transpose()
+        time_point_columns = ['weekday', 'end_of_month', 'end_of_season', 'end_of_year']
+        df_time_point = pd.DataFrame(data_array_time_point, index=data_index, columns=time_point_columns)
         # don't do cross_time feature extract in this class, move it the magic_feature_extract.py
-        # data = pd.concat([data, df_time_point], axis=1)
+        data = pd.concat([data, df_time_point], axis=1)
 
         # add y lag into X
         data_y = data_value[:, -1].copy()
@@ -298,6 +300,9 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
         # print(data['y'])
         # print(data[data.isnull()])        
         # print("Feature extracting: ", data.shape, data.dropna().shape)
+
+        for i in self.magic_feature_list:
+            data.rename(columns={i: 'magic_'+i}, inplace=True)
 
         return data
 

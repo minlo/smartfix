@@ -280,7 +280,7 @@ def check_inf_nan(np_array, array_name):
 
 def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, validation_period_length):
     imputer_param_grid = {
-        "imputer__method": ["directly"],  # ["directly", "quadratic", "slinear", "cubic"]
+        "imputer__method": ["directly", "zero", "slinear"]
     }
     engineer_param_grid = {
         "engineer__lag": [10],  # [10, 20, 30, 40, 50, 60]

@@ -16,7 +16,22 @@ class LSTM_model(BaseEstimator, TransformerMixin):
     """
     def __init__(self, look_forward_days=1, seq_length=30, input_dim=20,
                  output_dim=1, num_hidden=128, num_fully=256, learning_rate=0.001,
-                 batch_size=100, training_steps=100, display_step=10, separate_date = pd.datetime(2017,12,1)):
+                 batch_size=100, training_steps=100, display_step=10, separate_date = pd.datetime(2017, 12, 1)):
+        """
+        The grid search parameters are
+        :param look_forward_days:
+        :param seq_length:
+        :param input_dim:
+        :param output_dim:
+        :param num_hidden:
+        :param num_fully:
+        :param learning_rate:
+        :param batch_size:
+        :param training_steps:
+        :param display_step:
+        :param separate_date:
+        """
+
         self.seq_length = seq_length
         self.look_forward_days = look_forward_days
         self.input_dim = input_dim
@@ -109,7 +124,7 @@ class LSTM_model(BaseEstimator, TransformerMixin):
             acc_test = sess.run(accuracy, feed_dict={x: test_x, y: test_y})
             print("After training and validation,testing accuracy:%.2f" % acc_test)
             saver = tf.train.Saver()
-            model_path = './T+' + str(self.look_forward_days) + '_model.ckpt'
+            model_path = './T+' + str(self.look_forward_days) + '_model'
             saver.save(sess, model_path)
         return acc_test
 
@@ -129,7 +144,6 @@ class LSTM_model(BaseEstimator, TransformerMixin):
         acc_test = self.model_train_test(trainx, trainy, testx, testy)
         return acc_test
 
-
     def predict(self, X):
         """
 
@@ -137,5 +151,13 @@ class LSTM_model(BaseEstimator, TransformerMixin):
         :return: y_pred
         """
         with tf.Session() as sess:
-            new_saver = tf.train.import_meta_graph('./model/my_model.meta')
-            new_saver.restore(sess, './model/my_model')
+            new_saver = tf.train.import_meta_graph('./T+' + str(self.look_forward_days) + '_model.meta')
+            new_saver.restore(sess, './T+' + str(self.look_forward_days) + '_model')
+            graph = tf.get_default_graph()
+            predict = tf.get_collection('predict')[0]
+            input_x = graph.get_operation_by_name("input_x").outputs[0]
+            x = X.values[-1-self.seq_length:-1, :]
+
+            res = sess.run(predict, feed_dict={input_x: x})
+
+            return res

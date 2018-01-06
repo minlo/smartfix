@@ -4,6 +4,18 @@ import numpy as np
 from scipy import interpolate
 
 
+"""
+Bugs to fix:
+
+Notes on 2018-01-06:
+1. problem hinges in function method_imputed()
+    When we call "cubic" method, a ValueError would be raised concerning the index of x. Specific code is this: 
+            xnew = np.linspace(x[0], x[-1], x[-1] - x[0] + 1)
+
+"""
+
+
+
 class ImputationMethod (BaseEstimator, TransformerMixin):
     """
     make merged data(which have day,month,year frequency data) imputated by different method
@@ -80,6 +92,8 @@ class ImputationMethod (BaseEstimator, TransformerMixin):
             x = data_filled_position
             y = data_filled_value
             # f=interpolate.CubicSpline(x,y)
+            print("length of x: ", len(x))
+            print("x0: ", x[0])
             xnew = np.linspace(x[0], x[-1], x[-1] - x[0] + 1)
             if self.method == 'cubic':
                 f = interpolate.CubicSpline(x, y)

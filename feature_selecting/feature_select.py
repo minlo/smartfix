@@ -23,6 +23,7 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
     1. top-K features
     2. features with t-statistic value bigger than specified confidence level 1 - alpha, where alpha would be a
         parameter specified by the user.
+    3. As for magic features, we simply do not regress on them, and we will add them later to selected features.
     """
     def __init__(self, target_column="y", k=200, alpha=0.05, date_column="date", select_top_k=True, print_top_k=False):
         self.target_column = target_column
@@ -67,7 +68,7 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
         hard_thres_test_columns = []
         hard_thres_ctrl_columns = []
         for column_i in list(data.columns):
-            if column_i in [self.target_column, self.date_column] or "forward" in column_i:
+            if column_i in [self.target_column, self.date_column] or "forward" in column_i or "magic" in column_i:
                 continue
             if self.target_column + "_lag_" in column_i:
                 hard_thres_ctrl_columns.append(column_i)
@@ -102,6 +103,9 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
     def select_top_k_hard(self, data):
         init_time = time.time()
         selected_features = []
+        for column_i in list(data.columns):
+            if "magic" in column_i:
+                selected_features.append(column_i)
         sorted_hard_thres_t_stats = self.generate_t_statistic(data.copy())
         logger.info("\nIn total, it takes {:.2f} seconds to run regression for {} columns".format(
             time.time() - init_time,
@@ -152,7 +156,7 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
             raise ValueError("Select method must be one of ['hard', 'soft', 'all']")
 
     def _preprocess_data(self, data):
-        logger.info("select_method: {}, data_type: {}".format(self.select_method, type(data)))
+        # logger.info("select_method: {}, data_type: {}".format(self.select_method, type(data)))
         if self.select_method in ["soft", "all"]:
             data.reset_index(drop=True, inplace=True)
             # del data[self.target_column], data[self.date_column]
