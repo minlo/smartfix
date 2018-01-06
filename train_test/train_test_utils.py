@@ -82,8 +82,12 @@ logger = logging.getLogger(__name__)
 
 
 # define constants
-MODEL_PARAMS_JSON_PATH = "./../results/model_history/model_params.json"
-MODEL_TRAINING_EVAL_RESULTS_PATH = "./../results/model_history/model_train_eval_history_"
+MODEL_PARAMS_JSON_PATH = "./../results/model_history/regression_model_params.json"
+MODEL_TRAINING_EVAL_RESULTS_PATH = "./../results/model_history/regression_model_train_eval_history_"
+MODEL_TRAINING_FAILED_MODELS_PATH = "./../results/model_history/regression_model_failed_history_"
+BEST_MODEL_HISTORY_PATH = "./../results/model_history/regression_best_model_history_"
+PREDICTION_RESULTS_ALL_MODELS_PATH = "./../results/predict/regression_predict_all_models_step_"
+PREDICTION_RESULTS_BEST_MODEL_PATH = "./../results/predict/regression_predict_best_model_step_"
 
 
 def generate_grid_search(search_pipeline, pipeline_mode, param_grid, n_iter=5, verbose=3,
@@ -202,7 +206,7 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
 
     selector_param_grid = {
         "selector__k": [10],  # [10, 20, 30, 40, 50]
-        "selector__select_method": ["hard", "soft", "all"]
+        "selector__select_method": ["hard"],  # "soft", "all"]
     }
     # temporarily not used
     reducer_param_grid = {
@@ -236,7 +240,7 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
     results = pd.DataFrame(columns=["model_id", "split_date", "model_name", "eval_metric",
                                     "update_date", "timestamp"])
     
-    failed_models = []
+    failed_models_data = pd.DataFrame(columns=['model_name', 'split_date', 'update_date', 'timestamp'])
     # if os.path.exists(MODEL_PARAMS_JSON_PATH):
     #     model_params_dict = json.loads(MODEL_PARAMS_JSON_PATH)
     # else:
@@ -304,22 +308,25 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
                 )
             )
         except Exception as e:
-            failed_models.append({
-                "model_name": model_name
-            })
+            failed_models_data.loc[len(failed_models_data.index)] = [
+                model_name,
+                split_date,
+                datetime.date.today().strftime("%Y%m%d"),
+                int(1000 * time.time())
+            ]
             logger.info(str(e))
     logger.info("We have run {} models, with {} failed, using {:.2f} seconds".format(
         model_count + 1,
-        len(failed_models),
+        len(failed_models_data),
         time.time() - time_init
     ))
-    logger.info("\n\nList all the failed models:\n")
-    for failed_model_i in failed_models:
-        logger.info(
-            "failed model_name: {}".format(
-                failed_model_i["model_name"]
-            )
-        )
+    logger.info("\n\nSaving all the failed models into file...\n")
+    failed_model_file = MODEL_TRAINING_FAILED_MODELS_PATH + str(look_ahead_day) + ".csv"
+    # save failed models into a csv
+    if not os.path.exists(failed_model_file):
+        failed_models_data.to_csv(failed_model_file, encoding="utf-8", header=True, index=None)
+    else:
+        failed_models_data.to_csv(failed_model_file, encoding="utf-8", header=False, index=None, mode="a")
 
     # sort the results
     results.sort_values(["model_name", "eval_metric"], ascending=[True, False], inplace=True)
@@ -338,13 +345,12 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
             # "pipeline": save_model_dict[model_id_i].get_params()
         # }
 
+    model_eval_results_file = MODEL_TRAINING_EVAL_RESULTS_PATH + str(look_ahead_day) + ".csv"
     # save results into a csv
-    if not os.path.exists(results_path):
-        results.to_csv(MODEL_TRAINING_EVAL_RESULTS_PATH + str(look_ahead_day) + ".csv",
-                       encoding="utf-8", header=True, index=None)
+    if not os.path.exists(model_eval_results_file):
+        results.to_csv(model_eval_results_file, encoding="utf-8", header=True, index=None)
     else:
-        results.to_csv(MODEL_TRAINING_EVAL_RESULTS_PATH  + str(look_ahead_day) + ".csv",
-                       encoding="utf-8", header=False, index=None, mode="a")
+        results.to_csv(model_eval_results_file, encoding="utf-8", header=False, index=None, mode="a")
 
     # save model params
     # with open(MODEL_PARAMS_JSON_PATH, 'w') as fp:
@@ -363,14 +369,14 @@ if __name__ == "__main__":
     parser.add_argument("--is_training", help="if true, we run the grid search and "
                                               "select the best models in the validation period",
                         required=False, default=False, type=lambda x: (str(x).lower() == "true"))
+    parser.add_argument("--validation_period_length", help="run validation on how many natural days before split date",
+                        required=False, default=30, type=int)
     parser.add_argument("--dynamic_selecting", help="if true, we see which model did best in last period"
                                                     " (dynamic_eval_last_days). Otherwise, "
                                                     "we just use the best model to predict ",
                         required=False, default=False, type=lambda x: (str(x).lower() == "true"))
     parser.add_argument("--dynamic_eval_last_days", help="period to run dynamic evaluation",
                         required=False, default=7, type=int)
-    parser.add_argument("--validation_period_length", help="run validation on how many natural days before split date",
-                        required=False, default=30, type=int)
     parser.add_argument("--save_k_best", help="if training, select k best models to save after training",
                         required=False, default=1, type=int)
     args = parser.parse_args()
@@ -404,9 +410,8 @@ if __name__ == "__main__":
         )
 
     # set the model results path
-    results_path = os.path.join("./../results/model_history/",
-                                "regression_results_" + str(args.look_forward_days) + ".csv")
-    model_results = pd.read_csv(results_path, encoding="utf-8")
+    model_history_file = MODEL_TRAINING_EVAL_RESULTS_PATH + str(args.look_forward_days) + ".csv"
+    model_results = pd.read_csv(model_history_file, encoding="utf-8")
 
     # select the relevant models by split_date and eval_metric, so that we are using the best model trained with
     # the most recent updated data
@@ -429,13 +434,9 @@ if __name__ == "__main__":
         )
     )
 
-    predict_results_dir = "./../results/predict/"
-    predict_results_path = os.path.join(
-        predict_results_dir,
-        "regression_predict_step_" + str(args.look_forward_days) + ".csv"
-    )
-    predict_results = pd.DataFrame(columns=["date", "model_name", "model_id", "y", "forward_y", "predict_y",
-                                            "prediction_date", "timestamp"])
+    predict_results_all_models_data_all_models_file = PREDICTION_RESULTS_ALL_MODELS_PATH + str(args.look_forward_days) + ".csv"
+    predict_results_all_models_data = pd.DataFrame(columns=["date", "model_name", "model_id", "y", "forward_y",
+                                                            "predict_y", "prediction_date", "timestamp"])
 
     for index_i in range(len(model_results.index)):
         try:
@@ -446,34 +447,102 @@ if __name__ == "__main__":
             ))
 
             # save prediction results into file
-            predict_results_i = pd.DataFrame(columns=predict_results.columns)
-            predict_results_i['date'] = data_test.index
-            predict_results_i['date'] = pd.to_datetime(predict_results_i['date'])
-            predict_results_i['date'] = predict_results_i['date'].dt.date
-            predict_results_i["y"] = data_test["y"]
-            predict_results_i["forward_y"] = data_test["forward_y"]
-            predict_results_i["predict_y"] = test(
+            predict_results_all_models_data_i = pd.DataFrame(columns=predict_results_all_models_data.columns)
+            predict_results_all_models_data_i['date'] = data_test.index
+            predict_results_all_models_data_i['date'] = pd.to_datetime(predict_results_all_models_data_i['date'])
+            predict_results_all_models_data_i['date'] = predict_results_all_models_data_i['date'].dt.date
+            predict_results_all_models_data_i["y"] = data_test["y"]
+            predict_results_all_models_data_i["forward_y"] = data_test["forward_y"]
+            predict_results_all_models_data_i["predict_y"] = test(
                 x_test=x_test,
                 model_id=model_results['model_id'][index_i]
             )
-            predict_results_i["model_name"] = model_results['model_name'][index_i]
-            predict_results_i["model_id"] = model_results['model_id'][index_i]
-            predict_results_i["prediction_date"] = datetime.date.today().strftime("%Y%m%d")
-            predict_results_i["timestamp"] = int(time.time() * 1000)
-            predict_results_i = predict_results_i[predict_results_i['date'] >= split_date]
-            predict_results_i = predict_results_i[["date", "model_name", "model_id", "y", "forward_y", "predict_y",
-                                                   "prediction_date", "timestamp"]]
-            predict_results = predict_results.append(predict_results_i)
+            predict_results_all_models_data_i["model_name"] = model_results['model_name'][index_i]
+            predict_results_all_models_data_i["model_id"] = model_results['model_id'][index_i]
+            predict_results_all_models_data_i["prediction_date"] = datetime.date.today().strftime("%Y%m%d")
+            predict_results_all_models_data_i["timestamp"] = int(time.time() * 1000)
+            predict_results_all_models_data_i = predict_results_all_models_data_i[predict_results_all_models_data_i['date'] >= split_date]
+            predict_results_all_models_data_i = predict_results_all_models_data_i[["date", "model_name", "model_id",
+                                                                                   "y", "forward_y", "predict_y",
+                                                                                   "prediction_date", "timestamp"]]
+            predict_results_all_models_data = predict_results_all_models_data.append(predict_results_all_models_data_i)
         except ValueError as e:
             logger.info("model {} does not exists".format(model_results['model_id'][index_i]))
             logger.info(str(e))
 
-    if not os.path.exists(predict_results_dir):
-        os.makedirs(predict_results_dir)
-    if not os.path.exists(predict_results_path):
-        predict_results.to_csv(predict_results_path, encoding="utf-8", index=None, mode="a", header=True)
+    if not os.path.exists(PREDICTION_RESULTS_ALL_MODELS_PATH):
+        os.makedirs(PREDICTION_RESULTS_ALL_MODELS_PATH)
+    if not os.path.exists(predict_results_all_models_data_all_models_file):
+        predict_results_all_models_data.to_csv(predict_results_all_models_data_all_models_file, encoding="utf-8",
+                                               index=None, mode="a", header=True)
     else:
-        predict_results.to_csv(predict_results_path, encoding="utf-8", index=None, mode="a", header=False)
+        predict_results_all_models_data.to_csv(predict_results_all_models_data_all_models_file, encoding="utf-8",
+                                               index=None, mode="a", header=False)
+
+    # If specified, we would run dynamic selecting of best model, and update the best model in BEST_MODEL_HISTORY_PATH.
+    # Besides, we would also select the prediction results of it into another file.
+    best_model_file = BEST_MODEL_HISTORY_PATH + str(args.look_forward_days) + ".csv"
+    if args.dynamic_selecting:
+        logger.info("Dynamically selecting the best model in last {} days.".format(args.dynamic_eval_last_days))
+        predict_results_all_models_history = pd.read_csv(predict_results_all_models_data_all_models_file,
+                                                         encoding="utf-8")
+        predict_results_all_models_history['date'] = pd.to_datetime(predict_results_all_models_history['date'])
+        predict_results_all_models_history['date'] = predict_results_all_models_history['date'].dt.date
+        predict_results_all_models_history.sort_values(['date', 'model_name'], [True, True], inplace=True)
+        predict_all_models_dates = sorted(predict_results_all_models_history[predict_results_all_models_history['date']
+                                                                             < split_date]['date'].unique().tolist())
+
+        # specify start and end dates for eval dynamic period
+        start_dynamic_eval_date = split_date
+        end_dynamic_eval_date = predict_all_models_dates[(-1) * args.dynamic_eval_last_days]
+
+        predict_results_all_models_history = predict_results_all_models_history[
+            (predict_results_all_models_history['date'] < start_dynamic_eval_date) &
+            (predict_results_all_models_history['date'] >= end_dynamic_eval_date)
+        ]
+
+        # initialize best model data
+        best_model_data = pd.DataFrame(columns=["model_name", "model_id", "dynamic_eval_metric", "start_eval_date",
+                                                "end_eval_date", "update_date", "timestamp"])
+        model_list = predict_results_all_models_history['model_id'].unique().tolist()
+
+        y_true_history = np.array(data_test[(data_test.index >= start_dynamic_eval_date) &
+                                            (data_test.index < end_dynamic_eval_date)]["forward_y"].tolist())
+        for model_id_i in model_list:
+            y_test_predict = np.array(predict_results_all_models_history[(predict_results_all_models_history["model_id"] == model_id_i)]["forward_y"].tolist())
+            dynamic_eval_metric = Evaluate(y_test_predict, y_true_history, error=0.10).accuracy()
+            model_name_i = predict_results_all_models_history[predict_results_all_models_history["model_id"] == model_id_i]["model_name"].unique().tolist()[0]
+            best_model_data.loc[len(best_model_data.index)] = [model_name_i, model_id_i, dynamic_eval_metric,
+                                                               start_dynamic_eval_date,
+                                                               end_dynamic_eval_date,
+                                                               datetime.date.today().strftime("%Y%m%d"),
+                                                               int(1000 * time.time())]
+
+        best_model_data.sort_values(["dynamic_eval_metric"], acending=[False], inplace=True)
+        best_model_data = best_model_data.loc[0]
+
+        if not os.path.exists(best_model_file):
+            best_model_data.to_csv(best_model_file, encoding="utf-8", index=None, mode="a", header=True)
+        else:
+            best_model_data.to_csv(best_model_file, encoding="utf-8", index=None, mode="a", header=False)
+
+    # fetch the best model and save its predictions into PREDICTION_RESULTS_BEST_MODEL_PATH
+    predict_best_model_file = PREDICTION_RESULTS_BEST_MODEL_PATH + str(args.look_forward_days) + ".csv"
+    best_model_history = pd.read_csv(best_model_file, encoding="utf-8")
+    best_model_history.sort_values(["timestamp"], acending=[False], inplace=True)
+    best_model_history.reset_index(drop=True, inplace=True)
+    best_model_id = best_model_history['model_id'][0]
+    best_model_name = best_model_history['model_name'][0]
+    logger.info("We have selected best model, model_id: {}, model_name: {}".format(best_model_id, best_model_name))
+    predict_results_best_models_data = predict_results_all_models_data[predict_results_all_models_data["model_id"] == best_model_id]
+
+    # save it into file
+    if not os.path.exists(predict_best_model_file):
+        predict_results_best_models_data.to_csv(predict_best_model_file, encoding="utf-8",
+                                                index=None, mode="a", header=True)
+    else:
+        predict_results_best_models_data.to_csv(predict_best_model_file, encoding="utf-8",
+                                                index=None, mode="a", header=False)
 
     logger.info("It takes {:.2f} seconds to run this time.".format(time.time() - total_start_time))
     logger.info("Prediction finished!!!")
