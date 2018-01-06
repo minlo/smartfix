@@ -198,7 +198,7 @@ def test(x_test, model_id="", pipeline=None):
     # X_copy = data_test[["y", "forward_y"]]
     # X_copy['predict_y'] = y_predict
     logger.info("It takes {:.2f} seconds to predict.".format(time.time() - time_init))
-    print(y_test_predict)
+    # print(y_test_predict)
     # # before selector
     # pipeline_before_selector = pipeline_combined.named_steps["pipeline_before_selector"]
     # pipeline_after_selector = pipeline_combined.named_steps["pipeline_after_selector"]
@@ -499,7 +499,7 @@ if __name__ == "__main__":
     results_path = os.path.join("./../results/model_history/",
                                 "regression_results_" + str(args.look_forward_days) + ".csv")
     model_results = pd.read_csv(results_path, encoding="utf-8")
-    print(model_results)
+    # print(model_results)
     # select the relevant models by split_date and eval_metric, so that we are using the best model trained with
     # the most recent updated data
     model_results['split_date'] = pd.to_datetime(model_results['split_date'])
@@ -509,7 +509,7 @@ if __name__ == "__main__":
     best_eval_metric = model_results['eval_metric'].max()
     model_results = model_results[model_results['eval_metric'] == best_eval_metric]
     model_results.reset_index(drop=True, inplace=True)
-    print(most_recent_split_date, best_eval_metric)
+    # print(most_recent_split_date, best_eval_metric)
     if model_results.shape[0] == 0:
         raise ValueError("No model left after filtering the best model recently!")
 
@@ -532,7 +532,7 @@ if __name__ == "__main__":
     for index_i in range(len(model_results.index)):
         try:
             predict_results_i = pd.DataFrame(columns=predict_results.columns)
-            print(data_test.index[:5])
+            # print(data_test.index[:5])
             predict_results_i['date'] = data_test.index
             predict_results_i['date'] = pd.to_datetime(predict_results_i['date'])
             predict_results_i['date'] = predict_results_i['date'].dt.date
@@ -560,9 +560,9 @@ if __name__ == "__main__":
     if not os.path.exists(predict_results_dir):
         os.makedirs(predict_results_dir)
     if not os.path.exists(predict_results_path):
-        predict_results.to_csv(predict_results_path, encoding="utf-8", index=True, mode="a", header=True)
+        predict_results.to_csv(predict_results_path, encoding="utf-8", index=False, mode="a", header=True)
     else:
-        predict_results.to_csv(predict_results_path, encoding="utf-8", index=True, mode="a", header=False)
+        predict_results.to_csv(predict_results_path, encoding="utf-8", index=False, mode="a", header=False)
 
     logger.info("Prediction finished!!!")
 

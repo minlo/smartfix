@@ -42,8 +42,12 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
         """
         column_x_list = ctrl_columns.copy()
         column_x_list.append(feature_column)
-        data.replace([np.inf, -np.inf], np.nan, inplace=True)
+        # data.replace([np.inf, -np.inf], np.nan, inplace=True)
+        # logger.info("Before dropping na, data: {}".format(data.shape))
         data = data.dropna()
+        # logger.info("After dropping na, data: {}".format(data.shape))
+        if data.empty:
+            raise ValueError("data is empty!")
 
         x = data.as_matrix([column_x_list])
         y = data.as_matrix([target_column])
@@ -155,6 +159,7 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
             data_values = data.as_matrix()
             return data_values
         else:
+            # print("before converting to numpy", data.shape, data.dropna().shape)
             return data
 
     def _choose_selector(self):
@@ -182,11 +187,11 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
             self.selector.fit(X)
        
         X = self.selector.transform(X)
-        logger.info("Just to check if logger could be printed out here!")
-        if np.any(np.isnan(X)):
-            logger.info("There is np.nan in X!")
-        if not np.all(np.isfinite(X)):
-            logger.info("There is np.inf in X!")
+        # logger.info("Just to check if logger could be printed out here!")
+        # if np.any(np.isnan(X)):
+        #     logger.info("There is np.nan in X!")
+        # if not np.all(np.isfinite(X)):
+        #     logger.info("There is np.inf in X!")
 
         return X
 

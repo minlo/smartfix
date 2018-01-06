@@ -41,8 +41,15 @@ class ImputationMethod (BaseEstimator, TransformerMixin):
         """
         :return:
         """
+        # print("Before filling na, data: {}, dropna {}".format(data.shape, data.dropna().shape))
         data_directly = data.fillna(method='pad')
+        # print("After padding, data: {}, dropna: {}".format(data_directly.shape, data_directly.dropna().shape))
         data_directly = data_directly.fillna(method='bfill')
+        # print("After bfilling, data: {}, dropna: {}".format(data_directly.shape, data_directly.dropna().shape))
+        # exit(1)
+        # Drop those columns where we cannot find any valid value in both backward and 
+        # forward directions to fill the column. That is, we simply drop these columns with no sympathy.
+
         return data_directly
 
     # @staticmethod
@@ -96,15 +103,18 @@ class ImputationMethod (BaseEstimator, TransformerMixin):
 
     def transform(self, X, y=None):
         # print(X)
-        data_after_remove_weekend = self.remove_weekend(X)
+        # X = self.remove_weekend(X)
+        print("before imputation", X.shape, X.dropna().shape)
 
         if self.method == 'directly':
-            # return self.direct_impute(data_after_remove_weekend), y
-            X = self.direct_impute(data_after_remove_weekend)
+            # return self.direct_impute(X), y
+            X = self.direct_impute(X)
         else:
-            # return self.diffmethod_imputed(data_after_remove_weekend), y
-            X = self.method_imputed(data_after_remove_weekend)
-        # print(X.values)
-        # print(X)
+            # return self.diffmethod_imputed(X), y
+            X = self.method_imputed(X)
+        X = X.dropna(axis=1, how="any")      
+        # print("After imputation", X.shape, X.dropna().shape)
+        # print("After imputation, X: {}".format(X[X.isnull()].shape))
+        # print(X[X.isnull()].reset_index().loc[:5])
         return X
 
