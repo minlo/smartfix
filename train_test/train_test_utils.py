@@ -502,8 +502,8 @@ if __name__ == "__main__":
             start_dynamic_eval_date = predict_all_models_dates[0]
 
         predict_results_all_models_history = predict_results_all_models_history[
-            (predict_results_all_models_history['date'] < start_dynamic_eval_date) &
-            (predict_results_all_models_history['date'] >= end_dynamic_eval_date)
+            (predict_results_all_models_history['date'] >= start_dynamic_eval_date) &
+            (predict_results_all_models_history['date'] < end_dynamic_eval_date)
         ]
 
         # initialize best model data
