@@ -201,7 +201,7 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
         "imputer__method": ["directly"]
     }
     engineer_param_grid = {
-        "engineer__lag": [10, 20, 30, 40, 50, 60]
+        "engineer__lag": [10],  # [10, 20, 30, 40, 50, 60]
     }
 
     selector_param_grid = {
