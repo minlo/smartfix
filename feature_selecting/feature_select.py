@@ -190,7 +190,7 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
                 print_top_k=self.print_top_k
             )
         else:
-            selector = SelectFromModel(Lasso(alpha=0.1), prefit=False)
+            selector = SelectFromModel(Lasso(alpha=0.001), prefit=False)
         return selector
 
     def fit(self, X, y=None):
