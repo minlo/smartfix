@@ -447,6 +447,8 @@ if __name__ == "__main__":
             ))
 
             # save prediction results into file
+            print("\n\nWhat is in data_test: \n")
+            print("y: {}\n\n".format(data_test["y"]))
             predict_results_all_models_data_i = pd.DataFrame(columns=predict_results_all_models_data.columns)
             predict_results_all_models_data_i['date'] = data_test.index
             predict_results_all_models_data_i['date'] = pd.to_datetime(predict_results_all_models_data_i['date'])
@@ -470,8 +472,6 @@ if __name__ == "__main__":
             logger.info("model {} does not exists".format(model_results['model_id'][index_i]))
             logger.info(str(e))
 
-    if not os.path.exists(PREDICTION_RESULTS_ALL_MODELS_PATH):
-        os.makedirs(PREDICTION_RESULTS_ALL_MODELS_PATH)
     if not os.path.exists(predict_results_all_models_data_all_models_file):
         predict_results_all_models_data.to_csv(predict_results_all_models_data_all_models_file, encoding="utf-8",
                                                index=None, mode="a", header=True)
@@ -488,7 +488,7 @@ if __name__ == "__main__":
                                                          encoding="utf-8")
         predict_results_all_models_history['date'] = pd.to_datetime(predict_results_all_models_history['date'])
         predict_results_all_models_history['date'] = predict_results_all_models_history['date'].dt.date
-        predict_results_all_models_history.sort_values(['date', 'model_name'], [True, True], inplace=True)
+        predict_results_all_models_history.sort_values(['date', 'model_name'], ascending=[True, True], inplace=True)
         predict_all_models_dates = sorted(predict_results_all_models_history[predict_results_all_models_history['date']
                                                                              < split_date]['date'].unique().tolist())
 
