@@ -437,8 +437,8 @@ if __name__ == "__main__":
     )
 
     predict_results_all_models_data_all_models_file = PREDICTION_RESULTS_ALL_MODELS_PATH + str(args.look_forward_days) + ".csv"
-    predict_results_all_models_data = pd.DataFrame(columns=["date", "model_name", "model_id", "y", "forward_y",
-                                                            "predict_y", "prediction_date", "timestamp"])
+    predict_results_all_models_data = pd.DataFrame(columns=["date", "look_forward_days", "model_name", "model_id", "y",
+                                                            "forward_y", "predict_y", "prediction_date", "timestamp"])
 
     for index_i in range(len(model_results.index)):
         try:
@@ -453,6 +453,7 @@ if __name__ == "__main__":
             #                                                           "forward_y", "predict_y", "prediction_date",
             #                                                           "timestamp"])
             predict_results_all_models_data_i = data_test[["y", "forward_y"]]
+            predict_results_all_models_data_i['look_forward_days'] = args.look_forward_days
             predict_results_all_models_data_i['date'] = data_test.index
             predict_results_all_models_data_i['date'] = pd.to_datetime(predict_results_all_models_data_i['date'])
             predict_results_all_models_data_i['date'] = predict_results_all_models_data_i['date'].dt.date
@@ -468,7 +469,8 @@ if __name__ == "__main__":
             predict_results_all_models_data_i["timestamp"] = int(time.time() * 1000)
             predict_results_all_models_data_i = predict_results_all_models_data_i[predict_results_all_models_data_i['date'] >= split_date]
 
-            predict_results_all_models_data_i = predict_results_all_models_data_i[["date", "model_name", "model_id",
+            predict_results_all_models_data_i = predict_results_all_models_data_i[["date", "look_forward_days",
+                                                                                   "model_name", "model_id",
                                                                                    "y", "forward_y", "predict_y",
                                                                                    "prediction_date", "timestamp"]]
             predict_results_all_models_data = predict_results_all_models_data.append(predict_results_all_models_data_i)
@@ -509,8 +511,8 @@ if __name__ == "__main__":
         ]
 
         # initialize best model data
-        best_model_data = pd.DataFrame(columns=["model_name", "model_id", "dynamic_eval_metric", "start_eval_date",
-                                                "end_eval_date", "update_date", "timestamp"])
+        best_model_data = pd.DataFrame(columns=["look_forward_days", "model_name", "model_id", "dynamic_eval_metric",
+                                                "start_eval_date", "end_eval_date", "update_date", "timestamp"])
         model_list = predict_results_all_models_history['model_id'].unique().tolist()
 
         y_true_history = np.array(data_test[(data_test.index >= start_dynamic_eval_date) &
@@ -519,7 +521,8 @@ if __name__ == "__main__":
             y_test_predict = np.array(predict_results_all_models_history[(predict_results_all_models_history["model_id"] == model_id_i)]["forward_y"].tolist())
             dynamic_eval_metric = Evaluate(y_test_predict, y_true_history, error=0.10).accuracy()
             model_name_i = predict_results_all_models_history[predict_results_all_models_history["model_id"] == model_id_i]["model_name"].unique().tolist()[0]
-            best_model_data.loc[len(best_model_data.index)] = [model_name_i, model_id_i, dynamic_eval_metric,
+            best_model_data.loc[len(best_model_data.index)] = [args.look_forward_days, model_name_i, model_id_i,
+                                                               dynamic_eval_metric,
                                                                start_dynamic_eval_date,
                                                                end_dynamic_eval_date,
                                                                datetime.date.today().strftime("%Y%m%d"),
