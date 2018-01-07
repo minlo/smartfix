@@ -200,8 +200,11 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
         X = self._preprocess_data(X)
         # if self.is_training:
         #     self.selector.fit(X)
-       
-        X = self.selector.transform(X)
+
+        if self.select_method in ["soft", "all"]:
+            X = self.selector.fit_transform(X)
+        else:
+            X = self.selector.transform(X)
         # logger.info("Just to check if logger could be printed out here!")
         # if np.any(np.isnan(X)):
         #     logger.info("There is np.nan in X!")
