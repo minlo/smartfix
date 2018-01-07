@@ -14,15 +14,16 @@ class LSTM_model(BaseEstimator, TransformerMixin):
     This model is for LSTM, we do train and predict in this class
     furthermore, we establish another pipiline for LSTM apart from the pipeline of ML method
     """
-    def __init__(self, look_forward_days=1, seq_length=30, input_dim=20,
+
+    def __init__(self, look_forward_days=1, seq_length=30, input_dim=107,
                  output_dim=1, num_hidden=128, num_fully=256, learning_rate=0.001,
-                 batch_size=100, training_steps=100, display_step=10, separate_date = pd.datetime(2017, 12, 1)):
+                 batch_size=100, training_steps=100, display_step=10, separate_date=pd.datetime(2017, 12, 1)):
         """
         The grid search parameters are
         :param look_forward_days:
         :param seq_length:
-        :param input_dim:
-        :param output_dim:
+        :param input_dim:   the dimension of data which inputed, maybe the data processed after feature_engineering,feature_select
+        :param output_dim:  be 1 if predicting the value of r007, be 4 fi predicting the level of warning
         :param num_hidden:
         :param num_fully:
         :param learning_rate:
@@ -56,13 +57,15 @@ class LSTM_model(BaseEstimator, TransformerMixin):
         x = data
         y = data[:, [-1]]
 
-        for i in range(self.seq_length, len(y)-self.look_forward_days):
-            _x = x[i-self.seq_length:i, :]
-            _y = y[i + day]
+        for i in range(self.seq_length, len(y) - self.look_forward_days):
+            _x = x[i - self.seq_length:i, :]
+            _y = y[i + self.look_forward_days]
             datax.append(_x)
             datay.append(_y)
 
-        train_size, test_size = seperate_data_bydate(data)
+        # train_size, test_size = self.separate_data_by_date(df)
+        # print(train_size, test_size)
+        train_size, test_size = len(datax) - 30, 30
         datax, datay = np.array(datax), np.array(datay)
 
         trainx, testx = np.array(datax[0:train_size]), np.array(datax[train_size:len(datax)])
@@ -92,20 +95,33 @@ class LSTM_model(BaseEstimator, TransformerMixin):
         #     'fully': tf.Variable(tf.truncated_normal([1]))
         # }
 
-        weights = tf.Variable(tf.random_normal([self.n_hidden, self.output_dim]), name="weights")
+        weights = tf.Variable(tf.random_normal([self.num_hidden, self.output_dim]), name="weights")
         biases = tf.Variable(tf.random_normal([self.output_dim]), name="biases")
 
-        x = tf.unstack(x, self.seq_length, 1)
-        cell = rnn.BasicLSTMCell(self.num_hidden, forget_bias=1.0)
-        outputs, _ = rnn.static_rnn(cell, x, dtype=tf.float32)
-        y_pred = tf.add(tf.matmul(outputs[-1], weights), biases)
-        tf.add_to_collection('predict', y_pred)
+        # x = tf.unstack(x, self.seq_length, 1)
+        # cell = rnn.BasicLSTMCell(self.num_hidden, forget_bias=1.0)
+        # outputs, _ = rnn.static_rnn(cell, x, dtype=tf.float32)
+        # y_pred = tf.add(tf.matmul(outputs[-1], weights), biases)
+        # tf.add_to_collection('predict', y_pred)
         # hidden=tf.nn.tanh(hidden)
         # result=tf.add(tf.matmul(hidden,weights['fully']),biases['fully'])
 
+        def RNN(x, weights, biases):
+            x = tf.unstack(x, self.seq_length, 1)
+            cell = rnn.BasicLSTMCell(self.num_hidden, forget_bias=1.0)
+            outputs, _ = rnn.static_rnn(cell, x, dtype=tf.float32)
+            hidden = tf.add(tf.matmul(outputs[-1], weights), biases)
+            # hidden=tf.nn.tanh(hidden)
+            # result=tf.add(tf.matmul(hidden,weights['fully']),biases['fully'])
+            return hidden
+
+        y_pred = RNN(x, weights, biases)
+        tf.add_to_collection('predict', y_pred)
+
         loss = tf.reduce_sum(tf.square(y_pred - y))
         optimizer = tf.train.AdamOptimizer(self.learning_rate).minimize(loss)
-        correct = (tf.abs(tf.abs(y_pred, y)) < 0.1)
+        # correct = (tf.abs(y_pred-y) < 0.1)
+        correct = (tf.abs(y_pred - y) < 0.1)
         accuracy = tf.reduce_mean(tf.cast(correct, tf.float32))
         init = tf.global_variables_initializer()
         with tf.Session() as sess:
@@ -113,7 +129,7 @@ class LSTM_model(BaseEstimator, TransformerMixin):
             num_of_batches = int(train_x.shape[0] / self.batch_size)
             for i in range(self.training_steps):
                 for j in range(num_of_batches):
-                    indices = random.sample(range(train_x.shape[0]), batch_size),
+                    indices = random.sample(range(train_x.shape[0]), self.batch_size),
                     batch_x, batch_y = train_x[indices], train_y[indices]
                     sess.run(optimizer, feed_dict={x: batch_x, y: batch_y})
                 if (i + 1) % self.display_step == 0:
@@ -156,8 +172,8 @@ class LSTM_model(BaseEstimator, TransformerMixin):
             graph = tf.get_default_graph()
             predict = tf.get_collection('predict')[0]
             input_x = graph.get_operation_by_name("input_x").outputs[0]
-            x = X.values[-1-self.seq_length:-1, :]
+            x = X.values[-1 - self.seq_length:-1, :]
 
-            res = sess.run(predict, feed_dict={input_x: x})
+            res = sess.run(predict, feed_dict={input_x: [x]})
 
-            return res
+            return res[0][0]
