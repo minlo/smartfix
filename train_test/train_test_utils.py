@@ -447,22 +447,20 @@ if __name__ == "__main__":
             ))
 
             # save prediction results into file
-            print("\n\nWhat is in data_test: \n")
-            print("y: {}\n\n".format(data_test["y"]))
             predict_results_all_models_data_i = pd.DataFrame(columns=["date", "model_name", "model_id", "y",
                                                                       "forward_y", "predict_y", "prediction_date",
                                                                       "timestamp"])
             predict_results_all_models_data_i['date'] = data_test.index
             predict_results_all_models_data_i['date'] = pd.to_datetime(predict_results_all_models_data_i['date'])
             predict_results_all_models_data_i['date'] = predict_results_all_models_data_i['date'].dt.date
+            predict_results_all_models_data_i["model_name"] = model_results['model_name'][index_i]
+            predict_results_all_models_data_i["model_id"] = model_results['model_id'][index_i]
             predict_results_all_models_data_i["y"] = data_test["y"]
             predict_results_all_models_data_i["forward_y"] = data_test["forward_y"]
             predict_results_all_models_data_i["predict_y"] = test(
                 x_test=x_test,
                 model_id=model_results['model_id'][index_i]
             )
-            predict_results_all_models_data_i["model_name"] = model_results['model_name'][index_i]
-            predict_results_all_models_data_i["model_id"] = model_results['model_id'][index_i]
             predict_results_all_models_data_i["prediction_date"] = datetime.date.today().strftime("%Y%m%d")
             predict_results_all_models_data_i["timestamp"] = int(time.time() * 1000)
             predict_results_all_models_data_i = predict_results_all_models_data_i[predict_results_all_models_data_i['date'] >= split_date]
@@ -523,7 +521,7 @@ if __name__ == "__main__":
                                                                datetime.date.today().strftime("%Y%m%d"),
                                                                int(1000 * time.time())]
 
-        best_model_data.sort_values(["dynamic_eval_metric"], acending=[False], inplace=True)
+        best_model_data.sort_values(["dynamic_eval_metric"], ascending=[False], inplace=True)
         best_model_data = best_model_data.loc[0]
 
         if not os.path.exists(best_model_file):
