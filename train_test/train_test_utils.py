@@ -420,12 +420,13 @@ if __name__ == "__main__":
     model_results['split_date'] = model_results['split_date'].dt.date
     most_recent_split_date = model_results['split_date'].max()
     model_results = model_results[model_results['split_date'] == most_recent_split_date]
-    best_eval_metric = model_results['eval_metric'].max()
-    model_results = model_results[model_results['eval_metric'] == best_eval_metric]
+    model_results = model_results.drop_duplicates(['model_id'])
+    # best_eval_metric = model_results['eval_metric'].max()
+    # model_results = model_results[model_results['eval_metric'] == best_eval_metric]
     model_results.reset_index(drop=True, inplace=True)
     # print(most_recent_split_date, best_eval_metric)
-    if model_results.shape[0] == 0:
-        raise ValueError("No model left after filtering the best model recently!")
+    # if model_results.shape[0] == 0:
+    #     raise ValueError("No model left after filtering the best model recently!")
 
     logger.info(
         "By filtering the best eval_metric, "
@@ -448,16 +449,17 @@ if __name__ == "__main__":
             ))
 
             # save prediction results into file
-            predict_results_all_models_data_i = pd.DataFrame(columns=["date", "model_name", "model_id", "y",
-                                                                      "forward_y", "predict_y", "prediction_date",
-                                                                      "timestamp"])
+            # predict_results_all_models_data_i = pd.DataFrame(columns=["date", "model_name", "model_id", "y",
+            #                                                           "forward_y", "predict_y", "prediction_date",
+            #                                                           "timestamp"])
+            predict_results_all_models_data_i = data_test[["y", "forward_y"]]
             predict_results_all_models_data_i['date'] = data_test.index
             predict_results_all_models_data_i['date'] = pd.to_datetime(predict_results_all_models_data_i['date'])
             predict_results_all_models_data_i['date'] = predict_results_all_models_data_i['date'].dt.date
             predict_results_all_models_data_i["model_name"] = model_results['model_name'][index_i]
             predict_results_all_models_data_i["model_id"] = model_results['model_id'][index_i]
-            predict_results_all_models_data_i["y"] = data_test["y"]
-            predict_results_all_models_data_i["forward_y"] = data_test["forward_y"]
+            # predict_results_all_models_data_i["y"] = data_test["y"]
+            # predict_results_all_models_data_i["forward_y"] = data_test["forward_y"]
             predict_results_all_models_data_i["predict_y"] = test(
                 x_test=x_test,
                 model_id=model_results['model_id'][index_i]
@@ -525,15 +527,10 @@ if __name__ == "__main__":
                                                                end_dynamic_eval_date,
                                                                datetime.date.today().strftime("%Y%m%d"),
                                                                int(1000 * time.time())]
-            print(model_id_i)
-            print([model_name_i, model_id_i, dynamic_eval_metric,
-                   start_dynamic_eval_date, end_dynamic_eval_date,
-                   datetime.date.today().strftime("%Y%m%d"), int(1000 * time.time())])
 
         best_model_data.sort_values(["dynamic_eval_metric"], ascending=[False], inplace=True)
         best_model_data.reset_index(drop=True, inplace=True)
         best_model_data = best_model_data.loc[best_model_data.index == 0]
-        print(best_model_data)
 
         if not os.path.exists(best_model_file):
             best_model_data.to_csv(best_model_file, encoding="utf-8", index=None, mode="a", header=True)
