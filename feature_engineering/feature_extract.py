@@ -17,7 +17,7 @@ class FeatureExtract(BaseEstimator, TransformerMixin):
     return all the feature extracted merged together
 
     """
-    def __init__(self, ma=[1, 2, 3, 4, 5], log=True, ind=[2, 3], changerate=True,
+    def __init__(self, ma=[1, 3, 5], log=True, ind=[2], changerate=True,
                  diff=True, lag=10, look_forward_days=1,
                  magic_feature_list=['weekday', 'end_of_month', 'end_of_season', 'end_of_year']):
         """

@@ -48,7 +48,7 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
         column_x_list.append(feature_column)
         # data.replace([np.inf, -np.inf], np.nan, inplace=True)
         # logger.info("Before dropping na, data: {}".format(data.shape))
-        data = data.dropna()
+        # data = data.dropna()
         # logger.info("After dropping na, data: {}".format(data.shape))
         if data.empty:
             raise ValueError("data is empty!")
@@ -135,7 +135,7 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
 
     def partial_fit(self, X, y=None):
         """Online computation of min and max on X for later selecting."""
-        self.selected_features = self.select_top_k_hard(X)
+        self.selected_features = self.select_top_k_hard(X.copy())
         return self
 
     def fit(self, X, y=None):
