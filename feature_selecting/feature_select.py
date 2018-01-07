@@ -194,13 +194,17 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
         return selector
 
     def fit(self, X, y=None):
+        print("!!!Before soft thresholding fitting, X shape: {}".format(X.shape))
         X = self._preprocess_data(X)
         self.selector.fit(X, y)
+        print("!!!After soft thresholding fitting, X shape: {}".format(X.shape))
         return self
 
     def transform(self, X, y=None):
         X = self._preprocess_data(X)
+        print("!!!Before soft thresholding transforming, X shape: {}".format(X.shape))
         X = self.selector.transform(X)
+        print("!!!After soft thresholding transforming, X shape: {}".format(X.shape))
 
         return X
 
