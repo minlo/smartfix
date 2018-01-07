@@ -205,7 +205,7 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
     }
 
     selector_param_grid = {
-        "selector__k": [10, -1],  # [10, 20, 30, 40, 50],
+        "selector__k": [10, -1],  # , 20, 30, 40, 50],
         "selector__select_method": ["hard", "soft"]
     }
     # temporarily not used
@@ -467,9 +467,7 @@ if __name__ == "__main__":
             predict_results_all_models_data_i["prediction_date"] = datetime.date.today().strftime("%Y%m%d")
             predict_results_all_models_data_i["timestamp"] = int(time.time() * 1000)
             predict_results_all_models_data_i = predict_results_all_models_data_i[predict_results_all_models_data_i['date'] >= split_date]
-            print("\nPrediction results, first data_test, second this specific model: ")
-            print(data_test["y"])
-            print(predict_results_all_models_data_i["y"])
+
             predict_results_all_models_data_i = predict_results_all_models_data_i[["date", "model_name", "model_id",
                                                                                    "y", "forward_y", "predict_y",
                                                                                    "prediction_date", "timestamp"]]
@@ -500,7 +498,6 @@ if __name__ == "__main__":
 
         # specify start and end dates for eval dynamic period
         end_dynamic_eval_date = split_date
-        logger.info("predict_all_models_dates: {}".format(",".join([str(i) for i in predict_all_models_dates])))
         try:
             start_dynamic_eval_date = predict_all_models_dates[(-1) * args.dynamic_eval_last_days]
         except IndexError:
