@@ -201,11 +201,11 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
         "imputer__method": ["directly"]
     }
     engineer_param_grid = {
-        "engineer__lag": [10, 20, 30, 40, 50, 60]
+        "engineer__lag": [10, 30, 50]
     }
 
     selector_param_grid = {
-        "selector__k": [10, 20, 30, 40, 50, -1],
+        "selector__k": [10, 30, 50, -1],
         "selector__select_method": ["hard"],  # ["hard", "soft"]
     }
     # temporarily not used
@@ -502,7 +502,7 @@ if __name__ == "__main__":
         end_dynamic_eval_date = split_date
         try:
             start_dynamic_eval_date = predict_all_models_dates[(-1) * args.dynamic_eval_last_days]
-        except IndexError:
+        except:
             start_dynamic_eval_date = predict_all_models_dates[0]
 
         predict_results_all_models_history = predict_results_all_models_history[

@@ -150,6 +150,7 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
             for column_i in unseen_columns:
                 logger.info(column_i + "\n")
             logger.info("The end of this print.")
+            self.partial_fit(X, y)
         data_hard = X[self.selected_features]
         data_hard.reset_index(drop=True, inplace=True)
         return data_hard.as_matrix()

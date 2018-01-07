@@ -52,7 +52,7 @@ class BuildPipeline(object):
                 ("reducer", self.reducer),
                 ("model", self.model)
             ],
-            # memory=self.memory
+            memory=self.memory
         )
         return pipeline
 
