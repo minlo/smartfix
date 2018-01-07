@@ -532,7 +532,7 @@ if __name__ == "__main__":
     # fetch the best model and save its predictions into PREDICTION_RESULTS_BEST_MODEL_PATH
     predict_best_model_file = PREDICTION_RESULTS_BEST_MODEL_PATH + str(args.look_forward_days) + ".csv"
     best_model_history = pd.read_csv(best_model_file, encoding="utf-8")
-    best_model_history.sort_values(["timestamp"], acending=[False], inplace=True)
+    best_model_history.sort_values(["timestamp"], ascending=[False], inplace=True)
     best_model_history.reset_index(drop=True, inplace=True)
     best_model_id = best_model_history['model_id'][0]
     best_model_name = best_model_history['model_name'][0]
