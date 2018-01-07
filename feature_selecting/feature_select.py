@@ -138,6 +138,8 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
         return self.partial_fit(X, y)
 
     def transform(self, X, y=None):
+        if self.selected_features is None:
+            raise ValueError("Watch out, self.selected_features is None, you must fit before transforming!!!")
         data_hard = X[self.selected_features]
         data_hard.reset_index(drop=True, inplace=True)
         return data_hard.as_matrix()
