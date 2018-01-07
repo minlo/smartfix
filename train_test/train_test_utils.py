@@ -333,7 +333,8 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
     results.sort_values(["model_name", "eval_metric"], ascending=[True, False], inplace=True)
     results.reset_index(drop=True, inplace=True)
 
-    results = results.loc[results.index < save_k_best]
+    results = results.groupby("model_name", group_keys=False).apply(lambda g: g.nlargest(save_k_best, "eval_metric"))
+    # results.loc[results.index < save_k_best]
 
     # save the best models during this training process
     for index_i in range(len(results.index)):
