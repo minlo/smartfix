@@ -333,7 +333,7 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
     results.sort_values(["model_name", "eval_metric"], ascending=[True, False], inplace=True)
     results.reset_index(drop=True, inplace=True)
 
-    results = results.loc[:save_k_best]
+    results = results.loc[results.index < save_k_best]
 
     # save the best models during this training process
     for index_i in range(len(results.index)):
@@ -465,6 +465,9 @@ if __name__ == "__main__":
             predict_results_all_models_data_i["prediction_date"] = datetime.date.today().strftime("%Y%m%d")
             predict_results_all_models_data_i["timestamp"] = int(time.time() * 1000)
             predict_results_all_models_data_i = predict_results_all_models_data_i[predict_results_all_models_data_i['date'] >= split_date]
+            print("\nPrediction results, first data_test, second this specific model: ")
+            print(data_test["y"])
+            print(predict_results_all_models_data_i["y"])
             predict_results_all_models_data_i = predict_results_all_models_data_i[["date", "model_name", "model_id",
                                                                                    "y", "forward_y", "predict_y",
                                                                                    "prediction_date", "timestamp"]]
@@ -529,7 +532,7 @@ if __name__ == "__main__":
 
         best_model_data.sort_values(["dynamic_eval_metric"], ascending=[False], inplace=True)
         best_model_data.reset_index(drop=True, inplace=True)
-        best_model_data = best_model_data.loc[0]
+        best_model_data = best_model_data.loc[best_model_data.index == 0]
         print(best_model_data)
 
         if not os.path.exists(best_model_file):
