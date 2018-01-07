@@ -131,12 +131,6 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
         # selected_features.extend([self.date_column, self.target_column])
         # We may deal with X features only, and leave y as parameter.
         # selected_features.extend([self.target_column, "forward_y"])
-        unseen_columns = [column_i for column_i in selected_features if column_i not in list(data.columns)]
-        if len(unseen_columns) > 0:
-            logger.info("print out columns which may cause key error: ")
-            for column_i in unseen_columns:
-                logger.info(column_i + "\n")
-            logger.info("The end of this print.")
         return selected_features
 
     def partial_fit(self, X, y=None):
@@ -150,6 +144,12 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
     def transform(self, X, y=None):
         if self.selected_features is None:
             raise ValueError("Watch out, self.selected_features is None, you must fit before transforming!!!")
+        unseen_columns = [column_i for column_i in self.selected_features if column_i not in list(X.columns)]
+        if len(unseen_columns) > 0:
+            logger.info("print out columns which may cause key error: ")
+            for column_i in unseen_columns:
+                logger.info(column_i + "\n")
+            logger.info("The end of this print.")
         data_hard = X[self.selected_features]
         data_hard.reset_index(drop=True, inplace=True)
         return data_hard.as_matrix()
