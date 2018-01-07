@@ -366,7 +366,7 @@ if __name__ == "__main__":
     parser.add_argument("--look_forward_days", help="how many days to look forward",
                         required=False, default=1, type=int)
     parser.add_argument("--data_path", help="select which data to import for training or testing",
-                        required=False, default="raw_data_20171222.xls", type=str)
+                        required=False, default="raw_data_2018-01-05.csv", type=str)
     parser.add_argument("--is_training", help="if true, we run the grid search and "
                                               "select the best models in the validation period",
                         required=False, default=False, type=lambda x: (str(x).lower() == "true"))

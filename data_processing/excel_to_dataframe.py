@@ -18,7 +18,7 @@ class GenerateDataFrame:
         read excel which have features and the r007 on the last columns
         :return: DataFrame
         """
-        data = pd.read_excel(self.raw_data_url, index_col='指标名称')
+        data = pd.read_excel(self.raw_data_url, index_col='date', encoding='utf-8')
         data.index = data.index.rename('date')
         data.index = pd.to_datetime(data.index, errors="coerce")
         data = data[~data.index.isnull()]
