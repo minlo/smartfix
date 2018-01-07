@@ -24,8 +24,9 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
     2. features with t-statistic value bigger than specified confidence level 1 - alpha, where alpha would be a
         parameter specified by the user.
     3. As for magic features, we simply do not regress on them, and we will add them later to selected features.
+    4. If k is -1, we select all features.
     """
-    def __init__(self, target_column="y", k=200, alpha=0.05, date_column="date", select_top_k=True, print_top_k=False):
+    def __init__(self, target_column="y", k=10, alpha=0.05, date_column="date", select_top_k=True, print_top_k=False):
         self.target_column = target_column
         self.k = k
         self.alpha = alpha
@@ -34,6 +35,8 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
         self.print_top_k = print_top_k
 
         self.significant_value = norm.ppf(1 - self.alpha / 2)
+
+        self.selected_features = None
 
     @staticmethod
     def regression_t_statistic(data, target_column, ctrl_columns, feature_column):
@@ -104,20 +107,23 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
         init_time = time.time()
         selected_features = []
         for column_i in list(data.columns):
-            if "magic" in column_i:
+            if "magic" in column_i and self.k > 0:
                 selected_features.append(column_i)
-        sorted_hard_thres_t_stats = self.generate_t_statistic(data.copy())
-        logger.info("\nIn total, it takes {:.2f} seconds to run regression for {} columns".format(
-            time.time() - init_time,
-            len(sorted_hard_thres_t_stats)
-        ))
-        index = 0
-        for item_i in sorted_hard_thres_t_stats:
-            if self.select_top_k and index < self.k:
-                selected_features.append(item_i[0])
-            elif not self.select_top_k and item_i[1] >= self.significant_value:
-                selected_features.append(item_i[1])
-            index += 1
+            elif self.k < 0:
+                selected_features.append(column_i)
+        if self.k > 0:
+            sorted_hard_thres_t_stats = self.generate_t_statistic(data.copy())
+            logger.info("\nIn total, it takes {:.2f} seconds to run regression for {} columns".format(
+                time.time() - init_time,
+                len(sorted_hard_thres_t_stats)
+            ))
+            index = 0
+            for item_i in sorted_hard_thres_t_stats:
+                if self.select_top_k and index < self.k:
+                    selected_features.append(item_i[0])
+                elif not self.select_top_k and item_i[1] >= self.significant_value:
+                    selected_features.append(item_i[1])
+                index += 1
         if self.print_top_k:
             logger.info("We select {} features by hard thresholding: \n".format(len(selected_features)))
             logger.info("{}".format("\n".join(selected_features)))
@@ -125,13 +131,20 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
         # selected_features.extend([self.date_column, self.target_column])
         # We may deal with X features only, and leave y as parameter.
         # selected_features.extend([self.target_column, "forward_y"])
-        return data[selected_features]
+        return selected_features
 
-    def fit(self, X, y=None):
+    def partial_fit(self, X, y=None):
+        """Online computation of min and max on X for later selecting."""
+        self.selected_features = self.select_top_k_hard(X)
         return self
 
+    def fit(self, X, y=None):
+        return self.partial_fit(X, y)
+
     def transform(self, X, y=None):
-        data_hard = self.select_top_k_hard(X)
+        if self.selected_features is None:
+            raise ValueError("Watch out, self.selected_features is None, you must fit before transforming!!!")
+        data_hard = X[self.selected_features]
         data_hard.reset_index(drop=True, inplace=True)
         return data_hard.as_matrix()
 
@@ -152,12 +165,12 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
         self.selector = self._choose_selector()
 
     def check_select_method(self):
-        if self.select_method not in ["hard", "soft", "all"]:
-            raise ValueError("Select method must be one of ['hard', 'soft', 'all']")
+        if self.select_method not in ["hard", "soft"]:
+            raise ValueError("Select method must be one of ['hard', 'soft']")
 
     def _preprocess_data(self, data):
         # logger.info("select_method: {}, data_type: {}".format(self.select_method, type(data)))
-        if self.select_method in ["soft", "all"]:
+        if self.select_method == "soft":
             data.reset_index(drop=True, inplace=True)
             # del data[self.target_column], data[self.date_column]
             data_values = data.as_matrix()
@@ -176,26 +189,22 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
                 select_top_k=self.select_top_k,
                 print_top_k=self.print_top_k
             )
-        elif self.select_method == "soft":
-            selector = SelectFromModel(Lasso(alpha=0.1), prefit=False)
         else:
-            selector = SelectKBest(k="all")
+            selector = SelectFromModel(Lasso(alpha=0.001), prefit=False)
         return selector
 
     def fit(self, X, y=None):
+        print("!!!Before soft thresholding fitting, X shape: {}".format(X.shape))
+        X = self._preprocess_data(X)
+        self.selector.fit(X, y)
+        print("!!!After soft thresholding fitting, X shape: {}".format(X.shape))
         return self
 
     def transform(self, X, y=None):
         X = self._preprocess_data(X)
-        if self.is_training:
-            self.selector.fit(X)
-       
+        print("!!!Before soft thresholding transforming, X shape: {}".format(X.shape))
         X = self.selector.transform(X)
-        # logger.info("Just to check if logger could be printed out here!")
-        # if np.any(np.isnan(X)):
-        #     logger.info("There is np.nan in X!")
-        # if not np.all(np.isfinite(X)):
-        #     logger.info("There is np.inf in X!")
+        print("!!!After soft thresholding transforming, X shape: {}".format(X.shape))
 
         return X
 
