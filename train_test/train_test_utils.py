@@ -228,9 +228,9 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
             "model__colsample_bytree": [0.1, 0.2, 0.3, 0.4, 0.5],
             "model__learning_rate": [0.01, 0.1]
         },
-        # "lasso": {
-        #     "model__alpha": [1 / (10**x) for x in range(2, 10)]
-        # }
+        "lasso": {
+            "model__alpha": [1 / (10**x) for x in range(2, 10)]
+        }
     }
     model_pipeline_mode_dict = {
         "random_forest": "grid",
