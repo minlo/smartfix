@@ -205,7 +205,7 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
     }
 
     selector_param_grid = {
-        "selector__k": [10, 20, 30, 40, 50],  # [-1]
+        "selector__k": [10, 20, 30, 40, 50, -1],
         "selector__select_method": ["hard"],  # ["hard", "soft"]
     }
     # temporarily not used
