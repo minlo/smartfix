@@ -522,10 +522,15 @@ if __name__ == "__main__":
                                                                end_dynamic_eval_date,
                                                                datetime.date.today().strftime("%Y%m%d"),
                                                                int(1000 * time.time())]
+            print(model_id_i)
+            print([model_name_i, model_id_i, dynamic_eval_metric,
+                   start_dynamic_eval_date, end_dynamic_eval_date,
+                   datetime.date.today().strftime("%Y%m%d"), int(1000 * time.time())])
 
         best_model_data.sort_values(["dynamic_eval_metric"], ascending=[False], inplace=True)
         best_model_data.reset_index(drop=True, inplace=True)
         best_model_data = best_model_data.loc[0]
+        print(best_model_data)
 
         if not os.path.exists(best_model_file):
             best_model_data.to_csv(best_model_file, encoding="utf-8", index=None, mode="a", header=True)
