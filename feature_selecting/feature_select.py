@@ -187,8 +187,8 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
 
     def transform(self, X, y=None):
         X = self._preprocess_data(X)
-        if self.is_training:
-            self.selector.fit(X)
+        # if self.is_training:
+        #     self.selector.fit(X)
        
         X = self.selector.transform(X)
         # logger.info("Just to check if logger could be printed out here!")

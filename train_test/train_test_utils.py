@@ -493,11 +493,11 @@ if __name__ == "__main__":
                                                                              < split_date]['date'].unique().tolist())
 
         # specify start and end dates for eval dynamic period
-        start_dynamic_eval_date = split_date
+        end_dynamic_eval_date = split_date
         try:
-            end_dynamic_eval_date = predict_all_models_dates[(-1) * args.dynamic_eval_last_days]
+            start_dynamic_eval_date = predict_all_models_dates[(-1) * args.dynamic_eval_last_days]
         except IndexError:
-            end_dynamic_eval_date = predict_all_models_dates[0]
+            start_dynamic_eval_date = predict_all_models_dates[0]
 
         predict_results_all_models_history = predict_results_all_models_history[
             (predict_results_all_models_history['date'] < start_dynamic_eval_date) &
