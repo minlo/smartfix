@@ -240,7 +240,7 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
     results = pd.DataFrame(columns=["model_id", "split_date", "model_name", "eval_metric",
                                     "update_date", "timestamp"])
     
-    failed_models_data = pd.DataFrame(columns=['model_name', 'split_date', 'update_date', 'timestamp'])
+    failed_models_data = pd.DataFrame(columns=['model_name', 'split_date', 'error_message', 'update_date', 'timestamp'])
     # if os.path.exists(MODEL_PARAMS_JSON_PATH):
     #     model_params_dict = json.loads(MODEL_PARAMS_JSON_PATH)
     # else:
@@ -311,6 +311,7 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
             failed_models_data.loc[len(failed_models_data.index)] = [
                 model_name,
                 split_date,
+                str(e),
                 datetime.date.today().strftime("%Y%m%d"),
                 int(1000 * time.time())
             ]
@@ -494,6 +495,7 @@ if __name__ == "__main__":
 
         # specify start and end dates for eval dynamic period
         end_dynamic_eval_date = split_date
+        logger.info("predict_all_models_dates: {}".format(",".join([str(i) for i in predict_all_models_dates])))
         try:
             start_dynamic_eval_date = predict_all_models_dates[(-1) * args.dynamic_eval_last_days]
         except IndexError:
