@@ -449,7 +449,9 @@ if __name__ == "__main__":
             # save prediction results into file
             print("\n\nWhat is in data_test: \n")
             print("y: {}\n\n".format(data_test["y"]))
-            predict_results_all_models_data_i = pd.DataFrame(columns=predict_results_all_models_data.columns)
+            predict_results_all_models_data_i = pd.DataFrame(columns=["date", "model_name", "model_id", "y",
+                                                                      "forward_y", "predict_y", "prediction_date",
+                                                                      "timestamp"])
             predict_results_all_models_data_i['date'] = data_test.index
             predict_results_all_models_data_i['date'] = pd.to_datetime(predict_results_all_models_data_i['date'])
             predict_results_all_models_data_i['date'] = predict_results_all_models_data_i['date'].dt.date
@@ -494,7 +496,10 @@ if __name__ == "__main__":
 
         # specify start and end dates for eval dynamic period
         start_dynamic_eval_date = split_date
-        end_dynamic_eval_date = predict_all_models_dates[(-1) * args.dynamic_eval_last_days]
+        try:
+            end_dynamic_eval_date = predict_all_models_dates[(-1) * args.dynamic_eval_last_days]
+        except IndexError:
+            end_dynamic_eval_date = predict_all_models_dates[0]
 
         predict_results_all_models_history = predict_results_all_models_history[
             (predict_results_all_models_history['date'] < start_dynamic_eval_date) &
