@@ -205,8 +205,8 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
     }
 
     selector_param_grid = {
-        "selector__k": [10, 20, 30, 40, 50],
-        "selector__select_method": ["hard"],  # "soft", "all"]
+        "selector__k": [10],  # [10, 20, 30, 40, 50],
+        "selector__select_method": ["hard", "soft", "all"]
     }
     # temporarily not used
     reducer_param_grid = {
@@ -214,8 +214,8 @@ def search_regression_ml(data_train, save_k_best, look_ahead_day, split_date, va
     }
     model_dict = {
         "random_forest": RandomForestRegressor(n_estimators=1000, n_jobs=-1, random_state=1234),
-        "xgboost": XGBRegressor(),
-        "lasso": Lasso(alpha=0.01, random_state=1234),
+        # "xgboost": XGBRegressor(),
+        # "lasso": Lasso(alpha=0.01, random_state=1234),
     }
     model_param_grid_dict = {
         "random_forest": {
@@ -522,6 +522,7 @@ if __name__ == "__main__":
                                                                int(1000 * time.time())]
 
         best_model_data.sort_values(["dynamic_eval_metric"], ascending=[False], inplace=True)
+        best_model_data.reset_index(drop=True, inplace=True)
         best_model_data = best_model_data.loc[0]
 
         if not os.path.exists(best_model_file):

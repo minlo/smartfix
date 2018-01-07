@@ -35,6 +35,8 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
 
         self.significant_value = norm.ppf(1 - self.alpha / 2)
 
+        self.selected_features = None
+
     @staticmethod
     def regression_t_statistic(data, target_column, ctrl_columns, feature_column):
         """
@@ -125,13 +127,18 @@ class HardThresholdSelector(BaseEstimator, TransformerMixin):
         # selected_features.extend([self.date_column, self.target_column])
         # We may deal with X features only, and leave y as parameter.
         # selected_features.extend([self.target_column, "forward_y"])
-        return data[selected_features]
+        return selected_features
 
-    def fit(self, X, y=None):
+    def partial_fit(self, X, y=None):
+        """Online computation of min and max on X for later selecting."""
+        self.selected_features = self.select_top_k_hard(X)
         return self
 
+    def fit(self, X, y=None):
+        return self.partial_fit(X, y)
+
     def transform(self, X, y=None):
-        data_hard = self.select_top_k_hard(X)
+        data_hard = X[self.selected_features]
         data_hard.reset_index(drop=True, inplace=True)
         return data_hard.as_matrix()
 
@@ -183,6 +190,8 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
         return selector
 
     def fit(self, X, y=None):
+        X = self._preprocess_data(X)
+        self.selector.fit(X, y)
         return self
 
     def transform(self, X, y=None):
