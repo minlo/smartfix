@@ -1,8 +1,10 @@
 <component name="ProjectDictionaryState">
   <dictionary name="jiangbaishou">
     <words>
+      <w>argparse</w>
       <w>bytree</w>
       <w>colsample</w>
+      <w>sklearn</w>
       <w>slinear</w>
       <w>xgboost</w>
     </words>
