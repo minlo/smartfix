@@ -20,15 +20,15 @@ reducer_param_grid = {
     "reducer__n_components": [10]
 }
 model_dict = {
-    "random_forest": RandomForestClassifier(n_estimators=1000, n_jobs=-1, random_state=1234),
+    # "random_forest": RandomForestClassifier(n_estimators=1000, n_jobs=-1, random_state=1234),
     # "xgboost": XGBClassifier(),
     "logistic_regression": LogisticRegression(penalty="l1"),
     # "svm": SVC(probability=True)
 }
 model_param_grid_dict = {
-    "random_forest": {
-        "model__n_estimators": [1000]
-    },
+    # "random_forest": {
+    #     "model__n_estimators": [1000]
+    # },
     # "xgboost": {
     #     "model__max_depth": range(2, 12, 2),
     #     "model__min_child_weight": range(2, 10, 2),
@@ -41,10 +41,11 @@ model_param_grid_dict = {
     #     "model__kernel": ["linear", "poly", "rbf", "sigmoid"],
     #     "model__epsilon": [x / 100 for x in range(10, 50, 5)],
     #     "model_gamma": ["auto"]
-    # }
+    # },
+    "logistic_regression": None
 }
 model_pipeline_mode_dict = {
-    "random_forest": "grid",
+    # "random_forest": "grid",
     # "xgboost": "random",
     "logistic_regression": "single",
     # "svm": "random"
