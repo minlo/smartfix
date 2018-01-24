@@ -1,17 +1,21 @@
+from __future__ import absolute_import
+
 import os
 import pandas as pd
 import numpy as np
 import datetime
 import time
+import sys
 
-from ..data_processing import GenerateDataFrame
-from ..evaluation import Evaluate
-from ..definitions import MODEL_SAVE_DIR, MODEL_PARAMS_JSON_DIR, MODEL_TRAINING_EVAL_RESULTS_DIR, \
+sys.path.append('./../')
+from data_processing import GenerateDataFrame
+from evaluation import Evaluate
+from definitions import MODEL_SAVE_DIR, MODEL_PARAMS_JSON_DIR, MODEL_TRAINING_EVAL_RESULTS_DIR, \
     MODEL_TRAINING_FAILED_MODELS_DIR, BEST_MODEL_HISTORY_DIR, PREDICTION_RESULTS_ALL_MODELS_DIR, \
     PREDICTION_RESULTS_BEST_MODEL_DIR, DATA_DIR
-from ..config.warning_model_config import imputer_param_grid, engineer_param_grid, selector_param_grid, \
+from config.warning_model_config import imputer_param_grid, engineer_param_grid, selector_param_grid, \
     reducer_param_grid, model_dict, model_param_grid_dict, model_pipeline_mode_dict
-from .utils import search_model_ml
+from utils import search_model_ml
 
 import logging
 import argparse

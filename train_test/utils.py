@@ -24,6 +24,7 @@ We provide following functions to be utilized from outside modules.
 # Authors: xuhaonan <>, zhaoyizhaoyi <zhaoyizhaoyi@sjtu.edu.cn>
 
 
+from __future__ import absolute_import
 import os
 import pandas as pd
 import numpy as np
@@ -32,11 +33,12 @@ import time
 import sys
 import uuid
 
-from ..pipeline_lib import BuildPipeline
-from ..feature_engineering import FeatureExtract
-from ..feature_selecting import FeatureSelector
-from ..data_processing import ImputationMethod
-from ..evaluation import Evaluate
+sys.path.append('./../')
+from pipeline_lib import BuildPipeline
+from feature_engineering import FeatureExtract
+from feature_selecting import FeatureSelector
+from data_processing import ImputationMethod
+from evaluation import Evaluate
 
 from sklearn.externals import joblib
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV, TimeSeriesSplit
