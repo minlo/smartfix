@@ -188,7 +188,7 @@ if __name__ == "__main__":
         print("All model dates: ")
         print(predict_all_models_dates)
         # specify start and end dates for eval dynamic period
-        end_dynamic_eval_date = split_date
+        end_dynamic_eval_date = predict_all_models_dates[-1]
         try:
             start_dynamic_eval_date = predict_all_models_dates[(-1) * args.dynamic_eval_last_days]
         except:
