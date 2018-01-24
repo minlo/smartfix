@@ -183,7 +183,7 @@ if __name__ == "__main__":
         predict_results_all_models_history['date'] = predict_results_all_models_history['date'].dt.date
         predict_results_all_models_history.sort_values(['date', 'model_name'], ascending=[True, True], inplace=True)
         predict_all_models_dates = sorted(predict_results_all_models_history[predict_results_all_models_history['date']
-                                                                             < split_date]['date'].unique().tolist())
+                                                                             >= split_date]['date'].unique().tolist())
 
         print("All model dates: ")
         print(predict_all_models_dates)
