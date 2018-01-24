@@ -70,6 +70,9 @@ if __name__ == "__main__":
 
     # generate forward_y as response variable
     data["forward_y"] = data["y"].shift((-1) * args.look_forward_days)
+    # convert forward_y to be integer
+    data["forward_y"] = data["forward_y"].astype("int")
+
     split_date = datetime.datetime.strptime(args.split_date, "%Y%m%d").date()
     data.index = data.index.date
     data_train = data[data.index < split_date]
