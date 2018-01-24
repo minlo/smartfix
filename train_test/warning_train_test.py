@@ -185,6 +185,8 @@ if __name__ == "__main__":
         predict_all_models_dates = sorted(predict_results_all_models_history[predict_results_all_models_history['date']
                                                                              < split_date]['date'].unique().tolist())
 
+        print("All model dates: ")
+        print(predict_all_models_dates)
         # specify start and end dates for eval dynamic period
         end_dynamic_eval_date = split_date
         try:
