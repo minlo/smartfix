@@ -188,7 +188,10 @@ def search_model_ml(data_train, save_k_best, look_ahead_day, split_date, validat
     for model_name in model_dict.keys():
         logger.info("\n\n\n\n\nmodel: {}\n".format(model_name))
         time_start = time.time()
-        pipeline_param_grid = model_param_grid_dict[model_name].copy()
+        if model_pipeline_mode_dict[model_name] != "single":
+            pipeline_param_grid = model_param_grid_dict[model_name].copy()
+        else:
+            pipeline_param_grid = {}
         pipeline_param_grid.update(imputer_param_grid)
         pipeline_param_grid.update(engineer_param_grid)
         pipeline_param_grid.update(selector_param_grid)
