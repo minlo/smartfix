@@ -46,6 +46,7 @@ from sklearn.model_selection import GridSearchCV, RandomizedSearchCV, TimeSeries
 # from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.decomposition import PCA
+from sklearn.metrics import recall_score
 from xgboost import XGBRegressor, XGBClassifier
 import logging
 # import argparse
@@ -139,7 +140,10 @@ def test(x_test, model_id="", pipeline=None):
 
 
 def evaluate(y_test_true, y_test_predict, error=0.10):
-    return Evaluate(y_test_predict, y_test_true, error).accuracy()
+    # return Evaluate(y_test_predict, y_test_true, error).accuracy()
+    y_true = np.array(y_test_true).astype(int)
+    y_predict = np.array(y_test_predict).astype(int)
+    return recall_score(y_true, y_predict, average="micro")
 
 
 def train_test_split_by_position(data, split_position):
