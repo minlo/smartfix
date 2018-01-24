@@ -1,5 +1,6 @@
-from sklearn.linear_model import Lasso
+from sklearn.linear_model import Lasso, Ridge
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.svm import SVR
 from xgboost import XGBRegressor, XGBClassifier
 
 
@@ -22,6 +23,8 @@ model_dict = {
     "random_forest": RandomForestRegressor(n_estimators=1000, n_jobs=-1, random_state=1234),
     "xgboost": XGBRegressor(),
     "lasso": Lasso(alpha=0.01, random_state=1234),
+    "ridge": Ridge(alpha=0.01, random_state=1234),
+    "svm": SVR(kernel="rbf", C=1, epsilon=0.35)
 }
 model_param_grid_dict = {
     "random_forest": {
@@ -36,11 +39,22 @@ model_param_grid_dict = {
     },
     "lasso": {
         "model__alpha": [1 / (10 ** x) for x in range(2, 10)]
+    },
+    "ridge": {
+        "model__alpha": [1 / (10 ** x) for x in range(2, 10)]
+    },
+    "svm": {
+        "model__C": [0.01, 0.1, 1, 10, 100, 1000],
+        "model__kernel": ["linear", "poly", "rbf", "sigmoid"],
+        "model__epsilon": [x / 100 for x in range(10, 50, 5)],
+        "model_gamma": ["auto"]
     }
 }
 model_pipeline_mode_dict = {
     "random_forest": "grid",
     "xgboost": "random",
-    "lasso": "random"
+    "lasso": "random",
+    "ridge": "random",
+    "svm": "random"
 }
 
