@@ -59,7 +59,7 @@ if __name__ == "__main__":
     parser.add_argument("--save_k_best", help="if training, select k best models to save after training",
                         required=False, default=1, type=int)
     parser.add_argument("--scoring_criterion", help="scoring criterion when running grid search",
-                        required=False, default="recall", type=str)
+                        required=False, default="recall_micro", type=str)
     args = parser.parse_args()
 
     # import data
