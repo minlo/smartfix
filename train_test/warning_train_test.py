@@ -15,7 +15,7 @@ from definitions import MODEL_SAVE_DIR, MODEL_PARAMS_JSON_DIR, MODEL_TRAINING_EV
     PREDICTION_RESULTS_BEST_MODEL_DIR, DATA_DIR
 from config.warning_model_config import imputer_param_grid, engineer_param_grid, selector_param_grid, \
     reducer_param_grid, model_dict, model_param_grid_dict, model_pipeline_mode_dict
-from utils import search_model_ml
+from utils import search_model_ml, test
 
 import logging
 import argparse
